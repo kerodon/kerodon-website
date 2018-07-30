@@ -7,6 +7,7 @@ import sys
 import pickle
 import pybtex.database
 import collections
+import bs4
 
 from PyPDF2 import PdfFileReader
 
@@ -132,11 +133,11 @@ def makeSearchTable():
 
   for tag in Tag.select():
     SearchTag.insert({SearchTag.tag: tag.tag,
-                      SearchTag.html: tag.html + "".join([proof.html for proof in tag.proofs])}).execute()
+                      SearchTag.html: bs4.BeautifulSoup(tag.html + "".join([proof.html for proof in tag.proofs]), "html5lib").get_text()}).execute()
 
     if tag.type in ["definition", "example", "exercise", "lemma", "proposition", "remark", "remarks", "situation", "theorem"]:
       SearchStatement.insert({SearchStatement.tag: tag.tag,
-                              SearchStatement.html: tag.html}).execute()
+                              SearchStatement.html: bs4.BeautifulSoup(tag.html, "html5lib").get_text()}).execute()
 
 
 def assignParts():
