@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Recent changes{% endblock %}
+
+{% block head %}
+  <script type="text/javascript" src="/static/js/toggle.js"></script>
+
+  <style type="text/css">
+dl#changes dt + dd {
+  border-left: 1px solid black;
+}
+
+pre.commit-message {
+  margin: 0;
+}
+  </style>
+{% endblock %}
+
+{% block breadcrumb %}
+  <li><a href="/recent-changes">Recent changes</a>
+{% endblock %}
+
+{% block hamburger %}
+  <div class="interaction"></div>
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+{% block sidebar %}
+  <div class="interaction"></div>
+{% endblock %}
+

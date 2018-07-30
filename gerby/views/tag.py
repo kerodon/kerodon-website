@@ -227,7 +227,7 @@ def show_tag(tag):
       if count > 0:
         parentComments.append([parent, count])
 
-  # we are not using separate files for Kerodon
+  # Kerodon: we are not using separate files for the pdf's
   filename = "kerodon.pdf"
 
   return render_template("tag.show.html",

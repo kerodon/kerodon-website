@@ -170,6 +170,16 @@ def show_robots():
   return send_from_directory(app.static_folder, request.path[1:])
 
 
+@app.route("/tags")
+def show_tags():
+  return render_template("single/tags.html")
+
+
+@app.route("/markdown")
+def show_markdown():
+  return render_template("single/markdown.html")
+
+
 app.jinja_env.add_extension('jinja2.ext.do')
 
 import gerby.views.bibliography
@@ -180,5 +190,5 @@ import gerby.views.tag
 
 #flask_profiler.init_app(app)
 
-# Stacks project specific pages
-import gerby.views.stacks
+# Kerodon specific pages
+import gerby.views.kerodon
