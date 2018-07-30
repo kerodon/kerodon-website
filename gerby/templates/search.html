@@ -20,18 +20,7 @@
 {% endmacro %}
 
 {% block sidebar %}
-  <div class="interaction">
-  </div>
-
-  {% if count > 10 %}
-    <nav id="results-per-page" class="pagination">
-      <span class="page-item{% if perpage == 10 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, 10, radius) }}">10</a></span>
-      <span class="page-item{% if perpage == 50 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, 50, radius) }}">50</a></span>
-      <span class="page-item{% if perpage == 2**63-1 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, "oo", radius) }}">&infin;</a></span>
-
-      <p>results per page</span>
-    </nav>
-  {% endif %}
+  <div class="interaction"></div>
 
   <hr>
 
@@ -45,24 +34,29 @@
 
 {% block hamburger %}
   <div class="interaction"></div>
-
-  {% if count > 10 %}
-    <nav id="results-per-page" class="pagination">
-      <span class="page-item{% if perpage == 10 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, 10, radius) }}">10</a></span>
-      <span class="page-item{% if perpage == 50 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, 50, radius) }}">50</a></span>
-      <span class="page-item{% if perpage == 2**63-1 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, "oo", radius) }}">&infin;</a></span>
-
-      <p>results per page</span>
-    </nav>
-  {% endif %}
 {% endblock %}
 
 {% block pagination %}
   {% if count > perpage %}
     <nav>
       <ul id="pages" class="pagination flex-wrap">
-      {% for i in range(1, ((count - 1) // perpage) + 2) %}
-        <li class="page-item{% if i == page %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, i, perpage, radius) }}">{{ i }}</a>
+      {% set lastpage = ((count - 1) // perpage) + 1 %}
+
+      {% set pages = [1, page - 1, page, page + 1, lastpage] %}
+      {% if page == 1 %}{% do pages.append(3) %}{% endif %}
+      {% if page == lastpage %}{% do pages.append(lastpage - 2) %}{% endif %}
+
+      {% set jump = {"jump": false} %} {# determines whether we want to add ellipsis, need dictionary for variable in loop... #}
+
+      {% for i in range(1, lastpage + 1) %}
+        {% if i in pages %}
+          {% do jump.update({"jump": true}) %}
+          <li class="page-item{% if i == page %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, i, perpage, radius) }}">{{ i }}</a>
+        {% elif jump.jump %}
+          <li class="page-item">...</li>
+          {% do jump.update({"jump": false}) %}
+        {% endif %}
+
       {% endfor %}
       </ul>
     </nav>
