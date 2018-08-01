@@ -6,7 +6,7 @@ from gerby.database import *
 from gerby.views.methods import *
 
 
-@app.route("/recent-changes")
+@app.route("/changes")
 def show_recent_changes():
   changes = dict()
 
