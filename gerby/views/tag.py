@@ -100,17 +100,8 @@ def getNeighbours(tag):
 
   return (left, right, up)
 
-# for the absolutely ancient redirect setup
-@app.route("/index.php")
-def redirect_to_tag():
-  tag = request.args.get('tag')
-  if tag is None:
-    return redirect('/', code = 301)
-  return redirect("/tag/" + tag, code = 301)
-
 
 @app.route("/tag/<string:tag>")
-@app.route("/tag/tag/<string:tag>")
 def show_tag(tag):
   tag = tag.upper()
 
@@ -192,20 +183,9 @@ def show_tag(tag):
       chapters = Part.select(Part.chapter).where(Part.part == tag.tag)
       chapters = Tag.select().where(Tag.tag << [chapter.chapter.tag for chapter in chapters])
 
-      prefixes = tuple(chapter.ref + "." for chapter in chapters)
-      sections = Tag.select().where(Tag.type == "section")
-      sections = filter(lambda section: section.ref.startswith(prefixes), sections)
-
-      tags = list(chapters) + list(sections)
+      tags = [tag for chapter in chapters for tag in Tag.select().where(Tag.ref.startswith(chapter.ref), Tag.type << headings, Tag.type != "part")]
     else:
-      tags = (Tag.select(Tag,
-                        Reference.html.alias("reference"), # the alias is for Reference rather than Reference.html, oddly enough
-                        Slogan.html.alias("slogan"),
-                        History.html.alias("history"))
-                .where(Tag.ref.startswith(tag.ref + "."))
-                .join(Reference, JOIN.LEFT_OUTER).switch(Tag)
-                .join(History, JOIN.LEFT_OUTER).switch(Tag)
-                .join(Slogan, JOIN.LEFT_OUTER))
+      tags = Tag.select().where(Tag.ref.startswith(tag.ref + "."), Tag.type << headings)
 
     tree = combine(sorted(tags))
 
