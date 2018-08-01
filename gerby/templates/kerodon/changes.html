@@ -6,13 +6,13 @@
   <script type="text/javascript" src="/static/js/toggle.js"></script>
 
   <style type="text/css">
+dl#changes dt {
+  text-align: right;
+}
 dl#changes dt + dd {
-  border-left: 1px solid black;
+  border-left: 1px solid rgba(0,0,0,.1); /* TODO use the appropriate color maybe? */
 }
 
-pre.commit-message {
-  margin: 0;
-}
   </style>
 {% endblock %}
 
@@ -25,6 +25,15 @@ pre.commit-message {
 {% endblock %}
 
 {% block body %}
+  {% for year in changes | dictsort(reverse=True) %}
+    <h2>{{ year[0] }}</h2>
+    <dl id="changes" class="row">
+      {% for change in year[1] %}
+        <dt class="col-sm-3">{{ change[0].strftime("%B %d") }}</dt>
+        <dd class="col-sm-9">{{ change[1] | safe }}</dd>
+      {% endfor %}
+    </dl>
+  {% endfor %}
 {% endblock %}
 
 {% block sidebar %}
