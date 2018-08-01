@@ -176,6 +176,7 @@ def show_tag(tag):
   footnotes = Footnote.select().where(Footnote.label << labels)
 
   tree = None
+  quicknav = None
   # if it's a heading
   if tag.type in headings and headings.index(tag.type) < headings.index(gerby.configuration.UNIT):
     # if the tag is a part, we select all chapters, and then do the startswith for these
@@ -188,6 +189,11 @@ def show_tag(tag):
       tags = Tag.select().where(Tag.ref.startswith(tag.ref + "."), Tag.type << headings)
 
     tree = combine(sorted(tags))
+
+    # only makes sense if there are at least 2 levels to go
+    if headings.index(tag.type) < headings.index(gerby.configuration.UNIT) - 1:
+      level = min([len(tag.ref.split(".")) for tag in tags])
+      quicknav = sorted([tag for tag in tags if len(tag.ref.split(".")) == level])
 
   # dealing with comments
   commentsEnabled = tag.type not in hideComments and Comment.table_exists()
@@ -218,6 +224,7 @@ def show_tag(tag):
                          footnotes=footnotes,
                          dependencies=tag.incoming,
                          tree=tree,
+                         quicknav=quicknav,
                          commentsEnabled=commentsEnabled,
                          comments=comments,
                          filename=filename,
