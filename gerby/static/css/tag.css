@@ -273,7 +273,7 @@ li.custom-item::before {
   vertical-align: top;
 }
 
-li.custom-item p {
+li.custom-item > p {
   display: inline-block;
 }
 
