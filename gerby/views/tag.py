@@ -184,6 +184,10 @@ def show_tag(tag):
   for symbol in symbols:
     html = html.replace("data-marker=\"" + symbol + "\"", "data-marker=\"" + symbols[symbol] + "\"")
 
+  # deal with \futureref
+  #html = html.replace("[???]", '<a role="button" data-trigger="focus" data-toggle="popover" data-content="Future reference" data-container="body" data-placement="bottom"><img src="/static/images/question.svg"></a><a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-secondary" data-toggle="popover" title="History" data-html="true" data-content=\'abc\'>historical remark</a>')
+  html = html.replace("[???]", '<a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="" data-toggle="popover" title="Future reference" data-html="true" data-content="This is a reference to something which is not yet available in Kerodon."><img src="/static/images/question.svg"></a>')
+
   tree = None
   quicknav = None
   # if it's a heading
