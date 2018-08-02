@@ -265,8 +265,12 @@ li.custom-item {
   list-style-type: none;
 }
 
-li.custom-item[data-marker]:before {
+li.custom-item::before {
   content: attr(data-marker) !important;
+  display: inline-block;
+  width: 2rem;
+  margin-left: -2rem;
+  vertical-align: top;
 }
 
 li.custom-item p {

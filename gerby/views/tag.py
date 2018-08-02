@@ -1,4 +1,5 @@
 import datetime
+import string
 
 from flask import render_template, request, redirect
 
@@ -174,6 +175,14 @@ def show_tag(tag):
   html = html.replace("class=\"footnotemark\"", "class=\"footnotemark footnote-offset\"")
 
   footnotes = Footnote.select().where(Footnote.label << labels)
+
+  # deal with data-marker="$$"
+  symbols = {"$(" + symbol + ")$": "(" + symbol + ")" for symbol in string.ascii_letters + string.digits}
+  symbols["$(\\ast )$"] = "(&lowast;)"
+  symbols["$(\\ast ')$"] = "(&lowast;')"
+  symbols["$(\\ast '')$"] = "(&lowast;'')"
+  for symbol in symbols:
+    html = html.replace("data-marker=\"" + symbol + "\"", "data-marker=\"" + symbols[symbol] + "\"")
 
   tree = None
   quicknav = None
