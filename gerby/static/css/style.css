@@ -1,6 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans);
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans+Mono);
-@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
 
 @import url("bibliography.css");
 @import url("browse.css");
@@ -47,8 +46,10 @@ ul#quicklinks {
 
 body {
   position: relative;
-  font-family: "Droid Sans", Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   color: #000;
+  font-weight: lighter;
+
 }
 
 div.bounded {
