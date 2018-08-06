@@ -185,7 +185,7 @@ def show_tag(tag):
     html = html.replace("data-marker=\"" + symbol + "\"", "data-marker=\"" + symbols[symbol] + "\"")
 
   # deal with \futureref
-  html = html.replace("[???]", '<a style="cursor: pointer;" tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="" data-toggle="popover" title="Future reference" data-html="true" data-content="This is a reference to something which is not yet available in Kerodon."><img src="/static/images/question.svg"></a>')
+  html = html.replace("[?]", '<a style="cursor: pointer;" tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="" data-toggle="popover" title="Future reference" data-html="true" data-content="This is a reference to something which is not yet available in Kerodon."><img src="/static/images/question.svg"></a>')
 
   tree = None
   quicknav = None
