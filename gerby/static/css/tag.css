@@ -36,11 +36,11 @@ div.html {
 
 div.html div.equation {
   overflow-x: scroll;
-  overflow: -moz-scrollbars-none;
+  /*overflow: -moz-scrollbars-none;*/
 }
 
 div.equation::-webkit-scrollbar {
-  display: none;
+  /*display: none;*/
 }
 
 p + div.equation {
@@ -50,7 +50,7 @@ p + div.equation {
 
 div.html h1 {
   font-size: 1.6rem;
-  font-weight: bold;
+  font-weight: 400;
   margin-bottom: 1rem;
 }
 
@@ -120,7 +120,7 @@ div.html article.env-lemma {
 
 div.html a.environment-identifier {
   font-style: normal;
-  font-weight: bold;
+  font-weight: 500;
   color: black;
   text-decoration: underline;
 }
