@@ -51,6 +51,7 @@ def getBreadcrumb(tag):
   # to deal with tags which are immediate descendants of parts
   if tag.type not in headings and len(tag.ref.split(".")) == 2:
     part = Tag.get(Tag.ref == tag.ref.split(".")[0], Tag.type == "part")
+    tag.type = tag.type[4:] # remove the prefix part
     return [part, tag]
 
   pieces = tag.ref.split(".")

@@ -109,6 +109,11 @@ def show_search():
                 .join(History, JOIN.LEFT_OUTER).switch(Tag) \
                 .join(Reference, JOIN.LEFT_OUTER)
 
+  # deal with parttheorem etc.
+  for result in complete:
+    if result.type.startswith("part"):
+      result.type = result.type[4:]
+
   tree = tag.combine(list(sorted(complete)))
 
   # check whether we should suggest an alternative query, and build it if this is the case
