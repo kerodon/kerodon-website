@@ -23,27 +23,10 @@
 
 {% block body %}
 <div class="html" id="tag">
-  {% if tag.slogan %}
-    <p class="slogan alert alert-primary"><strong>{{ tag.slogan.html | safe }}</strong>
-  {% endif %}
-
-  {% if tag.reference %}
-    <p class="reference alert alert-info">{{ tag.reference.html | safe }}
-  {% endif %}
-
-  {% if tag.history %}
-    <p class="history alert alert-secondary">{{ tag.history.html | safe }}
-  {% endif %}
-
   {{ html | safe }}
 
   <script type="text/javascript">
 $(document).ready(function() {
-  // move extras from parent element to after environment name and number
-  $("article a[data-toggle]").each(function(index, element) {
-    $(element).insertAfter(($(element).parent().find("a.environment-identifier")));
-  });
-
   $('div.html a[data-toggle="popover"]').popover()
 
   // render mathematics in popovers
