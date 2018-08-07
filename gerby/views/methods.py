@@ -6,6 +6,8 @@ from mdx_math import MathExtension
 
 from gerby.database import *
 
+headings = ["part", "chapter", "section", "subsection", "subsubsection"]
+
 def is_math(tag, name, value):
   return name == "type" and value in ["math/tex", "math/tex; mode=display"]
 
@@ -45,6 +47,11 @@ def getBreadcrumb(tag):
 
   if tag.type == "part":
     return [tag]
+
+  # to deal with tags which are immediate descendants of parts
+  if tag.type not in headings and len(tag.ref.split(".")) == 2:
+    part = Tag.get(Tag.ref == tag.ref.split(".")[0], Tag.type == "part")
+    return [part, tag]
 
   pieces = tag.ref.split(".")
   refs = [".".join(pieces[0:i]) for i in range(len(pieces) + 1)]
