@@ -22,7 +22,7 @@
   <ul id="toc" class="tree">
     {% for part in parts %}
       <li id="{{ part.tag }}" class="expanded">
-        <a class="header-offset" id="{{ part.label }}"></a>
+        <a id="{{ part.label }}"></a>
         <strong><a href="/tag/{{ part.tag }}">Part <span data-tag="{{ part.tag }}">{{ part.ref }}</span></a>: {{ part.name }}</strong>
 
         {#

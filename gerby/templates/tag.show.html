@@ -55,7 +55,7 @@ $(document).ready(function() {
 
   {% if tree %}
     {% set recursed = {"value": false} %} {# to know whether we need to add expand / collapse buttons #}
-    <h2>Structure</h2>
+    <h2 id="structure">Structure</h2>
     <ul class="tree" id="tree">
     {% for item in tree recursive %}
       {% if loop.depth <= depth %}<li class="expanded" id="{{ item.tag }}">{% else %}<li id="{{ item.tag }}">{% endif %}
@@ -99,7 +99,7 @@ $(function () {
   {% if footnotes %}
     <section id="footnotes">
     {% for footnote in footnotes %}
-      <div><a id="footnote-{{ loop.index }}" class="footnote-offset"></a><a href="#footnote-{{ loop.index }}-mark">[{{ loop.index }}]</a> {{ footnote.html | safe }}</div>
+      <div><a id="footnote-{{ loop.index }}"></a><a href="#footnote-{{ loop.index }}-mark">[{{ loop.index }}]</a> {{ footnote.html | safe }}</div>
     {% endfor %}
     </section>
   {% endif %}
@@ -112,8 +112,7 @@ $(function () {
   <h2>Comments ({{ comments | length }})</h2>
 
   {% for comment in comments %}
-    <a id="comment-{{ comment.id }}" class="header-offset"></a>
-    <article>
+    <article  id="comment-{{ comment.id }}">
       <header>
         <p><a href="/tag/{{ tag.tag }}#comment-{{ comment.id }}">Comment #{{ comment.id }}</a>
         by
@@ -245,18 +244,11 @@ easymde.element.form.addEventListener("submit", function(event) {
   <hr>
 
   {% if quicknav %}
+    <a href="#structure">go to structure</a>
     <ul id="quicknav">
       {% for item in quicknav %}
-        <li>{{ item.type | capitalize }} <a class="sidebar-link" data-for="{{ item.tag }}" href="#{{ item.tag }}">{{ item.ref }}</a>: {{ item.name }}
+        <li>{{ item.type | capitalize }} <a class="sidebar-link" data-tag="{{ item.tag }}" href="/tag/{{ item.tag }}">{{ item.ref }}</a>: {{ item.name }}
       {% endfor %}
     </ul>
-
-    <script type="text/javascript">
-$("a.sidebar-link").click(function() {
-  var bonsai = $("ul#tree").data("bonsai");
-  console.log($(this).data("for"));
-  bonsai.expand($("li#" + $(this).data("for")));
-});
-    </script>
   {% endif %}
 {% endblock %}
