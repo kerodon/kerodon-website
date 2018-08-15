@@ -89,6 +89,10 @@ def getNeighbours(tag):
   except Tag.DoesNotExist:
     right = None
 
+  # deal with thmenv in parts
+  if left and left.type.startswith("part"): left.type = left.type[4:]
+  if right and right.type.startswith("part"): right.type = right.type[4:]
+
   # up
   up = ".".join(map(str, pieces[:-1]))
   try:
