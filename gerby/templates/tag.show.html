@@ -43,7 +43,7 @@ $(document).ready(function() {
     {% for item in tree recursive %}
       {% if loop.depth <= depth %}<li class="expanded" id="{{ item.tag }}">{% else %}<li id="{{ item.tag }}">{% endif %}
       {{ item.type | capitalize }} <a href="/tag/{{ item.tag }}" data-tag="{{ item.tag }}">{{ item.ref }}</a>{% if item.name %}: {{ item.name | safe }}{% endif %}
-      {{ macros.badges(item) }}
+
       {% if item.children %}
         {% do recursed.update({"value": true}) %}
         <ul>{{ loop(item.children) }}</ul>
@@ -227,11 +227,14 @@ easymde.element.form.addEventListener("submit", function(event) {
   <hr>
 
   {% if quicknav %}
-    <a href="#structure">go to structure</a>
     <ul id="quicknav">
       {% for item in quicknav %}
-        <li>{{ item.type | capitalize }} <a class="sidebar-link" data-tag="{{ item.tag }}" href="/tag/{{ item.tag }}">{{ item.ref }}</a>: {{ item.name }}
+        <li><a class="sidebar-link" data-tag="{{ item.tag }}" href="/tag/{{ item.tag }}">{{ item.type | capitalize }} {{ item.ref }}</a>: {{ item.name }}
       {% endfor %}
     </ul>
+
+    <a id="structure-link" href="#structure">go to structure</a>
   {% endif %}
+
+  <hr>
 {% endblock %}

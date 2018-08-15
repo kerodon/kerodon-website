@@ -13,7 +13,7 @@ ul.neighbours li.left {
 }
 
 ul.neighbours li.left a:before {
-  content: "\ab";
+  content: "\2190";
   margin-right: .3em;
 }
 
@@ -22,7 +22,7 @@ ul.neighbours li.right {
 }
 
 ul.neighbours li.right a:after {
-  content: "\bb";
+  content: "\2192";
   margin-left: .3em;
 }
 
@@ -52,11 +52,13 @@ div.html h1 {
   font-size: 1.6rem;
   font-weight: 400;
   margin-bottom: 1rem;
+  color: #f7970e;
 }
 
 div.html h2 {
   font-size: 1.4rem;
   margin-bottom: 1rem;
+  color: #3fa43f;
 }
 
 div.html h3 {
@@ -239,7 +241,6 @@ div.information ul.tag-info {
 }
 
 div.information ul.tag-info li {
-  margin-bottom: .5rem;
   margin-left: 0;
   padding-left: 0;
 }
@@ -247,14 +248,11 @@ div.information ul.tag-info li {
 div.information ul.tag-info li a {
   background-repeat: no-repeat;
   padding-left: 1.5rem;
-}
-
-li.tag-history a {
-  background-image: url("../images/clock.svg");
+  color: black;
 }
 
 li.tag-statistics a {
-  background-image: url("../images/graph.svg");
+  background-image: url("../images/statistics.svg");
 }
 
 li.tag-dependencies a {
@@ -288,4 +286,21 @@ a.btn:hover {
 ul + span.qed,
 ol + span.qed {
   margin-top: -2.5rem !important;
+}
+
+ul#quicknav {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul#quicknav a {
+  color: black;
+  font-weight: bold;
+}
+
+a#structure-link {
+  background-repeat: no-repeat;
+  padding-left: 1.8rem;
+  color: black;
+  background-image: url("../images/structure.svg");
 }

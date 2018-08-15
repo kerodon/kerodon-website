@@ -7,10 +7,10 @@
 
   <ul class="neighbours">
   {% if neighbours[0] %}
-    <li class="left"><a href="/tag/{{ neighbours[0].tag }}{{ modifier }}">previous {{ neighbours[0].type }}</a>
+    <li class="left"><a href="/tag/{{ neighbours[0].tag }}{{ modifier }}">previous</a>
   {% endif %}
   {% if neighbours[1] %}
-    <li class="right"><a href="/tag/{{ neighbours[1].tag }}{{ modifier }}">next {{ neighbours[1].type }}</a>
+    <li class="right"><a href="/tag/{{ neighbours[1].tag }}{{ modifier }}">next</a>
   {% endif %}
   </ul>
   {% if neighbours[0] or neighbours[1] %}<br style="clear:both">{% endif %}
@@ -18,7 +18,6 @@
 
 {% macro tagInformation(tag, dependencies) %}
   <ul class="tag-info">
-    <li class="tag-history"><a href="/tag/{{ tag.tag }}/history">history</a>
     <li class="tag-statistics"><a href="/tag/{{ tag.tag }}/statistics">statistics</a>
     {% if dependencies | length > 0 %}
       <li class="tag-dependencies"><a href="/tag/{{ tag.tag }}/statistics#dependencies">{{ dependencies | length }} tag{% if dependencies | length > 1 %}s{% endif %} refer{% if dependencies | length == 1 %}s{% endif %} to this tag</a>
@@ -67,28 +66,4 @@
     <li{% if loop.last %} class="active"{% endif %}>{{ parent.type | capitalize }} <a href="/tag/{{ parent.tag }}" data-tag="{{ parent.tag }}">{{ parent.ref }}</a>{% if parent.name %}: {{ parent.name }}{% endif %}
     {% if loop.last %}<span id="citation">(<a href="/tag/{{ parent.tag }}/cite">cite</a>)</span>{% endif %}
   {% endfor %}
-{% endmacro %}
-
-{% macro singlePageLinks() %}
-  <ul>
-    <li><a href="/about">about</a>
-    <li><a href="/acknowledgements">acknowledgements</a>
-    <li><a href="/statistics">statistics</a>
-    <li><a href="/tags">tags explained</a>
-    <li><a href="/contribute">how to contribute</a>
-    <li><a href="/contributors">contributors</a>
-    <li><a href="/api"><abbr title='Application Programming Interface'>API</abbr></a>
-  </ul>
-{% endmacro %}
-
-{% macro badges(tag) %}
-  {% if tag.slogan %}
-    <a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-primary" data-toggle="popover" title="Slogan" data-html="true" data-content="{{ tag.slogan.html }}">slogan</a>
-  {% endif %}
-  {% if tag.history %}
-    <a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-secondary" data-toggle="popover" title="History" data-html="true" data-content='{{ tag.history.html }}'>historical remark</a>
-  {% endif %}
-  {% if tag.reference %}
-    <a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-info" data-toggle="popover" title="Reference" data-html="true" data-content='{{ tag.reference.html }}'>reference</a>
-  {% endif %}
 {% endmacro %}

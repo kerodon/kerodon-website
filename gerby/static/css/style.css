@@ -11,13 +11,9 @@
 @import url("tree.css");
 
 html {
-  font-size: 14px;
+  font-size: 15px;
   overflow-x: hidden;
   overflow-y: scroll;
-}
-
-nav#header > * {
-  display: inline-block;
 }
 
 section#meta,
@@ -52,12 +48,12 @@ body {
 }
 
 div.bounded {
-  max-width: calc(980rem / 14);
+  max-width: calc(1280rem / 15);
 }
 
 a {
   text-decoration: none;
-  color: #1d5cb4;
+  color: #158aba;
   transition: color 0.2s ease;
 }
 
@@ -79,6 +75,7 @@ ul#crumbs {
   margin: auto 0;
   vertical-align: center;
   min-width: 2rem;
+  font-size: 12px;
 }
 
 div#burger {
@@ -98,22 +95,22 @@ label#burger-icon {
 label#burger-icon span {
   display: block;
   position: relative;
-  width: calc(23rem / 14);
-  height: calc(3rem / 14);
-  border-radius: calc(3rem / 14);
+  width: calc(23rem / 15);
+  height: calc(3rem / 15);
+  border-radius: calc(3rem / 15);
   background-color: black;
-  margin-top: calc(4rem / 14);
+  margin-top: calc(4rem / 15);
   transition: all 0.1s ease-in-out;
 }
 
 input#burger-input:checked + label#burger-icon span#top-bun {
   transform: rotate(-45deg);
-  margin-top: calc(9rem / 14);
+  margin-top: calc(9rem / 15);
 }
 
 input#burger-input:checked + label#burger-icon span#meat {
   transform: rotate(45deg);
-  margin-top: calc(-2.5rem / 14);
+  margin-top: calc(-2.5rem / 15);
 }
 
 input#burger-input:checked + label#burger-icon span#bottom-bun {
@@ -129,10 +126,10 @@ input#burger-input:checked + label#burger-icon + div#burger-content {
 div#burger-content {
   display: none;
   position: absolute;
-  width: calc(250rem / 14);
-  top: calc(30rem / 14);
-  margin-left: calc(-225rem / 14);
-  padding: calc(5rem / 14);
+  width: calc(250rem / 15);
+  top: calc(30rem / 15);
+  margin-left: calc(-225rem / 15);
+  padding: calc(5rem / 15);
   background-color: #f9f8f4;
   z-index: 2;
   text-align: left;
@@ -182,76 +179,84 @@ header h1 {
   float: left;
   padding: 0;
   margin: 0;
-  margin-top: calc(3rem / 14);
-  font-size: calc(22rem / 14);
+  margin-top: calc(3rem / 15);
+  font-size: calc(22rem / 15);
   font-weight: bold;
 }
 
 header h1 a {
   display: block;
-  padding-left: calc(30rem / 14);
+  text-indent: -100em;
   height: 100%;
-  background-image: url('/static/kerodon.png');
+  background-image: url("/static/logo-kerodon.svg");
+  height: calc(40rem / 15);
+  width: calc(180rem / 15);
   background-repeat: no-repeat;
   background-position: 0 0;
-  background-size: calc(24rem / 14);
-  color: black;
-  text-decoration: none;
 }
 
 div.main {
-  padding-left: calc(20rem / 14);
-  padding-right: calc(20rem / 14);
+  padding-left: calc(20rem / 15);
+  padding-right: calc(20rem / 15);
 }
 
 div#first-bar {
-  background-color: #d9d8d1;
   z-index: 2000;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 div.inner-top {
-  padding: calc(10rem / 14);
+  padding: calc(10rem / 15);
 }
 
 nav#header {
   padding: 0;
   margin: 0;
   position: relative;
-  padding-top: calc(3rem / 14);
+  padding-top: calc(3rem / 15);
 }
 
 form#quicksearch span#search-icon {
   position: relative;
-  left: calc(24rem / 14);
+  left: calc(24rem / 15);
   width: 0;
 }
 
+nav#header > * {
+  display: inline-block;
+}
+
+nav#header a {
+  color: #9a9a9a;
+}
+
 form#quicksearch input {
-  border-radius: calc(5rem / 14);
+  border-radius: calc(5rem / 15);
   border-style: solid;
   border-width: 0;
-  padding-left: calc(23rem / 14);
-  padding-top: calc(5rem / 14);
-  padding-bottom: calc(5rem / 14);
+  padding-left: calc(23rem / 15);
+  padding-top: calc(5rem / 15);
+  padding-bottom: calc(5rem / 15);
 }
 
 nav#header ul#quicklinks {
-  margin: 0 calc(20rem / 14) 0 0;
+  margin: 0 calc(20rem / 15) 0 0;
+  font-size: 14px;
 }
 
 nav#header ul#quicklinks li {
   display: inline-block;
-  margin-left: calc(10rem / 14);
+  margin-left: calc(15rem / 15);
 }
 
 nav#second-bar {
-  padding: calc(10rem / 14);
-  background-color: #edece6;
+  padding: calc(10rem / 15);
+  background-color: #f4f0ea;
   z-index: 2000;
 }
 
 div#content {
-  padding: calc(10rem / 14);
+  padding: calc(10rem / 15);
 }
 
 section#main {
@@ -259,9 +264,10 @@ section#main {
 }
 
 section#meta {
-  top: calc(45rem / 14);
+  background-color: #f4f0ea;
+  top: calc(45rem / 15);
   z-index: 0;
-  padding: 0 calc(10rem / 14) 0 calc(5rem / 4);
+  padding: calc(15rem / 15);
 }
 
 .tag, .commit, .filename, .label {
@@ -278,6 +284,10 @@ h3 {
   font-size: 1.3em;
 }
 
+hr {
+  color: #dbcaad;
+}
+
 a[href^="https://github.com"],
 a[href^="https://doi.org"],
 a[href^="https://arxiv.org"],
@@ -287,9 +297,9 @@ a[href*=".rss"],
 a[href*=".atom"] {
   background-repeat: no-repeat;
   background-position: center right;
-  padding-right: calc(18rem / 14);
-  min-height: calc(16rem / 14);
-  background-size: calc(16rem / 14);
+  padding-right: calc(18rem / 15);
+  min-height: calc(16rem / 15);
+  background-size: calc(16rem / 15);
 }
 
 a[href^="https://github.com"] {
@@ -321,7 +331,7 @@ ul#index-select {
   list-style-type: none;
   padding: 0;
   margin: 0 auto;
-  max-width: calc(400rem / 14);
+  max-width: calc(400rem / 15);
 }
 
 ul#index-select li {
