@@ -217,10 +217,42 @@ nav#header {
   padding-top: calc(3rem / 15);
 }
 
-form#quicksearch span#search-icon {
-  position: relative;
-  left: calc(24rem / 15);
-  width: 0;
+
+form#quicksearch input {
+  float: left;
+}
+
+form#quicksearch input[type=search] {
+  -webkit-appearance: none;
+  padding-left: .3rem;
+  border: 1px solid #FAA70B;
+  margin: 0;
+  height: 2em;
+}
+
+form#quicksearch input[type=search]:focus {
+  outline: none;
+}
+
+form#quicksearch input[type=submit] {
+  -webkit-appearance: none;
+  cursor: pointer;
+
+  border: 0;
+  margin: 0;
+  padding: 0;
+
+  height: 2em;
+  width: 2em;
+
+  background-color: #FAA70B;
+  background-image: url("/static/images/Search-Arrow.svg");
+  background-size: 1em;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+form#quicksearch input[type=search]:focus + input[type=submit] {
 }
 
 nav#header > * {
@@ -229,15 +261,6 @@ nav#header > * {
 
 nav#header a {
   color: #9a9a9a;
-}
-
-form#quicksearch input {
-  border-radius: calc(5rem / 15);
-  border-style: solid;
-  border-width: 0;
-  padding-left: calc(23rem / 15);
-  padding-top: calc(5rem / 15);
-  padding-bottom: calc(5rem / 15);
 }
 
 nav#header ul#quicklinks {
