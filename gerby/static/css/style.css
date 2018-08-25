@@ -217,6 +217,9 @@ nav#header {
   padding-top: calc(3rem / 15);
 }
 
+form#quicksearch {
+  padding-top: .6rem;
+}
 
 form#quicksearch input {
   float: left;
@@ -265,12 +268,14 @@ nav#header a {
 
 nav#header ul#quicklinks {
   margin: 0 calc(20rem / 15) 0 0;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 nav#header ul#quicklinks li {
   display: inline-block;
-  margin-left: calc(15rem / 15);
+  margin-left: calc(25rem / 15);
+  position: relative;
+  top: -.7rem;
 }
 
 nav#second-bar {
