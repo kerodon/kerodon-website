@@ -58,7 +58,7 @@
       <h1><a href="/">Kerodon</a></h1>
     </header>
 
-    <nav id="header">
+    <nav>
       <ul id="quicklinks">
         <li><a href="/about">about</a>
         <li><a href="/changes">changes</a>
@@ -67,42 +67,18 @@
       </ul>
 
       <form id="quicksearch" action="/search">
-        <span id="search-icon"><img src="/static/images/search.svg"></span>
-        <input type="search" name="query" size="16" placeholder="keywords or a tag"{% if index %} autofocus{% endif %} value="{{ query }}">
+        <input type="search" placeholder="keywords or a tag" name="query"><input type="submit" value="">
       </form>
     </nav>
   </div>
 
-  <nav id="second-bar" class="row topbar sticky-top justify-content-lg-center">
-    {% if self.breadcrumb() %}
-      <ul class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11" id="crumbs">
-        <li><a href="/browse">Table of contents</a></li>
-        {% block breadcrumb %}{% endblock %}
+  {% if self.breadcrumb() %}
+    <nav class="row topbar sticky-top" id="second-bar">
+      <ul id="crumbs">
+      {% block breadcrumb %}{% endblock %}
       </ul>
-    {% endif %}
-
-    <!--
-    {% if self.hamburger() %}
-      <div class="col-1 col-sm-1 col-md-1" id="burger">
-        <input type="checkbox" id="burger-input"></input>
-
-        <label id="burger-icon" for="burger-input">
-          <span id="top-bun"></span>
-          <span id="meat"></span>
-          <span id="bottom-bun"></span>
-        </label>
-
-        <div id="burger-content">
-          {% block hamburger %}{% endblock %}
-        </div>
-      </div>
-    {% endif %}
-
-    {% if self.tagline() %}
-      {% block tagline %}{% endblock %}
-    {% endif %}
-    -->
-  </nav>
+    </nav>
+  {% endif %}
 
   <div class="row justify-content-lg-center" id="content">
     <section id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">

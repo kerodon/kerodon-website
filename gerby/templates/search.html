@@ -11,10 +11,6 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-bonsai@2.1.3/jquery.bonsai.min.js" integrity="sha384-6tHeUHkvxX60Ea66TlEvjgBuIhXv37ETzU8gIu1gWPgt/4XCgQRWWVkDyDVTeHFA" crossorigin="anonymous"></script>
 {% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="/search">Search</a>
-{% endblock %}
-
 {% macro searchlink(query, page, perpage, radius) %}
 /search?query={{ query.replace(" ", "+") }}&page={{ page }}&perpage={{ perpage }}&radius={{ radius }}
 {% endmacro %}

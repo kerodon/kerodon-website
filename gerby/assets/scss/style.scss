@@ -11,8 +11,18 @@
 @import url("toc.css");
 @import url("tree.css");
 
+
+$size: 15; // need to use interpolation #{$size} in calc() etc.
+
+// the main colors
+$kerodon-blue:   #0089BC;
+$kerodon-gray:   #AAAAAA;
+$kerodon-green:  #4CAF50;
+$kerodon-orange: #FAA70B;
+$kerodon-red:    #ED2227;
+
 html {
-  font-size: 15px;
+  font-size: #{$size}px;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -49,12 +59,12 @@ body {
 }
 
 div.bounded {
-  max-width: calc(1280rem / 15);
+  max-width: calc(1280rem / #{$size});
 }
 
 a {
   text-decoration: none;
-  color: #158aba;
+  color: $kerodon-blue;
   transition: color 0.2s ease;
 }
 
@@ -68,15 +78,6 @@ a:hover {
   display: block;
   height: 60px;
   margin: -60px 0 0 0 ;
-}
-
-ul#crumbs {
-  padding: 0;
-  list-style: none;
-  margin: auto 0;
-  vertical-align: center;
-  min-width: 2rem;
-  font-size: 12px;
 }
 
 div#burger {
@@ -96,22 +97,22 @@ label#burger-icon {
 label#burger-icon span {
   display: block;
   position: relative;
-  width: calc(23rem / 15);
-  height: calc(3rem / 15);
-  border-radius: calc(3rem / 15);
+  width: calc(23rem / #{$size});
+  height: calc(3rem / #{$size});
+  border-radius: calc(3rem / #{$size});
   background-color: black;
-  margin-top: calc(4rem / 15);
+  margin-top: calc(4rem / #{$size});
   transition: all 0.1s ease-in-out;
 }
 
 input#burger-input:checked + label#burger-icon span#top-bun {
   transform: rotate(-45deg);
-  margin-top: calc(9rem / 15);
+  margin-top: calc(9rem / #{$size});
 }
 
 input#burger-input:checked + label#burger-icon span#meat {
   transform: rotate(45deg);
-  margin-top: calc(-2.5rem / 15);
+  margin-top: calc(-2.5rem / #{$size});
 }
 
 input#burger-input:checked + label#burger-icon span#bottom-bun {
@@ -127,10 +128,10 @@ input#burger-input:checked + label#burger-icon + div#burger-content {
 div#burger-content {
   display: none;
   position: absolute;
-  width: calc(250rem / 15);
-  top: calc(30rem / 15);
-  margin-left: calc(-225rem / 15);
-  padding: calc(5rem / 15);
+  width: calc(250rem / #{$size});
+  top: calc(30rem / #{$size});
+  margin-left: calc(-225rem / #{$size});
+  padding: calc(5rem / #{$size});
   background-color: #f9f8f4;
   z-index: 2;
   text-align: left;
@@ -152,140 +153,143 @@ div#burger-content ul.tag-info {
   margin-bottom: 0;
 }
 
-ul#crumbs li + li::before {
-  display: inline-block;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  color: #636c72;
-  content: "/";
-}
-
-ul#crumbs li {
-  float: left;
-  white-space: nowrap;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-ul#crumbs li.active {
-  color: #636c72;
-}
-
-header.col {
-  padding-left: 0;
-}
-
-header h1 {
-  float: left;
-  padding: 0;
-  margin: 0;
-  margin-top: calc(3rem / 15);
-  font-size: calc(22rem / 15);
-  font-weight: bold;
-}
-
-header h1 a {
-  display: block;
-  text-indent: -100em;
-  height: 100%;
-  background-image: url("/static/logo-kerodon.svg");
-  height: calc(40rem / 15);
-  width: calc(180rem / 15);
-  background-repeat: no-repeat;
-  background-position: 0 0;
-}
-
 div.main {
-  padding-left: calc(20rem / 15);
-  padding-right: calc(20rem / 15);
+  padding-left: calc(20rem / #{$size});
+  padding-right: calc(20rem / #{$size});
 }
 
 div#first-bar {
   z-index: 2000;
   border-bottom: 1px solid #d8d8d8;
+  padding: calc(5rem / #{$size}) calc(10rem / #{$size});
+
+  header {
+    padding-left: 0;
+  }
+
+  header h1 {
+    float: left;
+    padding: 0;
+    margin: 0;
+    margin-top: calc(3rem / #{$size});
+    font-size: calc(22rem / #{$size});
+  }
+
+  header h1 a {
+    display: block;
+    text-indent: -100em;
+    height: 100%;
+    background-image: url("/static/logo-kerodon.svg");
+    height: calc(40rem / #{$size});
+    width: calc(180rem / #{$size});
+    background-repeat: no-repeat;
+    background-position: 0 0;
+  }
+
+  nav {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    padding-top: calc(3rem / #{$size});
+
+    a {
+      color: $kerodon-gray;
+    }
+  }
+
+  ul#quicklinks, form#quicksearch {
+    display: inline-block;
+  }
+
+  ul#quicklinks {
+    margin: 0 calc(20rem / #{$size}) 0 0;
+    font-size: 1rem;
+  }
+
+  ul#quicklinks li {
+    display: inline-block;
+    margin-left: calc(25rem / #{$size});
+    position: relative;
+    top: -.7rem;
+  }
+
+  form#quicksearch {
+    padding-top: .6rem;
+  }
+
+  form#quicksearch input {
+    float: left;
+  }
+
+  form#quicksearch input[type=search] {
+    -webkit-appearance: none;
+    padding-left: .3rem;
+    border: 1px solid $kerodon-orange;
+    margin: 0;
+    height: 2rem;
+  }
+
+  form#quicksearch input[type=search]:focus {
+    outline: none;
+  }
+
+  form#quicksearch input[type=submit] {
+    -webkit-appearance: none;
+    cursor: pointer;
+
+    border: 0;
+    margin: 0;
+    padding: 0;
+
+    height: 2rem;
+    width: 2rem; // TODO potential to use partials here
+
+    background-color: $kerodon-orange;
+    background-image: url("/static/images/Search-Arrow.svg");
+    background-size: 1rem;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
 
-div.inner-top {
-  padding: calc(10rem / 15);
-}
-
-nav#header {
-  padding: 0;
-  margin: 0;
-  position: relative;
-  padding-top: calc(3rem / 15);
-}
-
-form#quicksearch {
-  padding-top: .6rem;
-}
-
-form#quicksearch input {
-  float: left;
-}
-
-form#quicksearch input[type=search] {
-  -webkit-appearance: none;
-  padding-left: .3rem;
-  border: 1px solid #FAA70B;
-  margin: 0;
-  height: 2em;
-}
-
-form#quicksearch input[type=search]:focus {
-  outline: none;
-}
-
-form#quicksearch input[type=submit] {
-  -webkit-appearance: none;
-  cursor: pointer;
-
-  border: 0;
-  margin: 0;
-  padding: 0;
-
-  height: 2em;
-  width: 2em;
-
-  background-color: #FAA70B;
-  background-image: url("/static/images/Search-Arrow.svg");
-  background-size: 1em;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-form#quicksearch input[type=search]:focus + input[type=submit] {
-}
-
-nav#header > * {
-  display: inline-block;
-}
-
-nav#header a {
-  color: #9a9a9a;
-}
-
-nav#header ul#quicklinks {
-  margin: 0 calc(20rem / 15) 0 0;
-  font-size: 1rem;
-}
-
-nav#header ul#quicklinks li {
-  display: inline-block;
-  margin-left: calc(25rem / 15);
-  position: relative;
-  top: -.7rem;
-}
 
 nav#second-bar {
-  padding: calc(10rem / 15);
+  padding: calc(10rem / #{$size});
   background-color: #f4f0ea;
   z-index: 2000;
+
+  ul#crumbs {
+    padding: 0;
+    list-style: none;
+    margin: auto 0;
+    vertical-align: center;
+    min-width: 2rem;
+    font-size: calc(12rem / #{$size});
+  }
+
+  ul#crumbs li + li::before {
+    display: inline-block;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    color: $kerodon-blue;
+    content: "/";
+  }
+
+  ul#crumbs li {
+    float: left;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  ul#crumbs li.active {
+    color: #636c72;
+  }
 }
 
 div#content {
-  padding: calc(10rem / 15);
+  padding: calc(10rem / #{$size});
 }
 
 section#main {
@@ -294,9 +298,9 @@ section#main {
 
 section#meta {
   background-color: #f4f0ea;
-  top: calc(45rem / 15);
+  top: calc(45rem / #{$size});
   z-index: 0;
-  padding: calc(15rem / 15);
+  padding: calc(15rem / #{$size});
 }
 
 .tag, .commit, .filename, .label {
@@ -328,9 +332,9 @@ a[href*=".rss"],
 a[href*=".atom"] {
   background-repeat: no-repeat;
   background-position: center right;
-  padding-right: calc(18rem / 15);
-  min-height: calc(16rem / 15);
-  background-size: calc(16rem / 15);
+  padding-right: calc(18rem / #{$size});
+  min-height: calc(16rem / #{$size});
+  background-size: calc(16rem / #{$size});
 }
 
 a[href^="https://github.com"] {
@@ -356,47 +360,6 @@ a[href*=".pdf"] {
 a[href*=".rss"],
 a[href*=".atom"] {
   background-image: url("../images/icon.rss.png");
-}
-
-ul#index-select {
-  list-style-type: none;
-  padding: 0;
-  margin: 0 auto;
-  max-width: calc(400rem / 15);
-}
-
-ul#index-select li {
-  float: left;
-  width: 48%;
-  margin-left: 4px;
-  margin-bottom: 1em;
-  border: 1px solid black;
-  border-radius: 6px;
-  box-shadow: 1px 1px 1px gray;
-}
-
-ul#index-select li a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  height: 4em;
-  line-height: 4em;
-}
-
-ul#index-select li img {
-  width: 2.5em;
-  padding: 0 .4em;
-}
-
-ul#index-select li#index-browse,
-ul#index-select li#index-search,
-ul#index-select li#index-bibliography,
-ul#index-select li#index-comments {
-  text-align: right;
-}
-
-ul#index-select a {
-  background-image: none;
 }
 
 pre {
