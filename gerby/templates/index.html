@@ -1,52 +1,252 @@
-{% extends "layout.html" %}
+<!doctype html>
+<html lang="en">
+<head>
 
-{% set index = true %}
+{% import "macros.html" as macros %}
 
-{% block title %}Index{% endblock %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="theme-color" content="#F4F0EA">
 
-{% block body %}
-  <ul id="index-select">
-    <li id="index-browse"><a href="/browse">table of contents<img src="/static/images/list-ordered.svg"></a>
-    <li id="index-about"><a href="/about"><img src="/static/images/info.svg">about</a>
-    <li id="index-search"><a href="/search">search<img src="/static/images/search.svg"></a>
-    <li id="index-blog"><a href="https://www.math.columbia.edu/~dejong/wordpress/"><img src="/static/images/blog.svg">blog</a>
-    <li id="index-bibliography"><a href="/bibliography">bibliography<img src="/static/images/bibliography.svg"></a>
-    <li id="index-github"><a href="https://github.com/stacks/stacks-project"><img src="/static/images/github.svg">GitHub</a>
-    <li id="index-comments"><a href="/recent-comments">comments<img src="/static/images/comments.svg"></a>
-    <li id="index-changes"><a href="/recent-changes"><img src="/static/images/diff.svg">recent changes</a>
-  </ul>
-{% endblock %}
+<title>Kerodon</title>
 
-{% block tagline %}
-  <em style="display: block; margin: auto; text-align: center">an online resource for homotopy-coherent mathematics</em>
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-{% block sidebar %}
-  <h3><a href="/recent-comments">Recent comments</a></h3>
-  <ul>
-    {% for comment in comments %}
-      <li>
-        <time datetime="{{ comment.date }}">{{ comment.date.strftime("%b %d %Y") }}</time>:
-        <a href="/tag/{{ comment.tag.tag }}#comment-{{ comment.id }}">tag&nbsp;<span class="tag">{{ comment.tag.tag }}</span></a>
-        by <cite>{{ comment.author }}</cite>
-    {% endfor %}
-  </ul>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/print.css') }}">
 
-  {% for update in updates %}
-    <h3>{{ update.title | safe }}</h3>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ['tex2jax.js'],
+    jax: ['input/TeX','output/HTML-CSS'],
+    TeX: {
+      extensions: ['AMSmath.js', 'AMSsymbols.js', '/static/XyJax/extensions/TeX/xypic.js'],
+      Macros: {
+        linebreak: ["", 1, ""],
+        },
+      TagSide: 'left'
+    },
+    tex2jax: {
+      inlineMath: [['$','$']],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    },
+    'HTML-CSS': { scale: 95, fonts: ["STIX"] }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" integrity="sha384-yBEPaZw444dClEfen526Q6x4nwuzGO6PreKpbRVSLFCci3oYGE5DnD1pNsubCxYW" crossorigin="anonymous">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js" integrity="sha384-cd07Jx5KAMCf7qM+DveFKIzHXeCSYUrai+VWCPIXbYL7JraHMFL/IXaCKbLtsxyB" crossorigin="anonymous"></script>
+
+<link rel="icon" type="image/vnd.microsoft.icon" href="/static/kerodon.ico">
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/static/kerodon.ico">
+
+{% block head %}{% endblock %}
+
+<style type="text/css">
+div#logo {
+  z-index: 1;
+  background-color: white;
+  margin-top: 4rem;
+  background-image: url("static/images/kerodon-square.png");
+  background-repeat: no-repeat;
+  background-size: calc(220rem / 15);
+  background-position: center top;
+  height: 25rem;
+  text-align: center;
+}
+
+div#logo h1 {
+  padding-top: 15rem;
+}
+
+div#logo p#tagline {
+  font-size: calc(32rem / 15);
+}
+
+div#forage {
+  position: absolute;
+  top: 40rem;
+  left: 0;
+  background-color: #F4F0EA;
+  width: 100%;
+  padding-top: 5rem;
+}
+
+div#forage img {
+  width: 250px;
+  margin: 5rem;
+}
+
+div#selector {
+  float: right;
+  width: calc(900rem / 15);
+  margin-right: calc(100rem / 15);
+}
+
+div#forage h2 {
+  font-family: "Roboto Slab";
+  font-size: calc(42rem / 15);
+  color: #FAA70B;
+}
+
+div#forage h3 {
+  font-size: calc(24rem / 15);
+  border-top: 1px solid #D3CBBD;
+  font-weight: normal;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+  margin-top: 3rem;
+}
+
+div#forage h3:first-of-type {
+  border: 0;
+  margin: 0;
+}
+
+div#forage a {
+  color: black;
+}
+
+div#forage span.type {
+  font-weight: bold;
+}
+
+div#forage a:hover {
+  text-decoration: none;
+}
+
+div#forage a:hover span.type {
+  text-decoration: underline;
+}
+
+div#forage ul {
+  list-style-type: none;
+  padding: 0;
+  font-size: calc(18rem / 15);
+}
+
+div#forage ul li {
+  padding-bottom: .5rem;
+
+}
+
+div#forage label {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  float: right;
+  position: relative;
+  top: -3.5rem;
+  background-image: url("static/images/Accordion-Expand.svg");
+}
+
+div#forage input[type=checkbox]:checked + label {
+  background-image: url("static/images/Accordion-Collapse.svg");
+}
+
+div#forage input[type=checkbox] {
+  display: none;
+}
+
+div#forage input[type=checkbox] + label + ul {
+  display: none;
+}
+
+div#forage input[type=checkbox]:checked + label + ul {
+  display: block;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container-fluid bounded">
+  <div id="first-bar" class="row topbar inner-top top">
+    <header class="col">
+      <h1><a href="/">Kerodon</a></h1>
+    </header>
+
+    <nav id="header">
+      <ul id="quicklinks">
+        <li><a href="/about">about</a>
+        <li><a href="/changes">changes</a>
+        <li><a href="/recent-comments">comments</a>
+        <li><a href="/bibliography">bibliography</a>
+      </ul>
+
+      <form id="quicksearch" action="/search">
+        <span id="search-icon"><img src="/static/images/search.svg"></span>
+        <input type="search" name="query" size="16" placeholder="keywords or a tag"{% if index %} autofocus{% endif %} value="{{ query }}">
+      </form>
+    </nav>
+  </div>
+
+  <div class="row justify-content-lg-center" id="content">
+    <section id="main">
+
+<div id="logo">
+  <h1>Kerodon</h1>
+  <hr>
+  <p id="tagline">an online resource for homotopy-coherent mathematics</p>
+</div>
+
+<div id="forage">
+  <div id="selector">
+    <h2>Forage</h2>
+
+    <h3><a href="#"><span class="type">Part I</span>: Fundamentals of Spectral Algebraic Geometry</a></h3>
+    <input type="checkbox" id="part-i" checked>
+    <label for="part-i"></label>
     <ul>
-      {% for item  in update.entries %}
-        <li>{{ item | safe }}
-      {% endfor %}
+      <li><a href="#"><span class="type">Chapter 1</span>: Schemes and Deligne&ndash;Mumford Stacks</a>
+      <li><a href="#"><span class="type">Chapter 2</span>: Quasi-Coherent Sheaves</a>
+      <li><a href="#"><span class="type">Chapter 3</span>: Spectral Algebraic Spaces</a>
     </ul>
-  {% endfor %}
 
-  <h3><a href="/statistics">Statistics</a></h3>
+    <h3><a href="#"><span class="type">Part II</span>: Proper Morphisms</a></h3>
+    <input type="checkbox" id="part-ii" checked>
+    <label for="part-ii"></label>
+    <ul>
+      <li><a href="#"><span class="type">Chapter 4</span>: Morphisms of Finite Presentation</a>
+      <li><a href="#"><span class="type">Chapter 5</span>: Proper Morphisms in Spectral Algebraic Geometry</a>
+      <li><a href="#"><span class="type">Chapter 6</span>: Grothendieck Duality</a>
+      <li><a href="#"><span class="type">Chapter 7</span>: Nilpotent, Local and Complete Modules</a>
+      <li><a href="#"><span class="type">Chapter 8</span>: Formal Spectral Algebraic Geometry</a>
+    </ul>
 
-  <p class="mb-1">The Stacks project now consists of
-  <ul>
-    {% for statistic in statistics %}
-      <li>{{ statistic | safe }}
-    {% endfor %}
-  </ul>
-{% endblock %}
+    <h3><a href="#"><span class="type">Part III</span>: Tannaka Reconstruction and Quasi-Coherent Stacks</a></h3>
+    <input type="checkbox" id="part-iii" checked>
+    <label for="part-iii"></label>
+    <ul>
+      <li><a href="#"><span class="type">Chapter 9</span>: Tannaka Duality</a>
+      <li><a href="#"><span class="type">Chapter 10</span>: Quasi-Coherent Stacks</a>
+      <li><a href="#"><span class="type">Chapter 11</span>: Smooth and Proper Linear $\infty$-Categories</a>
+    </ul>
+  </div>
+
+  <script type="text/javascript">
+  </script>
+
+  <img src="static/images/Kerodon-Climbing.svg">
+  <img src="static/images/Kerodon-Guitar.svg">
+  <img src="static/images/Kerodon-Reading.svg">
+  <img src="static/images/Kerodon-Scientist.svg">
+  <img src="static/images/Kerodon-Sports.svg">
+  <img src="static/images/Kerodon-Surfing.svg">
+  <img src="static/images/Kerodon-VR.svg">
+</div>
+
+    </section>
+  </div>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

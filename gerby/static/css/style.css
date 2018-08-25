@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400);
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Mono:400);
 
 @import url("bibliography.css");
@@ -285,7 +286,7 @@ h3 {
 }
 
 hr {
-  color: #dbcaad;
+  color: #D3CBBD;
 }
 
 a[href^="https://github.com"],
