@@ -286,7 +286,9 @@ h3 {
 }
 
 hr {
-  color: #D3CBBD;
+  background-color: #D3CBBD;
+  border: 0;
+  height: 1px;
 }
 
 a[href^="https://github.com"],
