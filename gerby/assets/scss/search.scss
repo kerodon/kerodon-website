@@ -1,3 +1,8 @@
+// TODO no duplication
+$kerodon-blue:   #0089BC;
+$kerodon-beige:  #F4F0EA;
+$size: 15;
+
 ol#search-results {
   padding: 0;
 }
@@ -22,10 +27,39 @@ span.previewing {
   background-image: url("/static/images/search.svg");
 }
 
-ul#pages li {
-  margin-bottom: .5rem;
-  width: 3rem;
-  text-align: center;
+ul#pages {
+  li {
+    margin-bottom: .5rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    text-align: center;
+    margin-right: .3rem;
+    vertical-align: bottom;
+    line-height: 2.5rem;
+    font-size: calc(14 / #{$size});
+  }
+
+  li a {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: block;
+    color: black;
+    border: 0;
+    padding: .6rem 0 0 0;
+    margin: auto;
+    background-color: $kerodon-beige;
+    font-weight: bold;
+  }
+
+  li a:hover {
+    text-decoration: underline;
+  }
+
+  li.active a {
+    color: white;
+    background-color: $kerodon-blue;
+  }
 }
 
 ol#search-results div.html li:before {
@@ -48,13 +82,18 @@ nav#results-per-page p {
 form#search {
   @import "searchinput";
 
-    input[type=search] {
-      height: 3rem;
-      width: 90%;
-    }
+  input[type=search] {
+    height: 3rem;
+    width: 90%;
+    margin-bottom: 1rem;
+  }
 
-    input[type=submit] {
-      height: 3rem;
-      width: 3rem;
-    }
+  input[type=submit] {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  label {
+    width: 15rem;
+  }
 }
