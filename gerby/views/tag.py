@@ -255,7 +255,7 @@ def show_citation(tag):
   try:
     tag = Tag.get(Tag.tag == tag.upper())
   except Tag.DoesNotExist:
-    return render_template("tag.notfound.html", tag=tag)
+    return render_template("tag.notfound.html", tag=tag), 404
 
   breadcrumb = getBreadcrumb(tag)
   neighbours = getNeighbours(tag)
@@ -274,7 +274,7 @@ def show_tag_statistics(tag):
   try:
     tag = Tag.get(Tag.tag == tag.upper())
   except Tag.DoesNotExist:
-    return render_template("tag.notfound.html", tag=tag)
+    return render_template("tag.notfound.html", tag=tag), 404
 
   breadcrumb = getBreadcrumb(tag)
   neighbours = getNeighbours(tag)
