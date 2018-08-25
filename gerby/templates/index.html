@@ -82,6 +82,31 @@ div#forage {
   padding-top: 5rem;
 }
 
+span#moveit {
+  position: relative;
+  top: -10rem;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  display: block;
+  transform: rotate(45deg);
+  border-radius: 20px;
+  border: 20px solid white;
+  background-color: white;
+}
+
+span#moveit a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url("static/images/Scroll-Arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+  transform: rotate(-45deg);
+  margin: 10px;
+}
+
 div#forage img {
   width: 250px;
   margin: 5rem;
@@ -208,6 +233,7 @@ div#forage input[type=checkbox]:checked + label + ul {
 </div>
 
 <div id="forage">
+  <span id="moveit"><a href="#"></a></span>
   <div id="selector">
     <h2>Forage</h2>
 
