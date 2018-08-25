@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.207 11.207">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #faa70b;
+        stroke-width: 2px;
+      }
+
+      .cls-2, .cls-4 {
+        fill: none;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="Symbol_107_1" data-name="Symbol 107 – 1" transform="translate(-196 -770)">
+    <g id="Ellipse_298" data-name="Ellipse 298" class="cls-1" transform="translate(196 770)">
+      <circle class="cls-3" cx="4.5" cy="4.5" r="4.5"/>
+      <circle class="cls-4" cx="4.5" cy="4.5" r="3.5"/>
+    </g>
+    <line id="Line_55" data-name="Line 55" class="cls-2" x2="3" y2="3" transform="translate(203.5 777.5)"/>
+  </g>
+</svg>
