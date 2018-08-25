@@ -14,17 +14,17 @@ div.preview {
 span.previewable {
   display: block;
   float: left;
-  margin-right: calc(3rem / 14);
   cursor: pointer;
   width: 1.3rem;
   height: 1.2rem;
-  background-image: url("/static/images/search.svg");
-  background-position: left .1rem;
+  background-image: url("/static/images/Search-Icon.svg");
+  background-position: left .3rem;
+  background-size: .8rem;
   background-repeat: no-repeat;
 }
 
 span.previewing {
-  background-image: url("/static/images/search.svg");
+  background-image: url("/static/images/Search-Icon.svg");
 }
 
 ul#pages {

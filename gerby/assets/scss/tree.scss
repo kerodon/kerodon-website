@@ -22,13 +22,29 @@ div.expand-all a:hover {
   text-decoration: underline;
 }
 
+div.expand-all a:before,
+li.has-children > .thumb:after {
+  content: "" !important;
+  width: .8rem;
+  height: .8rem;
+  display: inline-block;
+  margin-right: .3rem;
+  background-position: center;
+}
+
+li.has-children.expanded > .thumb:after {
+  background: url("/static/images/Search-Expanded.svg") no-repeat;
+}
+
+li.has-children > .thumb:after {
+  background: url("/static/images/Search-Collapsed.svg") no-repeat;
+}
+
 div.expand-all a.all:before {
-  content: '▾▾ ';
-  white-space: pre;
+  background: url("/static/images/Search-All-Expanded.svg") no-repeat;
 }
 
 div.expand-all a.none:before {
-  content: '▸▸  ';
-  white-space: pre;
+  background: url("/static/images/Search-All-Collapsed.svg") no-repeat;
 }
 
