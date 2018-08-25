@@ -36,6 +36,7 @@
   {% if count > perpage %}
     <nav>
       <ul id="pages" class="pagination flex-wrap">
+        <li id="previous-search-page"{% if page == 1%} class="inactive"{% endif %}><a href="#">previous page</a></li>
       {% set lastpage = ((count - 1) // perpage) + 1 %}
 
       {% set pages = [1, page - 1, page, page + 1, lastpage] %}
@@ -54,6 +55,7 @@
         {% endif %}
 
       {% endfor %}
+      <li id="next-search-page"{% if page == lastpage %} class="inactive"{% endif %}><a href="#">next page</a></li>
       </ul>
     </nav>
   {% endif %}

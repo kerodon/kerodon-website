@@ -39,7 +39,7 @@ ul#pages {
     font-size: calc(14 / #{$size});
   }
 
-  li a {
+  li.page-item a {
     height: 100%;
     width: 100%;
     text-align: center;
@@ -52,13 +52,40 @@ ul#pages {
     font-weight: bold;
   }
 
-  li a:hover {
+  li.page-item a:hover {
     text-decoration: underline;
   }
 
-  li.active a {
+  li.page-item.active a {
     color: white;
     background-color: $kerodon-blue;
+  }
+
+  li#previous-search-page,
+  li#next-search-page {
+    text-indent: -100em;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+  }
+
+  li#previous-search-page {
+    background-image: url("/static/images/Search-Previous.svg");
+  }
+
+  li#next-search-page {
+    background-image: url("/static/images/Search-Next.svg");
+  }
+
+  li#previous-search-page a,
+  li#next-search-page a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  li.inactive {
+    visibility: hidden;
   }
 }
 
