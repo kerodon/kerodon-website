@@ -7,6 +7,7 @@ import feedparser
 import re
 from flask import Flask, render_template, request, send_from_directory
 #import flask_profiler
+import flask_scss
 
 from peewee import *
 from playhouse.sqlite_ext import *
@@ -19,6 +20,8 @@ db.init(DATABASE)
 # Flask setup code
 app = Flask(__name__)
 app.config.from_object(__name__)
+
+flask_scss.Scss(app, static_dir="gerby/static/css", asset_dir="gerby/assets")
 
 #app.config["flask_profiler"] = {
 #    "enabled": "true",
