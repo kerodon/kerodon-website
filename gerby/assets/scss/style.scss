@@ -215,40 +215,17 @@ div#first-bar {
 
   form#quicksearch {
     padding-top: .6rem;
-  }
 
-  form#quicksearch input {
-    float: left;
-  }
+    @import "searchinput";
 
-  form#quicksearch input[type=search] {
-    -webkit-appearance: none;
-    padding-left: .3rem;
-    border: 1px solid $kerodon-orange;
-    margin: 0;
-    height: 2rem;
-  }
+    input[type=search] {
+      height: 2rem;
+    }
 
-  form#quicksearch input[type=search]:focus {
-    outline: none;
-  }
-
-  form#quicksearch input[type=submit] {
-    -webkit-appearance: none;
-    cursor: pointer;
-
-    border: 0;
-    margin: 0;
-    padding: 0;
-
-    height: 2rem;
-    width: 2rem; // TODO potential to use partials here
-
-    background-color: $kerodon-orange;
-    background-image: url("/static/images/Search-Arrow.svg");
-    background-size: 1rem;
-    background-repeat: no-repeat;
-    background-position: center;
+    input[type=submit] {
+      height: 2rem;
+      width: 2rem;
+    }
   }
 }
 

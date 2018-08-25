@@ -45,6 +45,16 @@ nav#results-per-page p {
   margin-top: .4rem;
 }
 
-form#search button {
-  float: right;
+form#search {
+  @import "searchinput";
+
+    input[type=search] {
+      height: 3rem;
+      width: 90%;
+    }
+
+    input[type=submit] {
+      height: 3rem;
+      width: 3rem;
+    }
 }
