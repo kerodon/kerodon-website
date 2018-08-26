@@ -52,8 +52,8 @@
 
 <body>
 
-<div class="container-fluid bounded">
-  <div id="first-bar" class="row topbar inner-top top">
+<div class="container-fluid">
+  <div id="first-bar" class="container row topbar inner-top top">
     <header class="col">
       <h1><a href="/">Kerodon</a></h1>
     </header>
@@ -72,22 +72,40 @@
     </nav>
   </div>
 
-  {% if self.breadcrumb() %}
-    <nav class="row topbar sticky-top" id="second-bar">
-      <ul id="crumbs">
-      {% block breadcrumb %}{% endblock %}
-      </ul>
-    </nav>
-  {% endif %}
+  <nav class="row topbar sticky-top" id="second-bar">
+    {% if self.breadcrumb() %}
+      <div id="breadcrumb">
+        <div class="container">
+          <ul id="crumbs">
+            {% block breadcrumb %}{% endblock %}
+          </ul>
+          <br style="clear: both">
+        </div>
+      </div>
+    {% endif %}
 
-  <div class="row justify-content-lg-center" id="content">
-    <section id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+    <div class="container d-none d-lg-block">
+      <div class="row">
+        <div class="col-lg-9"></div>
+
+        <div class="col-lg-3">
+          <div id="sidebar-container">
+            <section id="sidebar">
+              {% block sidebar %}{% endblock %}
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row justify-content-lg-center container" id="content">
+    <section id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
       {% block body %}{% endblock %}
     </section>
 
 	  <div class="col-lg-3 col-xl-3">
 	    <section id="meta" class="row topbar sticky-top">
-        {% block sidebar %}{% endblock %}
       </section>
     </div>
   </div>

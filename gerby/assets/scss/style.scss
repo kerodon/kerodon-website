@@ -28,39 +28,16 @@ html {
   overflow-y: scroll;
 }
 
-section#meta,
-ul#quicklinks {
-  display: none;
-}
-
-@media (min-width: 992px) {
-  section#meta {
-    display: block;
-  }
-
-  ul#quicklinks {
-    display: inline-block;
-  }
-
-  div#burger {
-    display: none;
-  }
-}
-
-@media (min-width: 768px) {
-  ul#toc .pdf-link {
-    display: inline;
-  }
-}
-
 body {
   position: relative;
   font-family: "Roboto", Arial, sans-serif;
   color: #000;
 }
 
-div.bounded {
-  max-width: calc(1280rem / #{$size});
+div#first-bar,
+ul#crumbs,
+div#content {
+  margin: 0 auto;
 }
 
 a {
@@ -145,7 +122,7 @@ div#burger-content div.interaction {
 
 
 div#burger-content div.toggle,
-section#meta div.toggle {
+section#sidebar div.toggle {
   margin-top: 1rem;
 }
 
@@ -161,7 +138,6 @@ div.main {
 
 div#first-bar {
   z-index: 2000;
-  border-bottom: 1px solid #d8d8d8;
   padding: calc(5rem / #{$size}) calc(10rem / #{$size});
 
   header {
@@ -232,21 +208,31 @@ div#first-bar {
 
 
 nav#second-bar {
-  padding: calc(10rem / #{$size});
-  background-color: #f4f0ea;
-  z-index: 2000;
+  border-top: 1px solid #d8d8d8;
+  z-index: 1;
+
+  div#breadcrumb {
+    background-color: #f4f0ea;
+    width: 100%;
+  }
+
+  div#sidebar-container {
+    position: absolute;
+    width: 100%;
+  }
+
+  div#sidebar {
+    width: 100%;
+  }
 
   ul#crumbs {
+    margin: calc(10rem / #{$size}) 0;
     padding: 0;
     list-style: none;
-    margin: auto 0;
-    vertical-align: center;
-    min-width: 2rem;
     font-size: calc(12rem / #{$size});
   }
 
   ul#crumbs li + li::before {
-    display: inline-block;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
     color: $kerodon-blue;
@@ -259,6 +245,10 @@ nav#second-bar {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  ul#crumbs li:last-of-type {
+    padding-bottom: calc(10rem / #{$size}); // to ensure that ul#crumbs has the correct size at the bottom
   }
 
   ul#crumbs li.active {
@@ -274,11 +264,11 @@ section#main {
   padding: 0;
 }
 
-section#meta {
+section#sidebar {
   background-color: #f4f0ea;
   top: calc(45rem / #{$size});
-  z-index: 0;
   padding: calc(15rem / #{$size});
+  margin-top: 1rem;
 }
 
 .tag, .commit, .filename, .label {
