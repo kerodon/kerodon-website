@@ -34,7 +34,7 @@
 
 {% block pagination %}
   {% if count > perpage %}
-    <nav>
+    <nav class="col-md-8">
       <ul id="pages" class="pagination flex-wrap">
         <li id="previous-search-page"{% if page == 1%} class="inactive"{% endif %}><a href="#">previous page</a></li>
       {% set lastpage = ((count - 1) // perpage) + 1 %}
@@ -47,6 +47,7 @@
 
       {% for i in range(1, lastpage + 1) %}
         {% if i in pages %}
+    <br style="clear: both">
           {% do jump.update({"jump": true}) %}
           <li class="page-item{% if i == page %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, i, perpage, radius) }}">{{ i }}</a>
         {% elif jump.jump %}
@@ -60,6 +61,16 @@
     </nav>
   {% endif %}
 
+  {% if count > 10 %}
+    <nav class="col-md-4" id="results-per-page">
+      <p>results per page</p>
+      <p class="pagination">
+        <span class="page-item{% if perpage == 10 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, 10, radius) }}"><span>10</span></a></span>
+        <span class="page-item{% if perpage == 50 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, 50, radius) }}"><span>50</span></a></span>
+        <span class="page-item{% if perpage == 2**63-1 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, "oo", radius) }}"><span>&infin;</span></a></span>
+      </p>
+    </nav>
+  {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -95,7 +106,9 @@ $("form[id=quicksearch] input[type=search]").on("paste keyup", function() {
 {% if count == -1 %}
   <p>This query returned too many search results, please refine it.
 {% else %}
-  {{ self.pagination() }}
+  <div class="row">
+    {{ self.pagination() }}
+  </div>
 
   <h2>{% if count == 0 %}No{% else %}{{ count }}{% endif %} result{% if count != 1 %}s{% endif %}
     {% if count > perpage %}
@@ -151,7 +164,9 @@ $(function () {
     {% endif %}
   </ol>
 
-  {{ self.pagination() }}
+  <div class="row">
+    {{ self.pagination() }}
+  </div>
 {% endif %}
 {% endblock %}
 

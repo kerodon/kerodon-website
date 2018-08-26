@@ -1,6 +1,8 @@
 // TODO no duplication
 $kerodon-blue:   #0089BC;
 $kerodon-beige:  #F4F0EA;
+$kerodon-orange: #FAA70B;
+$kerodon-gray:   #AAAAAA;
 $size: 15;
 
 ol#search-results {
@@ -54,6 +56,7 @@ ul#pages {
 
   li.page-item a:hover {
     text-decoration: underline;
+    background-color: $kerodon-orange;
   }
 
   li.page-item.active a {
@@ -63,7 +66,7 @@ ul#pages {
 
   li#previous-search-page,
   li#next-search-page {
-    text-indent: -100em;
+    text-indent: -10000em;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 60%;
@@ -101,9 +104,38 @@ ol#search-results article p:last-child {
   margin-bottom: 0;
 }
 
-nav#results-per-page p {
-  margin-left: .5rem;
-  margin-top: .4rem;
+nav#results-per-page {
+  margin-top: -.5rem;
+  margin-bottom: 1rem;
+
+  p:first-of-type {
+    font-size: calc(12rem / #{$size});
+    margin-left: .8rem;
+  }
+
+  p {
+    margin: 0 auto;
+  }
+
+  span.page-item a {
+    border: 0;
+    font-weight: bold;
+    color: $kerodon-gray;
+  }
+
+  span.page-item a span {
+    border-bottom: 2px solid;
+  }
+
+  span.page-item.active a {
+    background-color: white;
+    color: $kerodon-blue;
+  }
+
+  span.page-item:not(.active) a:hover {
+    color: $kerodon-orange;
+    background-color: white;
+  }
 }
 
 form#search {
