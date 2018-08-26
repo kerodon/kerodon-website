@@ -40,6 +40,10 @@ div#content {
   margin: 0 auto;
 }
 
+div.container {
+  max-width: calc(1140rem / #{$size}) !important;
+}
+
 a {
   text-decoration: none;
   color: $kerodon-blue;
@@ -131,11 +135,6 @@ div#burger-content ul.tag-info {
   margin-bottom: 0;
 }
 
-div.main {
-  padding-left: calc(20rem / #{$size});
-  padding-right: calc(20rem / #{$size});
-}
-
 div#first-bar {
   z-index: 2000;
   padding: calc(5rem / #{$size}) calc(10rem / #{$size});
@@ -205,7 +204,6 @@ div#first-bar {
     }
   }
 }
-
 
 nav#second-bar {
   border-top: 1px solid #d8d8d8;

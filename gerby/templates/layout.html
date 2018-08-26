@@ -58,7 +58,7 @@
       <h1><a href="/">Kerodon</a></h1>
     </header>
 
-    <nav>
+    <nav class="d-none d-lg-block">
       <ul id="quicklinks">
         <li><a href="/about">about</a>
         <li><a href="/changes">changes</a>
@@ -99,15 +99,10 @@
     </div>
   </nav>
 
-  <div class="row justify-content-lg-center container" id="content">
+  <div class="container" id="content">
     <section id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
       {% block body %}{% endblock %}
     </section>
-
-	  <div class="col-lg-3 col-xl-3">
-	    <section id="meta" class="row topbar sticky-top">
-      </section>
-    </div>
   </div>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>
 </div>
