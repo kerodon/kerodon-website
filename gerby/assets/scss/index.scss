@@ -1,12 +1,12 @@
 div#logo {
   z-index: 1;
   background-color: white;
-  margin-top: 4rem;
+  margin-top: 2rem;
   background-image: url("/static/images/kerodon-square.png");
   background-repeat: no-repeat;
   background-size: calc(220rem / 15);
   background-position: center top;
-  height: 25rem;
+  height: 20rem;
   text-align: center;
 }
 
@@ -20,9 +20,17 @@ div#logo hr {
 
 div#logo p#tagline {
   font-size: calc(32rem / 15);
+  z-index: 2;
+}
+
+@media (max-width: 767.98px) {
+  div#logo p#tagline {
+    font-size: calc(22rem / 15);
+  }
 }
 
 span#moveit {
+  z-index: -1;
   position: relative;
   top: -10rem;
   margin: 0 auto;
@@ -48,9 +56,10 @@ span#moveit a {
 }
 
 div#forage {
+  z-index: -2;
   width: 100%;
   position: absolute;
-  top: 45rem;
+  top: 35rem;
   left: 0;
   background-color: #F4F0EA;
   padding-top: 5rem;

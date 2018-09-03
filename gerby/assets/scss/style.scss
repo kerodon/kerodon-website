@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400);
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400);
@@ -15,12 +16,13 @@
 $size: 15; // need to use interpolation #{$size} in calc() etc.
 
 // the main colors
-$kerodon-beige:  #F4F0EA;
-$kerodon-blue:   #0089BC;
-$kerodon-gray:   #AAAAAA;
-$kerodon-green:  #4CAF50;
-$kerodon-orange: #FAA70B;
-$kerodon-red:    #ED2227;
+$kerodon-beige:     #F4F0EA;
+$kerodon-blue:      #0089BC;
+$kerodon-gray:      #AAAAAA;
+$kerodon-lightgray: #D3CBBD;
+$kerodon-green:     #4CAF50;
+$kerodon-orange:    #FAA70B;
+$kerodon-red:       #ED2227;
 
 html {
   font-size: #{$size}px;
@@ -62,83 +64,11 @@ a:hover {
   margin: -60px 0 0 0 ;
 }
 
-div#burger {
-  text-align: right;
-  padding: 0;
-}
-
-input#burger-input {
-  display: none;
-}
-
-label#burger-icon {
-  margin-bottom: 0 !important;
-  height: calc(6rem / 4);
-}
-
-label#burger-icon span {
-  display: block;
-  position: relative;
-  width: calc(23rem / #{$size});
-  height: calc(3rem / #{$size});
-  border-radius: calc(3rem / #{$size});
-  background-color: black;
-  margin-top: calc(4rem / #{$size});
-  transition: all 0.1s ease-in-out;
-}
-
-input#burger-input:checked + label#burger-icon span#top-bun {
-  transform: rotate(-45deg);
-  margin-top: calc(9rem / #{$size});
-}
-
-input#burger-input:checked + label#burger-icon span#meat {
-  transform: rotate(45deg);
-  margin-top: calc(-2.5rem / #{$size});
-}
-
-input#burger-input:checked + label#burger-icon span#bottom-bun {
-  opacity: 0;
-  transform: rotate(45deg);
-}
-
-input#burger-input:checked + label#burger-icon + div#burger-content {
-  display: block;
-  box-shadow: 1px 1px 1px gray;
-}
-
-div#burger-content {
-  display: none;
-  position: absolute;
-  width: calc(250rem / #{$size});
-  top: calc(30rem / #{$size});
-  margin-left: calc(-225rem / #{$size});
-  padding: calc(5rem / #{$size});
-  background-color: #f9f8f4;
-  z-index: 2;
-  text-align: left;
-  border: 1px solid black;
-  border-radius: 6px;
-}
-
-div#burger-content div.interaction {
-}
-
-
-div#burger-content div.toggle,
-section#sidebar div.toggle {
-  margin-top: 1rem;
-}
-
-div#burger-content ul.tag-info {
-  margin-left: .5rem;
-  margin-bottom: 0;
-}
 
 div#first-bar {
-  z-index: 2000;
+  z-index: 20;
   padding: calc(5rem / #{$size}) calc(10rem / #{$size});
-  border-bottom: 1px solid #d8d8d8;
+  border-bottom: 1px solid $kerodon-lightgray;
 
   header {
     padding-left: 0;
@@ -162,7 +92,7 @@ div#first-bar {
     background-position: 0 0;
   }
 
-  nav {
+  nav#navigation {
     padding: 0;
     margin: 0;
     position: relative;
@@ -202,6 +132,90 @@ div#first-bar {
       height: 2rem;
       width: 2rem;
     }
+  }
+
+  nav#burger {
+    input[type=checkbox] {
+      display: none;
+    }
+
+    label {
+      z-index: 10;
+      display: block;
+      height: calc(20rem / #{$size});
+      width: calc(24rem / #{$size});
+      background-image: url("/static/images/Nav-Burger.svg");
+      cursor: pointer;
+      margin-top: .7rem;
+    }
+
+    input[type=checkbox]:checked + label {
+      background-image: url("/static/images/Nav-Close.svg");
+      height: calc(24rem / #{$size});
+    }
+
+    form#burger-quicksearch {
+      padding: 0 1rem;
+
+      @import "searchinput";
+
+      input[type=search] {
+        height: 3rem;
+        width: 80%;
+      }
+
+      input[type=submit] {
+        height: 3rem;
+        width: 3rem;
+      }
+    }
+  }
+}
+
+div#burger-content {
+  z-index: 5;
+  position: fixed;
+  background-color: white;
+    top: calc(54rem / #{$size});
+
+  ul {
+    list-style-type: none;
+    padding: 1rem;
+  }
+
+  ul li {
+    border-bottom: 1px solid $kerodon-lightgray;
+    font-size: calc(24rem / #{$size});
+    font-weight: 300;
+    padding: 1.5rem 0 1rem 0;
+  }
+
+  ul li:last-of-type {
+    border: none;
+  }
+
+  ul a {
+    color: $kerodon-lightgray;
+    display: block;
+  }
+}
+
+@media (max-width: 991.98px) {
+  nav#burger input[type=checkbox]:checked + label + div#burger-content {
+    display: block !important;
+    width: 20rem;
+    height: 100%;
+    right: 0;
+    border-left: 1px solid $kerodon-lightgray;
+  }
+}
+
+@media (max-width: 767.98px) {
+  nav#burger input[type=checkbox]:checked + label + div#burger-content {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    left: 0;
   }
 }
 

@@ -58,7 +58,7 @@
       <h1><a href="/">Kerodon</a></h1>
     </header>
 
-    <nav class="d-none d-lg-block float-right">
+    <nav id="navigation" class="d-none d-lg-block float-right">
       <ul id="quicklinks">
         <li><a href="/about">about</a>
         <li><a href="/changes">changes</a>
@@ -69,6 +69,24 @@
       <form id="quicksearch" action="/search">
         <input type="search" placeholder="keywords or a tag" name="query"><input type="submit" value="">
       </form>
+    </nav>
+
+    <nav id="burger" class="d-lg-none float-right">
+      <input type="checkbox" id="burger-checkbox">
+      <label for="burger-checkbox"></label>
+
+      <div class="d-none" id="burger-content">
+        <ul>
+          <li><a href="#">about</a>
+          <li><a href="#">recent changes</a>
+          <li><a href="#">comments</a>
+          <li><a href="#">bibliography</a>
+        </ul>
+
+        <form id="burger-quicksearch" action="/search">
+          <input type="search" placeholder="keywords or a tag" name="query"><input type="submit" value="">
+        </form>
+      </div>
     </nav>
   </div>
 </div>
