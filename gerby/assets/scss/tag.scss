@@ -1,3 +1,5 @@
+$kerodon-green:  #4CAF50; // TODO fix duplication
+
 ul.neighbours {
   list-style-type: none;
   padding-left: 0 !important;
@@ -303,4 +305,24 @@ a#structure-link {
   padding-left: 1.8rem;
   color: black;
   background-image: url("../images/structure.svg");
+}
+
+section#sidebar{
+
+  .btn {
+    display: block;
+    border-radius: 0;
+    border: 0;
+    background-color: $kerodon-green;
+    p
+  }
+
+  .btn:hover {
+    text-decoration: underline;
+  }
+
+  a.btn[href*=".pdf"] {
+    background-image: none;
+    padding: .7rem 0;
+  }
 }

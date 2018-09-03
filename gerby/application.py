@@ -2,6 +2,8 @@ import os
 import os.path
 import time
 import urllib.request
+import itertools
+import random
 import socket
 import feedparser
 import re
@@ -114,8 +116,12 @@ def show_index():
   for comment in comments:
     comment.tag = Tag.get(Tag.tag == comment.tag)
 
+  kerodi = ["Kerodon-Climbing.svg", "Kerodon-Guitar.svg", "Kerodon-Reading.svg", "Kerodon-Scientist.svg", "Kerodon-Sports.svg", "Kerodon-Surfing.svg", "Kerodon-VR.svg"]
+  number = 3 # change accordingly
+
   return render_template(
       "index.html",
+      kerodi=random.choice(list(itertools.combinations(kerodi, number))),
       updates=updates,
       statistics=get_statistics(),
       comments=comments,

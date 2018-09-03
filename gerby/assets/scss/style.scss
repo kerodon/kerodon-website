@@ -138,13 +138,13 @@ div#burger-content ul.tag-info {
 div#first-bar {
   z-index: 2000;
   padding: calc(5rem / #{$size}) calc(10rem / #{$size});
+  border-bottom: 1px solid #d8d8d8;
 
   header {
     padding-left: 0;
   }
 
   header h1 {
-    float: left;
     padding: 0;
     margin: 0;
     margin-top: calc(3rem / #{$size});
@@ -206,7 +206,6 @@ div#first-bar {
 }
 
 nav#second-bar {
-  border-top: 1px solid #d8d8d8;
   z-index: 1;
 
   div#breadcrumb {

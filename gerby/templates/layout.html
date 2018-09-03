@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="theme-color" content="#F4F0EA">
 
-<title>{% block title %}{% endblock %}&mdash;Kerodon</title>
+<title>{% if self.title() %}{% block title %}{% endblock %}&mdash;{% endif %}Kerodon</title>
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -52,13 +52,13 @@
 
 <body>
 
-<div class="container-fluid">
-  <div id="first-bar" class="container row topbar inner-top top">
-    <header class="col">
+<div id="first-bar" class="topbar inner-top top">
+  <div class="container clearfix">
+    <header class="float-left">
       <h1><a href="/">Kerodon</a></h1>
     </header>
 
-    <nav class="d-none d-lg-block">
+    <nav class="d-none d-lg-block float-right">
       <ul id="quicklinks">
         <li><a href="/about">about</a>
         <li><a href="/changes">changes</a>
@@ -71,19 +71,21 @@
       </form>
     </nav>
   </div>
+</div>
 
-  <nav class="row topbar sticky-top" id="second-bar">
-    {% if self.breadcrumb() %}
-      <div id="breadcrumb">
-        <div class="container">
-          <ul id="crumbs">
-            {% block breadcrumb %}{% endblock %}
-          </ul>
-          <br style="clear: both">
-        </div>
+<nav class="row topbar sticky-top" id="second-bar">
+  {% if self.breadcrumb() %}
+    <div id="breadcrumb">
+      <div class="container">
+        <ul id="crumbs">
+          {% block breadcrumb %}{% endblock %}
+        </ul>
+        <br style="clear: both">
       </div>
-    {% endif %}
+    </div>
+  {% endif %}
 
+  {% if self.sidebar() %}
     <div class="container d-none d-lg-block">
       <div class="row">
         <div class="col-lg-9"></div>
@@ -97,14 +99,13 @@
         </div>
       </div>
     </div>
-  </nav>
+  {% endif %}
+</nav>
 
-  <div class="container" id="content">
-    <section id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
-      {% block body %}{% endblock %}
-    </section>
-  </div>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>
+<div class="container" id="content">
+  {% block content %}{% endblock %}
 </div>
+
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js" integrity="sha384-3ziFidFTgxJXHMDttyPJKDuTlmxJlwbSkojudK/CkRqKDOmeSbN6KLrGdrBQnT2n" crossorigin="anonymous"></script>
 </body>
 </html>
