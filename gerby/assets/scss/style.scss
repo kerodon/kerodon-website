@@ -177,7 +177,7 @@ div#burger-content {
   z-index: 5;
   position: fixed;
   background-color: white;
-    top: calc(54rem / #{$size});
+  top: calc(54rem / #{$size});
 
   ul {
     list-style-type: none;
@@ -198,6 +198,13 @@ div#burger-content {
   ul a {
     color: $kerodon-lightgray;
     display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  nav#second-bar {
+    position: sticky;
+    top: calc(59rem / #{$size});
   }
 }
 
