@@ -30,40 +30,6 @@ span.previewing {
 }
 
 ul#pages {
-  li {
-    margin-bottom: .5rem;
-    height: 2.5rem;
-    width: 2.5rem;
-    text-align: center;
-    margin-right: .3rem;
-    vertical-align: bottom;
-    line-height: 2.5rem;
-    font-size: calc(14 / #{$size});
-  }
-
-  li.page-item a {
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    display: block;
-    color: black;
-    border: 0;
-    padding: .6rem 0 0 0;
-    margin: auto;
-    background-color: $kerodon-beige;
-    font-weight: bold;
-  }
-
-  li.page-item a:hover {
-    text-decoration: underline;
-    background-color: $kerodon-orange;
-  }
-
-  li.page-item.active a {
-    color: white;
-    background-color: $kerodon-blue;
-  }
-
   li#previous-search-page,
   li#next-search-page {
     text-indent: -10000em;
