@@ -235,6 +235,7 @@ div#burger-content {
 
 nav#second-bar {
   z-index: 1;
+  margin: 0;
 
   div#breadcrumb {
     background-color: #f4f0ea;
@@ -245,7 +246,16 @@ nav#second-bar {
     }
   }
 
+  div#sidebar-parent div.row {
+    margin: 0;
+  }
+
+  div#sidebar-parent div.container, div#sidebar-parent div.col-lg-3 {
+    padding: 0;
+  }
+
   div#sidebar-container {
+    margin-left: calc(10rem / #{$size});
     position: absolute;
     width: 100%;
   }
@@ -297,7 +307,7 @@ section#sidebar {
   background-color: #f4f0ea;
   top: calc(45rem / #{$size});
   padding: calc(15rem / #{$size});
-  margin-top: 1rem;
+  margin-top: calc(10rem / #{$size});
 }
 
 .tag, .commit, .filename, .label {
