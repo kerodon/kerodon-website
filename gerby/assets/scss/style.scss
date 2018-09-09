@@ -42,10 +42,6 @@ div#content {
   margin: 0 auto;
 }
 
-div.container {
-  max-width: calc(1140rem / #{$size}) !important;
-}
-
 a {
   text-decoration: none;
   color: $kerodon-blue;
@@ -64,12 +60,21 @@ a:hover {
   margin: -60px 0 0 0 ;
 }
 
+div.container {
+  // resize containers to be screenwide on smaller resolutions
+  max-width: calc(1140rem / #{$size}) !important;
+}
+
 
 div#first-bar {
   z-index: 20;
   padding: calc(5rem / #{$size}) calc(10rem / #{$size});
   border-bottom: 1px solid $kerodon-lightgray;
   background-color: white;
+
+  div.container {
+    max-width: calc(1250rem / #{$size}) !important;
+  }
 
   header {
     padding-left: 0;
@@ -234,6 +239,10 @@ nav#second-bar {
   div#breadcrumb {
     background-color: #f4f0ea;
     width: 100%;
+
+    div.container {
+      padding: 0;
+    }
   }
 
   div#sidebar-container {
@@ -246,7 +255,7 @@ nav#second-bar {
   }
 
   ul#crumbs {
-    margin: calc(10rem / #{$size}) 0;
+    margin: calc(10rem / #{$size});
     padding: 0;
     list-style: none;
     font-size: calc(12rem / #{$size});
