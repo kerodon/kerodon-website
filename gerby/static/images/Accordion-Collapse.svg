@@ -1,14 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 2">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: none;
-        stroke: #faa70b;
-        stroke-width: 2px;
-      }
-    </style>
-  </defs>
-  <g id="Symbol_86_1" data-name="Symbol 86 – 1" transform="translate(-1087 -1094)">
-    <line id="Line_33" data-name="Line 33" class="cls-1" x1="30" transform="translate(1087 1095)"/>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 30 30" style="enable-background:new 0 0 30 30;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#FAA70B;stroke-width:2;}
+</style>
+<g id="Symbol_86_1" transform="translate(-1087 -1094)">
+	<line id="Line_33" class="st0" x1="1117" y1="1109" x2="1087" y2="1109"/>
+</g>
 </svg>
