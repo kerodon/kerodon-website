@@ -79,7 +79,7 @@
 
 {% block body %}
 <form id="search" action="/search">
-  <input type="search" placeholder="keywords or a tag" name="query" autofocus><input type="submit" value=""><br style="clear: both">
+  <input type="search" placeholder="keywords or a tag" name="query" autofocus value="{{ query | e }}"><input type="submit" value=""><br style="clear: both">
 
   <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="radius" id="allRadio" value="all"{% if radius == "all" %} checked{% endif %}>
@@ -94,12 +94,25 @@
   <input type="hidden" name="perpage" id="perpage" value="{{ perpage }}">
 
   <script type="text/javascript">
-// synchronise the two text inputs
-$("form[id=search] div input[type=search]").on("paste keyup", function() {
-  $("form[id=quicksearch] input[type=search]").val($(this).val());
+// synchronise the three text inputs
+$(document).ready(function() {
+  $("form#quicksearch input[type=search]").val($("form#search input[type=search]").val());
+  $("form#burger-quicksearch input[type=search]").val($("form#search input[type=search]").val());
 });
-$("form[id=quicksearch] input[type=search]").on("paste keyup", function() {
-  $("form[id=search] div input[type=search]").val($(this).val());
+
+$("form#search input[type=search]").on("paste keyup", function() {
+  $("form#quicksearch input[type=search]").val($(this).val());
+  $("form#burger-quicksearch input[type=search]").val($(this).val());
+});
+
+$("form#quicksearch input[type=search]").on("paste keyup", function() {
+  $("form#search input[type=search]").val($(this).val());
+  $("form#burger-quicksearch input[type=search]").val($(this).val());
+});
+
+$("form#burger-quicksearch input[type=search]").on("paste keyup", function() {
+  $("form#search input[type=search]").val($(this).val());
+  $("form#quicksearch input[type=search]").val($(this).val());
 });
   </script>
 

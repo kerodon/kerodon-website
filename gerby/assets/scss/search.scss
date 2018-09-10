@@ -109,7 +109,7 @@ form#search {
 
   input[type=search] {
     height: 3rem;
-    width: 90%;
+    width: calc(100% - 3rem);
     margin-bottom: 1rem;
   }
 
