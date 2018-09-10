@@ -128,8 +128,9 @@ $(function () {
   <div id="sidebar-interaction">
     {{ macros.neighbours(neighbours, "", tag) }}
     <span id="sidebar-toggle"></span>
-    <hr>
   </div>
+
+  <hr>
 
   {% if tree %}
   <div id="sidebar-structure">
@@ -142,8 +143,9 @@ $(function () {
     {% endif %}
 
     <a class="structure-link" href="#structure">go to structure</a>
-    <hr>
   </div>
+
+  <hr>
   {% endif %}
 
   <div id="sidebar-related">
@@ -153,5 +155,4 @@ $(function () {
 
     {{ macros.tagInformation(tag, dependencies) }}
   </div>
-
 {% endblock %}

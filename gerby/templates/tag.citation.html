@@ -18,6 +18,22 @@
   <br style="clear:both">
 {% endblock %}
 
+{% block sidebar %}
+  <div id="sidebar-interaction">
+    {{ macros.neighbours(neighbours, "", tag) }}
+  </div>
+
+  <hr>
+
+  <div id="sidebar-related">
+    <a class="btn btn-success" href="https://stacks.math.columbia.edu/download/{{ filename }}.pdf#nameddest={{ tag.tag }}">view as pdf</a>
+    <br>
+    <a class="btn btn-success" href="https://stacks.math.columbia.edu/tag/{{ tag.tag }}/comments">comments</a>
+
+    {{ macros.tagInformation(tag, dependencies) }}
+  </div>
+{% endblock %}
+
 {% block body %}
   <h2>How to cite <a href="/tag/{{ tag.tag }}">tag <span class="tag">{{ tag.tag }}</a>?</h2>
 
