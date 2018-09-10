@@ -1,13 +1,8 @@
+@import "variables";
+
 input {
   float: left;
 }
-// TODO fix this duplication
-$kerodon-blue:   #0089BC;
-$kerodon-gray:   #AAAAAA;
-$kerodon-green:  #4CAF50;
-$kerodon-orange: #FAA70B;
-$kerodon-red:    #ED2227;
-
 input[type=search] {
   -webkit-appearance: none;
   padding-left: .3rem;

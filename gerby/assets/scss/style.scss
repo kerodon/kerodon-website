@@ -12,17 +12,7 @@
 @import url("toc.css");
 @import url("tree.css");
 
-
-$size: 15; // need to use interpolation #{$size} in calc() etc.
-
-// the main colors
-$kerodon-beige:     #F4F0EA;
-$kerodon-blue:      #0089BC;
-$kerodon-gray:      #AAAAAA;
-$kerodon-lightgray: #D3CBBD;
-$kerodon-green:     #4CAF50;
-$kerodon-orange:    #FAA70B;
-$kerodon-red:       #ED2227;
+@import "variables";
 
 html {
   font-size: #{$size}px;
@@ -251,7 +241,7 @@ div#burger-content {
 }
 
 nav#second-bar {
-  z-index: 1;
+  z-index: 2;
   margin: 0;
 
   div#breadcrumb {
@@ -332,14 +322,21 @@ section#sidebar {
   font-size: 95%;
 }
 
-h2 {
-  font-size: 1.4em;
-  font-weight: 500;
-  color: $kerodon-green;
-}
+div#content {
+  h1 {
+    color: $kerodon-orange;
+    font-weight: 400;
+  }
 
-h3 {
-  font-size: 1.3em;
+  h2 {
+    font-size: 1.4em;
+    font-weight: 500;
+    color: $kerodon-green;
+  }
+
+  h3 {
+    font-size: 1.3em;
+  }
 }
 
 hr {

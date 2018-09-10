@@ -1,9 +1,4 @@
-// TODO no duplication
-$kerodon-blue:   #0089BC;
-$kerodon-beige:  #F4F0EA;
-$kerodon-orange: #FAA70B;
-$kerodon-gray:   #AAAAAA;
-$size: 15;
+@import "variables";
 
 ol#search-results {
   padding: 0;

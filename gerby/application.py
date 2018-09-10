@@ -130,7 +130,7 @@ def show_index():
 
 @app.route("/about")
 def show_about():
-  return render_template("single/about.html")
+  return render_template("kerodon/about.html")
 
 
 @app.route("/statistics")
