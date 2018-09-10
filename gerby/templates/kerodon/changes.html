@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "page.html" %}
 
 {% block title %}Recent changes{% endblock %}
 
@@ -21,10 +21,13 @@ dl#changes dt + dd {
 {% endblock %}
 
 {% block hamburger %}
-  <div class="interaction"></div>
+  <span id="hamburger-toggle"></span>
 {% endblock %}
 
 {% block body %}
+  <h1>Changes</h1>
+  <p>Below you find an overview of the major updates to Kerodon.
+
   {% for year in changes | dictsort(reverse=True) %}
     <h2>{{ year[0] }}</h2>
     <dl id="changes" class="row">
@@ -37,6 +40,8 @@ dl#changes dt + dd {
 {% endblock %}
 
 {% block sidebar %}
-  <div class="interaction"></div>
+  <div id="sidebar-interaction">
+    <span id="sidebar-toggle"></span>
+  </div>
 {% endblock %}
 

@@ -1,13 +1,9 @@
-{% extends "layout.html" %}
+{% extends "page.html" %}
 
 {% block title %}Gerby Flavored Markdown{% endblock %}
 
 {% block breadcrumb %}
   <li><a href="/markdown">Gerby Flavored Markdown</a>
-{% endblock %}
-
-{% block hamburger %}
-  {{ macros.singlePageLinks() }}
 {% endblock %}
 
 {% block body %}
@@ -19,15 +15,15 @@
   * list
   * list
 
-  Some math: $\varphi\colon X\to Y$, see Tag \ref{04FW}.
+Some math: $\varphi\colon X\to Y$, see Tag \ref{04FW}.
 
   1. another list
   2. list</code></pre>
   <p>You can use the preview option (if JavaScript is enabled in your browser) when writing a comment to check your comment before submit.
 
   <h2>LaTeX and Markdown</h2><p>Here at the Stacks project we try to merge Markdown and LaTeX for the comments system. You can write mathematics just like you're used in LaTeX, i.e. stuff like <code>$\pi$</code> and<pre><code>\begin{equation}
-    a^2+b^2=c^2
-  \end{equation}</code></pre>
+  a^2+b^2=c^2
+\end{equation}</code></pre>
   <p>just works. This is done using <a href="https://mathjax.org/">MathJax</a> (so you need to enable JavaScript).</p>
 
   <h2>Gerby Flavored Markdown</h2>
@@ -37,9 +33,5 @@
     <li>As discussed before you can use LaTeX-style mathematics the way you are used to.</li>
     <li>You can refer to tags by using <code>\ref{tag}</code>. So <code>\ref{0001}</code> will automatically be converted to <a href="/tag/0001"><var>0001</var></a>.
   </ol>
-{% endblock %}
-
-{% block sidebar %}
-  {{ macros.singlePageLinks() }}
 {% endblock %}
 

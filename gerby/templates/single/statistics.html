@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "page.html" %}
 
 {% block title %}Statistics{% endblock %}
 
@@ -7,10 +7,6 @@
 
 {% block breadcrumb %}
   <li><a href="/statistics">Statistics</a>
-{% endblock %}
-
-{% block hamburger %}
-  {{ macros.singlePageLinks() }}
 {% endblock %}
 
 {% block body %}
@@ -27,7 +23,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for environment in ["definition", "example", "exercise", "lemma", "proposition", "remark", "remarks", "situation", "theorem"] %}
+    {% for environment in ["definition", "example", "exercise", "lemma", "proposition", "question", "remark", "theorem"] %}
       <tr>
         <td>{{ environment }}</td>
         <td class="text-center">{{ counts[environment] }}
@@ -77,9 +73,5 @@
     </tr>
   </tbody>
 </table>
-{% endblock %}
-
-{% block sidebar %}
-  {{ macros.singlePageLinks() }}
 {% endblock %}
 
