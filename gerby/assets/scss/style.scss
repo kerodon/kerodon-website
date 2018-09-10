@@ -381,45 +381,36 @@ h2.error {
   padding-left: 1.5rem;
 }
 
-.toggle-off {
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-}
-.toggle.off {
-  border-color: rgba(0, 0, 0, .25);
-}
-
-.toggle-handle {
-  background-color: white;
-  border: thin rgba(0, 0, 0, .25) solid;
-}
-
-div.toggle,
-div.toggle:hover,
-div.toggle:active {
+// the toggle button
+div.toggle {
   display: block;
   margin: auto;
-  background-color: #edece6 !important;
-  border-color: rgba(0, 0, 0, .25) !important;
+  border-radius: 4rem;
+  border-width: 0 !important;
+
+  .btn {
+    background-color: #D3CBBD;
+  }
+
+  .toggle-handle {
+    background-color: white;;
+    border-radius: 50%;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .425rem;
+    margin-right: 2.4rem;
+  }
+
+  label {
+    color: white;
+    font-variant: small-caps;
+  }
 }
 
-div.btn-primary,
-div.btn-primary:hover,
-div.btn-primary:active {
-  border-color: rgba(0, 0, 0, .25);
-}
-
-label.toggle-on,
-label.toggle-off {
-  background-color: #edece6;
-  color: black;
-}
-
-label.toggle-on:hover,
-label.toggle-off:hover,
-label.toggle-on:active,
-label.toggle-off:active {
-  background-color: #d9d8d1 !important;
-  color: black !important;
+div.toggle.off {
+  .toggle-handle {
+    margin-right: -2.4rem;
+  }
 }
 
 .pagination {

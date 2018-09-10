@@ -3,8 +3,10 @@ var execute = false;
 
 $(document).ready(function() {
   // we do this in JS as it only makes sense to have these when JS is enabled
-  var html = '<input class="toggle" name="toggle" type="checkbox" checked data-toggle="toggle" data-on="numbers" data-off="tags" data-size="small" data-width="90" data-onstyle="default">';
-  $("section#meta div.interaction, div#burger-content div.interaction").append(html);
+  var html = '<input class="toggle" name="toggle" type="checkbox" checked data-toggle="toggle" data-on="numbers" data-off="tags" data-size="small" data-width="130" data-height="40" data-onstyle="default">';
+
+  $("section#sidebar div#sidebar-interaction ul.neighbours").after(html);
+  //$("section#sidebar div#sidebar-interaction, div#burger-content div.interaction").append(html);
 
   // turn the checkbox into a toggle button
   $("input.toggle").bootstrapToggle();

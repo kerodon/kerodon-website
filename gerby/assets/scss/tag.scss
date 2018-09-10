@@ -193,85 +193,6 @@ span.toggle label {
   margin-bottom: .2em;
 }
 
-p.slogan strong {
-  font-weight: normal;
-  text-decoration: underline;
-}
-
-p.slogan:before {
-  content: "Slogan: ";
-  font-weight: bold;
-}
-
-p.history:before {
-  content: "Historical remark: ";
-  font-weight: bold;
-}
-
-p.reference:before {
-  content: "Reference: ";
-  font-weight: bold;
-}
-
-table#history {
-}
-
-table#history tr:nth-child(odd) td:nth-child(1) {
-  background-image: url("/static/images/plus.svg");
-  background-repeat: no-repeat;
-  background-position: right .4rem;
-  padding-right: 1rem;
-}
-
-table#history tr:nth-child(odd) td.clicked:nth-child(1) {
-  background-image: url("/static/images/minus.svg");
-}
-
-table#history tr:nth-child(odd) td:nth-child(2) {
-  width: 7rem;
-}
-
-table#history tr:nth-child(odd) td:nth-child(3) {
-  width: 5rem;
-}
-
-table#history tr:nth-child(even) td {
-  border-top: none;
-}
-
-table#history tr:nth-child(even):hover {
-  background-color: transparent;
-}
-
-table#history pre.commit-message {
-  margin-top: 1rem;
-  font-size: .8rem;
-}
-
-div.information ul.tag-info {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-div.information ul.tag-info li {
-  margin-left: 0;
-  padding-left: 0;
-}
-
-div.information ul.tag-info li a {
-  background-repeat: no-repeat;
-  padding-left: 1.5rem;
-  color: black;
-}
-
-li.tag-statistics a {
-  background-image: url("../images/statistics.svg");
-}
-
-li.tag-dependencies a {
-  background-image: url("../images/dependency.svg");
-}
-
 li.custom-item {
   list-style-type: none;
 }
@@ -313,12 +234,14 @@ ul#quicknav a {
 
 a#structure-link {
   background-repeat: no-repeat;
-  padding-left: 1.8rem;
+  background-position: left center;
+  padding-left: 1.4rem;
   color: black;
   background-image: url("../images/structure.svg");
+  background-size: 1.1rem;
 }
 
-section#sidebar{
+section#sidebar {
   a.btn {
     display: block;
     border-radius: 0;
@@ -333,3 +256,37 @@ section#sidebar{
     text-decoration: underline;
   }
 }
+
+div#sidebar-interaction {
+  ul.neighbours li {
+    margin-bottom: 1rem;
+  }
+}
+
+div#sidebar-related {
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+
+  ul li a {
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-left: 1.7rem;
+    margin-bottom: .3rem;
+    display: block;
+    color: black;
+    background-size: 1rem;
+  }
+
+  li.tag-statistics a {
+    background-image: url("../images/statistics.svg");
+  }
+
+  li.tag-dependencies a {
+    background-image: url("../images/dependency.svg");
+  }
+}
+

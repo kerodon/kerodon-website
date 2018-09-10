@@ -5,7 +5,7 @@
   {% endif %}
   #}
 
-  <ul class="neighbours">
+  <ul class="neighbours clearfix">
   {% if neighbours[0] %}
     <li class="left"><a href="/tag/{{ neighbours[0].tag }}{{ modifier }}">previous</a>
   {% endif %}
@@ -13,7 +13,6 @@
     <li class="right"><a href="/tag/{{ neighbours[1].tag }}{{ modifier }}">next</a>
   {% endif %}
   </ul>
-  {% if neighbours[0] or neighbours[1] %}<br style="clear:both">{% endif %}
 {% endmacro %}
 
 {% macro tagInformation(tag, dependencies) %}
@@ -40,27 +39,6 @@
 {% endmacro %}
 
 {% macro tagSidebar(tag, neighboursList, neighboursModifier, dependencies, filename) %}
-  <div class="interaction">
-    {{ neighbours(neighboursList, neighboursModifier, tag) }}
-  </div>
-
-  <hr>
-  {% if tag.type == "part" %}
-    {#<a href="https://stacks.math.columbia.edu/download/{{ filename }}.pdf">View Part <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span> as pdf</a>#}
-  {% else %}
-    <a class="btn btn-success" href="https://stacks.math.columbia.edu/download/{{ filename }}.pdf#nameddest={{ tag.tag }}">view as pdf</a>
-    <br>
-    <a class="btn btn-success" href="https://stacks.math.columbia.edu/tag/{{ tag.tag }}/comments">comments</a>
-  {% endif %}
-
-  {% if tag.type in ["definition", "example", "exercise", "lemma", "proposition", "remark", "remarks", "situation", "theorem"] %}
-
-    <hr>
-
-    <div class="information">
-      {{ tagInformation(tag, dependencies) }}
-    </div>
-  {% endif %}
 {% endmacro %}
 
 {% macro breadcrumb(breadcrumb) %}
