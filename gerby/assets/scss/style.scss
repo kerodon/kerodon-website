@@ -56,8 +56,9 @@ a:hover {
 :target::before { /* offsets all # links */
   content: "";
   display: block;
+  visibility: hidden;
   height: calc(110rem / #{$size});
-  margin: -calc(110rem / #{$size}) 0 0 0 ;
+  margin-top: calc(-110rem / #{$size});
 }
 
 div.container {
