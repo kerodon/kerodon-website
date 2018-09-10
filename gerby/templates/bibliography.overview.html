@@ -39,6 +39,13 @@
     <li>{{ entry.author | safe }}, <a href="/bibliography/{{ entry.key }}">{{ entry.title | safe }}</a>
     {% if loop.last %}</ul>{% endif %}
   {% endfor %}
+
+  <h2></h2>
+  <ul>
+  {% for entry in entries if not entry.author %}{# now we do the author-less books #}
+    <li><a href="/bibliography/{{ entry.key }}">{{ entry.title | safe }}</a>
+    {% if loop.last %}</ul>{% endif %}
+  {% endfor %}
   </ul>
 {% endblock %}
 

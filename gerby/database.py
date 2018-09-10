@@ -115,6 +115,8 @@ class BibliographyEntry(BaseModel):
       if self.author.lower() == other.author.lower() and hasattr(self, "title") and hasattr(other, "title"):
         return self.title.lower() > other.title.lower()
       return self.author.lower() > other.author.lower()
+    elif hasattr(self, "title") and hasattr(other, "title"):
+      return self.title.lower() > other.title.lower()
     else:
       return self.key.lower() > other.key.lower()
 
