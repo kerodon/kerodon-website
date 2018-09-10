@@ -95,7 +95,17 @@ $(function () {
   <h2>Comments ({{ comments | length }})</h2>
 
   {% for comment in comments %}
-    {% include "comment.show.html" %}
+    <article  id="comment-{{ comment.id }}">
+      <header>
+        <p><a href="/tag/{{ tag.tag }}#comment-{{ comment.id }}">Comment #{{ comment.id }}</a>
+        by
+        {% if comment.site %}<cite><a href="{{ comment.site }}" rel="author">{{ comment.author }}</a></cite>
+        {% else %}<cite>{{ comment.author }}</cite>{% endif %}
+        on <time datetime="{{ comment.date }}">{{ comment.date.strftime("%B %d, %Y at %H:%M %Z") }}</time>
+      </header>
+
+      <blockquote>{{ comment.comment | safe }}</blockquote>
+    </article>
   {% endfor %}
 
   {% if parentComments %}
@@ -128,4 +138,6 @@ $(function () {
 
     <a id="structure-link" href="#structure">go to structure</a>
   {% endif %}
+
+  <hr>
 {% endblock %}

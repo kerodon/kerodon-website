@@ -49,6 +49,8 @@
     {#<a href="https://stacks.math.columbia.edu/download/{{ filename }}.pdf">View Part <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span> as pdf</a>#}
   {% else %}
     <a class="btn btn-success" href="https://stacks.math.columbia.edu/download/{{ filename }}.pdf#nameddest={{ tag.tag }}">view as pdf</a>
+    <br>
+    <a class="btn btn-success" href="https://stacks.math.columbia.edu/tag/{{ tag.tag }}/comments">comments</a>
   {% endif %}
 
   {% if tag.type in ["definition", "example", "exercise", "lemma", "proposition", "remark", "remarks", "situation", "theorem"] %}

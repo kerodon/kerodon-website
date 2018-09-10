@@ -5,27 +5,38 @@ ul.neighbours {
   padding-left: 0 !important;
 }
 
-ul.neighbours li {
+ul.neighbours {
   padding: 0;
   margin: 0;
-}
 
-ul.neighbours li.left {
-  float: left;
-}
+  a {
+    color: black;
+    font-size: .8rem;
+    font-variant: small-caps;
+    display: block;
+    background-repeat: no-repeat;
+    background-size: .8rem;
+  }
 
-ul.neighbours li.left a:before {
-  content: "\2190";
-  margin-right: .3em;
-}
+  li.left {
+    float: left;
 
-ul.neighbours li.right {
-  float: right;
-}
+    a {
+      background-image: url("/static/images/Sidebar-Previous.svg");
+      background-position: left center;
+      padding-left: 1rem;
+    }
+  }
 
-ul.neighbours li.right a:after {
-  content: "\2192";
-  margin-left: .3em;
+  li.right {
+    float: right;
+
+    a {
+      background-image: url("/static/images/Sidebar-Next.svg");
+      background-position: right center;
+      padding-right: 1rem;
+    }
+  }
 }
 
 div.html {
@@ -308,21 +319,17 @@ a#structure-link {
 }
 
 section#sidebar{
-
-  .btn {
+  a.btn {
     display: block;
     border-radius: 0;
     border: 0;
     background-color: $kerodon-green;
-    p
+    font-weight: 500;
+    background-image: none;
+    padding: .7rem 0;
   }
 
   .btn:hover {
     text-decoration: underline;
-  }
-
-  a.btn[href*=".pdf"] {
-    background-image: none;
-    padding: .7rem 0;
   }
 }
