@@ -27,11 +27,3 @@ section#post-comment > h2 {
   background-position: right top;
   background-origin: content-box;
 }
-
-section#post-comment > h2:not(.hidden) {
-  background-image: url("/static/images/minus.svg");
-}
-
-section#post-comment > h2.hidden {
-  background-image: url("/static/images/plus.svg");
-}

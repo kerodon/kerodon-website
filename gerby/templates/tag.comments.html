@@ -22,90 +22,17 @@
 {% endblock %}
 
 {% block body %}
-<div class="html" id="tag">
-  {{ html | safe }}
-
-  <script type="text/javascript">
-$(document).ready(function() {
-  $('div.html a[data-toggle="popover"]').popover()
-
-  // render mathematics in popovers
-  $("[data-toggle=popover]").on('shown.bs.popover', function () {
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("div.popover-body").html()]);
-  });
-});
-  </script>
-
-  {% if tree %}
-    {% set recursed = {"value": false} %} {# to know whether we need to add expand / collapse buttons #}
-    <h2 id="structure">Structure</h2>
-    <ul class="tree" id="tree">
-    {% for item in tree recursive %}
-      {% if loop.depth <= depth %}<li class="expanded" id="{{ item.tag }}">{% else %}<li id="{{ item.tag }}">{% endif %}
-      {{ item.type | capitalize }} <a href="/tag/{{ item.tag }}" data-tag="{{ item.tag }}">{{ item.ref }}</a>{% if item.name %}: {{ item.name | safe }}{% endif %}
-
-      {% if item.children %}
-        {% do recursed.update({"value": true}) %}
-        <ul>{{ loop(item.children) }}</ul>
-      {% endif %}
-    {% endfor %}
-    </ul>
-    <script type="text/javascript">
-$("ul.tree").bonsai({
-  {% if recursed["value"] %}
-    addExpandAll: true,
-  {% endif %}
-});
-
-var state = localStorage.getItem("bonsai-{{ tag.tag }}");
-if (state !== null)
-  $("ul#tree").data("bonsai").restore(JSON.parse(state));
-
-$("ul#tree").click(function() {
-  var bonsai = $(this).data("bonsai");
-  var state = bonsai.serialize();
-  localStorage.setItem("bonsai-{{ tag.tag }}", JSON.stringify(state));
-});
-
-// trigger the click event handler to save state even when clicking on the expand/collapse all links, which are outside ul#tree
-$("div.expand-all").click(function() {
-  $("ul#tree").click();
-});
-
-$(function () {
-  $('[data-toggle="popover"]').popover()
-})
-    </script>
-
-  {% endif %}
-
-  {% if footnotes %}
-    <section id="footnotes">
-    {% for footnote in footnotes %}
-      <div><a id="footnote-{{ loop.index }}"></a><a href="#footnote-{{ loop.index }}-mark">[{{ loop.index }}]</a> {{ footnote.html | safe }}</div>
-    {% endfor %}
-    </section>
-  {% endif %}
-</div>
 
 {% if commentsEnabled %}
-<hr>
-
 <section id="comments">
-  <h2>Comments ({{ comments | length }})</h2>
+  <h2>Comments on {{ tag.type }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span></h2>
+
+  {% if comments | length == 0 %}
+    <p>There are currently no comments on {{ tag.type }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span>.
+  {% endif %}
 
   {% for comment in comments %}
-    <article  id="comment-{{ comment.id }}">
-      <header>
-        <p><a href="/tag/{{ tag.tag }}#comment-{{ comment.id }}">Comment #{{ comment.id }}</a>
-        by
-        {% if comment.site %}<cite><a href="{{ comment.site }}" rel="author">{{ comment.author }}</a></cite>
-        {% else %}<cite>{{ comment.author }}</cite>{% endif %}
-        on <time datetime="{{ comment.date }}">{{ comment.date.strftime("%B %d, %Y at %H:%M %Z") }}</time>
-      </header>
-
-      <blockquote>{{ comment.comment | safe }}</blockquote>
-    </article>
+    {% include "comment.show.html" %}
   {% endfor %}
 
   {% if parentComments %}
@@ -120,24 +47,23 @@ $(function () {
 
 <hr>
 
+{% include "comment.input.html" %}
+
 {% endif %}
 
 {% endblock %}
 
 {% block sidebar %}
-  {{ macros.tagSidebar(tag, neighbours, "", dependencies, filename) }}
+  <div id="sidebar-interaction">
+    {{ macros.neighbours(neighbours, "", tag) }}
+    <span id="sidebar-toggle"></span>
+  </div>
 
   <hr>
 
-  {% if quicknav %}
-    <ul id="quicknav">
-      {% for item in quicknav %}
-        <li><a class="sidebar-link" data-tag="{{ item.tag }}" href="/tag/{{ item.tag }}">{{ item.type | capitalize }} {{ item.ref }}</a>: {{ item.name }}
-      {% endfor %}
-    </ul>
+  <div id="sidebar-related">
+    <a class="btn btn-success" href="/kerodon.pdf#nameddest={{ tag.tag }}">view as pdf</a>
 
-    <a id="structure-link" href="#structure">go to structure</a>
-  {% endif %}
-
-  <hr>
+    {{ macros.tagInformation(tag, dependencies) }}
+  </div>
 {% endblock %}

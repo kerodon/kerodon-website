@@ -247,6 +247,44 @@ def show_tag(tag):
                          parentComments=parentComments,
                          depth=gerby.configuration.DEPTH)
 
+@app.route("/tag/<string:tag>/comments")
+def show_comments(tag):
+  if not isTag(tag):
+    return render_template("tag.invalid.html", tag=tag)
+
+  try:
+    tag = Tag.get(Tag.tag == tag.upper())
+  except Tag.DoesNotExist:
+    return render_template("tag.notfound.html", tag=tag), 404
+
+  breadcrumb = getBreadcrumb(tag)
+
+  commentsEnabled = Comment.table_exists() # for now use comments on every possible tag type
+  comments = []
+  parentComments = []
+
+  if commentsEnabled:
+    comments = Comment.select().where(Comment.tag == tag.tag, Comment.active)
+    for comment in comments:
+      comment.comment = sfm(comment.comment)
+
+    # looking for comments higher up in the breadcrumb
+    parentComments = []
+    for parent in breadcrumb:
+      if parent.tag == tag.tag:
+        continue
+      count = Comment.select().where(Comment.tag == parent.tag, Comment.active).count() # this could be done in a single JOIN
+      if count > 0:
+        parentComments.append([parent, count])
+
+  return render_template("tag.comments.html",
+                         tag=tag,
+                         breadcrumb=breadcrumb,
+                         neighbours=getNeighbours(tag),
+                         commentsEnabled=commentsEnabled,
+                         comments=comments,
+                         parentComments=parentComments)
+
 @app.route("/tag/<string:tag>/cite")
 def show_citation(tag):
   if not isTag(tag):
