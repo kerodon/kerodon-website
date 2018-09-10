@@ -2,10 +2,6 @@
 
 {% block title %}Bibliography{% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="/bibliography">Bibliography</a>
-{% endblock %}
-
 {% macro letters() %}
   {% set letter = [""] %}{# Jinja needs a ridiculous hack for global variables #}
 
@@ -21,10 +17,15 @@
 {% endmacro %}
 
 {% block hamburger %}
-  {{ letters() }}
+  <div id="hamburger-letters">
+    <p>Jump to letter
+    {{ letters() }}
+  </div>
 {% endblock %}
 
 {% block body %}
+  <h1>Bibliography</h1>
+
   {% set letter = [""] %}{# Jinja needs a ridiculous hack for global variables #}
 
   {% for entry in entries if entry.author %}{# FDL wreaks havoc in the Stacks project bibliography so we filter on non-zero entry.author#}
@@ -50,5 +51,6 @@
 {% endblock %}
 
 {% block sidebar %}
+  <p>Jump to letter
   {{ letters() }}
 {% endblock %}
