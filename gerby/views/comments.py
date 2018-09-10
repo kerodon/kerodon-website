@@ -8,7 +8,7 @@ import validators
 
 @app.route("/post-comment", methods=["POST"])
 def post_comment():
-  tag = request.headers["Referer"].split("/")[-1]
+  tag = request.headers["Referer"].split("/")[-2]
 
   if tag == request.form["tag"] and tag == request.form["check"]:
     if not validators.email(request.form["mail"]):
@@ -26,7 +26,7 @@ def post_comment():
         email=request.form["mail"],
         comment=request.form["comment"])
 
-    return redirect("/tag/" + request.form["tag"] + "#comment-" + str(comment.id))
+    return redirect("/tag/" + request.form["tag"] + "/comments#comment-" + str(comment.id))
 
   else:
     return render_template("comment.invalid-captcha.html")
