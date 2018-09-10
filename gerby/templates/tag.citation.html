@@ -19,25 +19,24 @@
 {% endblock %}
 
 {% block body %}
-  <h2>How to cite tag <span class="tag">{{ tag.tag }}</span></h2>
+  <h2>How to cite <a href="/tag/{{ tag.tag }}">tag <span class="tag">{{ tag.tag }}</a>?</h2>
 
-  <p>Go <a href="/tag/{{ tag.tag }}">back to the tag page</a>.
 
-  <p>You can use one of the following citations in your LaTeX code.
+  <p>You can use one of the following code snippets in your LaTeX code.
   <ul id="citations">
-    <li><code>\cite[\href{https://stacks.math.columbia.edu/tag/{{ tag.tag }}}{Tag {{ tag.tag }}}]{stacks-project}</code>
-    <li><code>\cite[\href{https://stacks.math.columbia.edu/tag/{{ tag.tag }}}{% raw %}{{% endraw %}{{ tag.type | capitalize }} {{ tag.tag }}{% raw %}}{% endraw %}]{stacks-project}</code>
-    <li><code>\href{https://stacks.math.columbia.edu/tag/{{ tag.tag }}}{Tag {{ tag.tag }}}</code>
-    <li><code>\href{https://stacks.math.columbia.edu/tag/{{ tag.tag }}}{% raw %}{{% endraw %}{{ tag.type | capitalize }} {{ tag.tag }}}</code>
+    <li><code>\cite[\href{https://kerodon.net/tag/{{ tag.tag }}}{Tag {{ tag.tag }}}]{kerodon}</code>
+    <li><code>\cite[\href{https://kerodon.net/tag/{{ tag.tag }}}{% raw %}{{% endraw %}{{ tag.type | capitalize }} {{ tag.tag }}{% raw %}}{% endraw %}]{kerodon}</code>
+    <li><code>\href{https://kerodon.net/tag/{{ tag.tag }}}{Tag {{ tag.tag }}}</code>
+    <li><code>\href{https://kerodon.net/tag/{{ tag.tag }}}{% raw %}{{% endraw %}{{ tag.type | capitalize }} {{ tag.tag }}}</code>
   </ul>
 
   <p>You can use the following in your BibTeX file.
-  <pre><code>@misc{stacks-project,
-  author       = {The {Stacks project authors}},
-  title        = {The Stacks project},
-  howpublished = {\url{https://stacks.math.columbia.edu}},
+  <pre><code>@misc{kerodon,
+  author       = {Jacob Lurie},
+  title        = {Kerodon},
+  howpublished = {\url{https://kerodon.net}},
   year         = {% raw %}{{% endraw %}{{ time.year }}},
 }</code></pre>
-  <p>You can also consider using the <code>@online</code> type in BibLaTeX, changing the the <code>howpublished</code> to <code>url</code>. Another neat trick in BibLaTeX is the <code>shorthand</code> field, which you could set to <code>SP</code> or <code>Stacks</code>.
+  <p>You can also consider using the <code>@online</code> type in BibLaTeX, changing the the <code>howpublished</code> to <code>url</code>. Another neat trick in BibLaTeX is the <code>shorthand</code> field, which you could set to <code>K</code> or <code>Kerodon</code>.
 {% endblock %}
 
