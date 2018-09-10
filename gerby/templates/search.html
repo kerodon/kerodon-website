@@ -34,7 +34,7 @@
 
 {% block pagination %}
   {% if count > perpage %}
-    <nav class="col-md-8">
+    <nav class="col-md">
       <ul id="pages" class="pagination flex-wrap">
         <li id="previous-search-page"{% if page == 1%} class="inactive"{% endif %}><a href="{{ searchlink(query, page - 1, perpage, radius) }}">previous page</a></li>
       {% set lastpage = ((count - 1) // perpage) + 1 %}
@@ -66,7 +66,7 @@
   {% endif %}
 
   {% if count > 10 %}
-    <nav class="col-md-4" id="results-per-page">
+    <nav class="col-md-auto" id="results-per-page">
       <p>results per page</p>
       <p class="pagination">
         <span class="page-item{% if perpage == 10 %} active{% endif %}"><a class="page-link" href="{{ searchlink(query, 1, 10, radius) }}"><span>10</span></a></span>

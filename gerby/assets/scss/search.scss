@@ -30,6 +30,12 @@ span.previewing {
 }
 
 ul#pages {
+  li {
+    font-size: .9rem;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
   li#previous-search-page,
   li#next-search-page {
     text-indent: -10000em;
