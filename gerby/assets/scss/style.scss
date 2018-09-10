@@ -145,7 +145,7 @@ div#first-bar {
       display: none;
     }
 
-    label {
+    label#burger-box {
       z-index: 10;
       display: block;
       height: calc(20rem / #{$size});
@@ -160,21 +160,6 @@ div#first-bar {
       height: calc(24rem / #{$size});
     }
 
-    form#burger-quicksearch {
-      padding: 0 1rem;
-
-      @import "searchinput";
-
-      input[type=search] {
-        height: 3rem;
-        width: 80%;
-      }
-
-      input[type=submit] {
-        height: 3rem;
-        width: 3rem;
-      }
-    }
   }
 }
 
@@ -184,23 +169,52 @@ div#burger-content {
   background-color: white;
   top: calc(54rem / #{$size});
 
-  ul {
+  ul.neighbours {
+    padding: 0;
+    margin: 1rem 1rem 0 1rem;
+  }
+
+  form#burger-quicksearch {
+    padding: 0 1rem;
+
+    @import "searchinput";
+
+    input[type=search] {
+      height: 3rem;
+      width: 80%;
+    }
+
+    input[type=submit] {
+      height: 3rem;
+      width: 3rem;
+    }
+  }
+
+  div.toggle {
+    margin-top: 1rem;
+
+    label {
+      line-height: 2.3;
+    }
+  }
+
+  ul.links {
     list-style-type: none;
     padding: 1rem;
   }
 
-  ul li {
+  ul.links li {
     border-bottom: 1px solid $kerodon-lightgray;
     font-size: calc(24rem / #{$size});
     font-weight: 300;
     padding: 1.5rem 0 1rem 0;
   }
 
-  ul li:last-of-type {
+  ul.links li:last-of-type {
     border: none;
   }
 
-  ul a {
+  ul.links a {
     color: $kerodon-lightgray;
     display: block;
   }

@@ -73,13 +73,16 @@
 
     <nav id="burger" class="d-lg-none float-right">
       <input type="checkbox" id="burger-checkbox">
-      <label for="burger-checkbox"></label>
+      <label id="burger-box" for="burger-checkbox"></label>
 
       <div class="d-none" id="burger-content">
-        <ul>
+        {% block hamburger %}
+        {% endblock %}
+
+        <ul class="links">
           <li><a href="#">about</a>
           <li><a href="#">recent changes</a>
-          <li><a href="#">comments</a>
+          <li><a href="#">recent comments</a>
           <li><a href="#">bibliography</a>
         </ul>
 
