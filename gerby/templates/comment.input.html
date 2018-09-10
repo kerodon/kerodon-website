@@ -8,13 +8,13 @@
 
   <form name="comment" id="comment-form" action="/post-comment" method="post">
     <label for="name">Name<sup>*</sup>:</label>
-    <input type="text" name="name" id="name" required><br>
+    <input class="border" type="text" name="name" id="name" required><br>
 
     <label for="mail">E-mail<sup>*</sup>:</label>
-    <input type="email" name="mail" id="mail" required><br>
+    <input class="border" type="email" name="mail" id="mail" required><br>
 
     <label for="site">Site:</label>
-    <input type="url" name="site" id="site"><br>
+    <input class="border" type="url" name="site" id="site"><br>
 
     <label>Comment:</label>
     <textarea name="comment" id="comment-textarea" cols="80" rows="10" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
@@ -87,7 +87,7 @@ easymde.element.form.addEventListener("submit", function(event) {
     <p>In order to prevent bots from posting comments, we would like you to prove that you are human. You can do this by <em>filling in the name of the current tag</em> in the following input field. As a reminder, this is tag <span class="tag">{{ tag.tag }}</span>. Beware of the difference between the letter&nbsp;'<span class="tag">O</span>' and the digit&nbsp;'<span class="tag">0</span>'.</p>
     <!--<p>This <abbr title="Completely Automated Public Turing test to tell Computers and Humans Apart">captcha</abbr> seems more appropriate than the usual illegible gibberish, right?<br>-->
     <label for="check">Tag:</label>
-    <input type="text" name="check" id="check" required autocomplete="off">
+    <input class="border" type="text" name="check" id="check" required autocomplete="off">
     <button type="submit" class="btn btn-primary">Post comment</button>
     <input type="hidden" name="tag" id="hidden-tag" value="{{ tag.tag }}"><br>
 
