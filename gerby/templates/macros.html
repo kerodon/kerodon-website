@@ -20,6 +20,7 @@
 
 {% macro tagHamburger(tag, neighboursList, neighboursModifier, dependencies) %}
   {{ neighbours(neighboursList, neighboursModifier, tag) }}
+  <span id="hamburger-toggle"></span>
 {% endmacro %}
 
 {% macro tagSidebar(tag, neighboursList, neighboursModifier, dependencies, filename) %}

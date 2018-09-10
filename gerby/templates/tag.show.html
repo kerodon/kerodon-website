@@ -19,6 +19,15 @@
 
 {% block hamburger %}
   {{ macros.tagHamburger(tag, neighbours, "", dependencies) }}
+
+  <!--
+  {% if tree %}
+    <br>
+    <a class="structure-link" href="#structure"><label for="burger-checkbox">go to structure</label></a>
+  {% endif %}
+  -->
+
+  <a class="btn btn-success" href="https://stacks.math.columbia.edu/tag/{{ tag.tag }}/comments">comments</a>
 {% endblock %}
 
 {% block body %}
@@ -118,6 +127,7 @@ $(function () {
 {% block sidebar %}
   <div id="sidebar-interaction">
     {{ macros.neighbours(neighbours, "", tag) }}
+    <span id="sidebar-toggle"></span>
     <hr>
   </div>
 
@@ -131,7 +141,7 @@ $(function () {
     </ul>
     {% endif %}
 
-    <a id="structure-link" href="#structure">go to structure</a>
+    <a class="structure-link" href="#structure">go to structure</a>
     <hr>
   </div>
   {% endif %}

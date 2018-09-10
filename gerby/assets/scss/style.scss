@@ -155,11 +155,10 @@ div#first-bar {
       margin-top: .7rem;
     }
 
-    input[type=checkbox]:checked + label {
+    input[type=checkbox]:checked + label#burger-box {
       background-image: url("/static/images/Nav-Close.svg");
       height: calc(24rem / #{$size});
     }
-
   }
 }
 
@@ -181,7 +180,7 @@ div#burger-content {
 
     input[type=search] {
       height: 3rem;
-      width: 80%;
+      width: calc(100% - 3rem);
     }
 
     input[type=submit] {
@@ -200,14 +199,18 @@ div#burger-content {
 
   ul.links {
     list-style-type: none;
-    padding: 1rem;
+    padding: 0 1rem;
   }
 
   ul.links li {
     border-bottom: 1px solid $kerodon-lightgray;
-    font-size: calc(24rem / #{$size});
+    font-size: calc(20rem / #{$size});
     font-weight: 300;
     padding: 1.5rem 0 1rem 0;
+  }
+
+  ul.links li:first-of-type {
+    padding-top: 1rem;
   }
 
   ul.links li:last-of-type {

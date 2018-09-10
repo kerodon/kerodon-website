@@ -5,8 +5,8 @@ $(document).ready(function() {
   // we do this in JS as it only makes sense to have these when JS is enabled
   var html = '<input class="toggle" name="toggle" type="checkbox" checked data-toggle="toggle" data-on="numbers" data-off="tags" data-size="small" data-width="130" data-height="40" data-onstyle="default">';
 
-  $("div#sidebar-interaction ul.neighbours").after(html);
-  $("div#burger-content ul.neighbours").after(html);
+  $("span#sidebar-toggle").replaceWith(html);
+  $("span#hamburger-toggle").replaceWith(html);
 
   // turn the checkbox into a toggle button
   $("input.toggle").bootstrapToggle();

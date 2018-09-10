@@ -93,7 +93,8 @@ div#selector {
     font-weight: normal;
     padding-top: 3rem;
     padding-bottom: 1.5rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
+    padding-right: 2rem;
   }
 
   h3:first-of-type {
@@ -121,6 +122,7 @@ div#selector {
     list-style-type: none;
     padding: 0;
     font-size: calc(18rem / 15);
+    margin: 0;
   }
 
   ul li {
@@ -134,7 +136,7 @@ div#selector {
     height: 2rem;
     float: right;
     position: relative;
-    top: -3.5rem;
+    top: -4rem;
     background-image: url("/static/images/Accordion-Expand.svg");
     cursor: pointer;
   }

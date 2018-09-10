@@ -233,7 +233,7 @@ ul#quicknav a {
   font-weight: bold;
 }
 
-a#structure-link {
+a.structure-link {
   background-repeat: no-repeat;
   background-position: left center;
   padding-left: 1.4rem;
@@ -242,7 +242,8 @@ a#structure-link {
   background-size: 1.1rem;
 }
 
-section#sidebar {
+section#sidebar,
+div#burger-content {
   a.btn {
     display: block;
     border-radius: 0;
@@ -291,3 +292,13 @@ div#sidebar-related {
   }
 }
 
+div#burger-content {
+  a.btn {
+    margin: 1rem auto 0 auto;
+    width: 10rem;
+  }
+
+  a.structure-link {
+    margin-left: 1rem;
+  }
+}
