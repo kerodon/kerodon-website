@@ -38,6 +38,6 @@ $(document).ready(function() {
 
   // toggle if localStorage says so
   if (localStorage.getItem("toggle") == "tag") {
-    $("section#meta input.toggle").bootstrapToggle("toggle");
+    $("section#sidebar input.toggle").bootstrapToggle("toggle");
   }
 });
