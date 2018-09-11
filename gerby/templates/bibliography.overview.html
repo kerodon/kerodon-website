@@ -13,6 +13,12 @@
       <li class="page-item"><a class="page-link" href="#letter-{{ letter[-1] }}">{{ letter[-1] | upper }}</a>
     {% endif %}
   {% endfor %}
+  {# deal with no-author publications #}
+  {% for entry in entries if not entry.author %}
+    {% if loop.first %}
+      <li class="page-item"><a class="page-link" href="#letter-mdash">&mdash;</a>
+    {% endif %}
+  {% endfor %}
   </ul>
 {% endmacro %}
 
@@ -37,17 +43,19 @@
       <ul class="entries">
     {% endif %}
 
-    <li>{{ entry.author | safe }}, <a href="/bibliography/{{ entry.key }}">{{ entry.title | safe }}</a>
+    <li>{{ entry.author | safe }}, <a href="/bibliography/{{ entry.key }}">{{ entry.title | safe }}</a>.
     {% if loop.last %}</ul>{% endif %}
   {% endfor %}
 
-  <h2></h2>
-  <ul>
   {% for entry in entries if not entry.author %}{# now we do the author-less books #}
-    <li><a href="/bibliography/{{ entry.key }}">{{ entry.title | safe }}</a>
+    {% if loop.first %}
+      <h2 id="letter-mdash">&mdash;</h2>
+      <ul>
+
+    {% endif %}
+    <li><a href="/bibliography/{{ entry.key }}">{{ entry.title | safe }}</a>.
     {% if loop.last %}</ul>{% endif %}
   {% endfor %}
-  </ul>
 {% endblock %}
 
 {% block sidebar %}
