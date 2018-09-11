@@ -111,6 +111,9 @@ class BibliographyEntry(BaseModel):
   code = CharField()
 
   def __gt__(self, other):
+    if hasattr(self, "author") and not hasattr(other, "author"): return False
+    if not hasattr(self, "author") and hasattr(other, "author"): return True
+
     if hasattr(self, "author") and hasattr(other, "author"):
       if self.author.lower() == other.author.lower() and hasattr(self, "title") and hasattr(other, "title"):
         return self.title.lower() > other.title.lower()
