@@ -2,25 +2,27 @@ div#logo {
   z-index: 1;
   background-color: white;
   margin-top: 2rem;
-  background-image: url("/static/images/kerodon-square.png");
+  background-image: url("/static/images/Large-Logo.svg");
   background-repeat: no-repeat;
   background-size: calc(220rem / 15);
   background-position: center top;
   height: 20rem;
   text-align: center;
-}
 
-div#logo h1 {
-  padding-top: 15rem;
-}
+  h1 {
+    padding-top: 15rem;
+    text-indent: -1000rem;
+  }
 
-div#logo hr {
-  max-width: calc(300rem / 15);
-}
+  hr {
+    max-width: calc(300rem / 15);
+  }
 
-div#logo p#tagline {
-  font-size: calc(32rem / 15);
-  z-index: 2;
+  p#tagline {
+    font-size: calc(32rem / 15);
+    z-index: 2;
+  }
+
 }
 
 @media (max-width: 767.98px) {
