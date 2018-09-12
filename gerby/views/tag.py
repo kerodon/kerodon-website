@@ -206,8 +206,7 @@ def show_tag(tag):
 
     tree = combine(sorted(tags))
 
-    # only makes sense if there are at least 2 levels to go
-    if headings.index(tag.type) < headings.index(gerby.configuration.UNIT) - 1:
+    if headings.index(tag.type) < headings.index(gerby.configuration.UNIT):
       level = min([len(tag.ref.split(".")) for tag in tags], default=-1)
       quicknav = sorted([tag for tag in tags if len(tag.ref.split(".")) == level])
 
