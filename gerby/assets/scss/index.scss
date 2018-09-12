@@ -1,16 +1,14 @@
 div#logo {
   z-index: 1;
-  background-color: white;
-  margin-top: 2rem;
-  background-image: url("/static/images/Large-Logo.svg");
-  background-repeat: no-repeat;
-  background-size: calc(220rem / 15);
-  background-position: center top;
-  height: 20rem;
+  margin-top: 1rem;
+  height: calc(100vh - 17rem);
   text-align: center;
 
   h1 {
-    padding-top: 15rem;
+    background-image: url("/static/images/Large-Logo.svg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: calc(40vh);
     text-indent: -1000rem;
   }
 
@@ -25,14 +23,8 @@ div#logo {
 
 }
 
-@media (max-width: 767.98px) {
-  div#logo p#tagline {
-    font-size: calc(22rem / 15);
-  }
-}
-
 span#moveit {
-  z-index: -1;
+  z-index: 1;
   position: relative;
   top: -10rem;
   margin: 0 auto;
@@ -61,7 +53,7 @@ div#forage {
   z-index: -2;
   width: 100%;
   position: absolute;
-  top: 35rem;
+  top: calc(100vh - 5rem);
   left: 0;
   background-color: #F4F0EA;
   padding-top: 5rem;
@@ -163,5 +155,15 @@ div#selector {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.4s, visibility 0.4s;
+  }
+}
+
+@media (max-height: 500px) {
+  div#logo p#tagline {
+    font-size: calc(22rem / 15);
+  }
+
+  div#forage {
+    top: calc(100vh - 3rem);
   }
 }
