@@ -11,6 +11,15 @@
 
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jquery-bonsai@2.1.2/jquery.bonsai.css" integrity="sha384-U1uEPfU2/stCtBJ6oZS4XLX35g0MD+BZTTskUun0Vhv64RLEaTUXtcpxGScTbkUP" crossorigin="anonymous">
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-bonsai@2.1.2/jquery.bonsai.min.js" integrity="sha384-ZKch/OmPYYZT/9GpxSgMqUIDdBjwYYuJ3+CfQytRQElwdBsCMJkEmcsynJlFlsCS" crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+$(document).ready(function() {
+  $("div#burger-content li.structure-link a").on("click", function() {
+    console.log("hi");
+    $("input#burger-checkbox").click();
+  });
+});
+  </script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -20,12 +29,14 @@
 {% block hamburger %}
   {{ macros.tagHamburger(tag, neighbours, "", dependencies) }}
 
-  <!--
-  {% if tree %}
-    <br>
-    <a class="structure-link" href="#structure"><label for="burger-checkbox">go to structure</label></a>
-  {% endif %}
-  -->
+  <hr>
+
+  <ul class="tag-info">
+    {% if tree %}
+      <li class="structure-link"><a href="#structure">go to structure</a>
+    {% endif %}
+    {{ macros.tagInformation(tag, dependencies) }}
+  </ul>
 
   <a class="btn btn-success" href="/tag/{{ tag.tag }}/comments">comments ({{ comments | length }})</a>
 {% endblock %}
@@ -118,7 +129,9 @@ $(function () {
     </ul>
     {% endif %}
 
-    <a class="structure-link" href="#structure">go to structure</a>
+    <ul class="tag-info">
+      <li class="structure-link"><a href="#structure">go to structure</a>
+    </ul>
   </div>
 
   <hr>
@@ -129,6 +142,8 @@ $(function () {
     <br>
     <a class="btn btn-success" href="/tag/{{ tag.tag }}/comments">comments ({{ comments | length }})</a>
 
-    {{ macros.tagInformation(tag, dependencies) }}
+    <ul class="tag-info">
+      {{ macros.tagInformation(tag, dependencies) }}
+    </ul>
   </div>
 {% endblock %}

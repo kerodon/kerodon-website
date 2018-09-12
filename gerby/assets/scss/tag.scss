@@ -232,15 +232,6 @@ ul#quicknav a {
   font-weight: bold;
 }
 
-a.structure-link {
-  background-repeat: no-repeat;
-  background-position: left center;
-  padding-left: 1.4rem;
-  color: black;
-  background-image: url("../images/structure.svg");
-  background-size: 1.1rem;
-}
-
 section#sidebar,
 div#burger-content {
   a.btn {
@@ -265,16 +256,17 @@ div#sidebar-interaction {
 }
 
 div#sidebar-related {
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top: 1rem;
-    margin-bottom: 0;
-  }
+}
 
-  ul li a {
+ul.tag-info {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 0;
+
+  li a {
     background-repeat: no-repeat;
-    background-position: left top;
+    background-position: left center;
     padding-left: 1.7rem;
     margin-bottom: .3rem;
     display: block;
@@ -282,12 +274,16 @@ div#sidebar-related {
     background-size: 1rem;
   }
 
+  li.structure-link a {
+    background-image: url("/static/images/structure.svg");
+  }
+
   li.tag-statistics a {
-    background-image: url("../images/statistics.svg");
+    background-image: url("/static/images/statistics.svg");
   }
 
   li.tag-dependencies a {
-    background-image: url("../images/dependency.svg");
+    background-image: url("/static/images/dependency.svg");
   }
 }
 
@@ -297,7 +293,7 @@ div#burger-content {
     width: 10rem;
   }
 
-  a.structure-link {
+  ul.tag-info {
     margin-left: 1rem;
   }
 }
