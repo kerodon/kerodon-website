@@ -124,7 +124,7 @@ $(function () {
     {% if quicknav %}
     <ul id="quicknav">
       {% for item in quicknav %}
-        <li><a class="sidebar-link" data-tag="{{ item.tag }}" href="/tag/{{ item.tag }}">{{ item.type | capitalize }} {{ item.ref }}</a>: {{ item.name }}
+        <li><a class="sidebar-link" href="/tag/{{ item.tag }}">{{ item.type | capitalize }} <span data-tag="{{ item.tag }}">{{ item.ref }}</span></a>: {{ item.name }}
       {% endfor %}
     </ul>
     {% endif %}
