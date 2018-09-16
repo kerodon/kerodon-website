@@ -1,3 +1,5 @@
+@import "variables";
+
 dl.entry {
   display: flex;
   flex-flow: row;
@@ -24,8 +26,17 @@ ul#letters {
   li {
     border: 1px solid black;
   }
+
+  li.page-item a {
+    background-color: white;
+  }
+
+  li.page-item a:hover {
+    background-color: $kerodon-orange;
+  }
 }
 
 div#hamburger-letters {
   margin: 1rem;
 }
+

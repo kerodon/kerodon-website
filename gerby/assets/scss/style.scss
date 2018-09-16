@@ -308,14 +308,20 @@ div#content {
 }
 
 section#main {
-  padding: 0;
+  padding: calc(20rem / #{$size}) 0 0 0;
+}
+
+@media (min-width: 992px) {
+  section#main {
+    padding-right: 2rem;
+  }
 }
 
 section#sidebar {
   background-color: #f4f0ea;
   top: calc(45rem / #{$size});
   padding: calc(15rem / #{$size});
-  margin-top: calc(10rem / #{$size});
+  margin-top: calc(30rem / #{$size});
 }
 
 .tag, .commit, .filename, .label {
@@ -455,7 +461,7 @@ div.toggle.off {
   }
 
   li.page-item a:hover {
-    text-decoration: underline;
+    text-decoration: none;
     background-color: $kerodon-orange;
   }
 
