@@ -320,9 +320,9 @@ section#main {
 
 section#sidebar {
   background-color: #f4f0ea;
-  top: calc(45rem / #{$size});
   padding: calc(15rem / #{$size});
   margin-top: calc(30rem / #{$size});
+  margin-right: .5rem;
 }
 
 .tag, .commit, .filename, .label {
