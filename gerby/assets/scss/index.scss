@@ -1,17 +1,13 @@
 div#content {
-  height: 100vh;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-section#main {
-  margin-bottom: 20vh;
-}
-
 div#logo {
   z-index: 1;
-  margin-top: 1rem;
+  margin-top: 2rem;
   text-align: center;
 
   h1 {
@@ -35,7 +31,6 @@ div#logo {
 }
 
 span#moveit {
-  z-index: 1;
   position: relative;
   top: -10rem;
   margin: 0 auto;
@@ -169,9 +164,9 @@ div#selector {
   }
 }
 
-@media (max-height: 600px) {
+@media (max-height: 600px), (max-width: 400px) {
   div#logo p#tagline {
-    font-size: calc(22rem / 15);
+    font-size: calc(24rem / 15);
   }
 
   div#forage {
