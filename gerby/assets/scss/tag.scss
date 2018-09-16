@@ -48,12 +48,12 @@ div.html {
 
 div.html div.equation {
   margin-top: -.3rem;
-  /*overflow-x: scroll;*/
-  /*overflow: -moz-scrollbars-none;*/
+  overflow-x: scroll;
+  overflow: -moz-scrollbars-none;
 }
 
 div.equation::-webkit-scrollbar {
-  /*display: none;*/
+  display: none;
 }
 
 p + div.equation {
