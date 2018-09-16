@@ -2,7 +2,9 @@
 
 input {
   float: left;
+  border-radius: 0;
 }
+
 input[type=search] {
   -webkit-appearance: none;
   padding-left: .3rem;
