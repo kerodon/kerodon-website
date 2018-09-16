@@ -22,11 +22,14 @@ dl.entry dd {
   overflow: hidden;
 }
 
-ul#letters {
+ul.letters {
   li {
     border: 1px solid black;
   }
 
+}
+
+section#sidebar{
   li.page-item a {
     background-color: white;
   }
