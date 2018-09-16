@@ -18,6 +18,7 @@ html {
   font-size: #{$size}px;
   overflow-x: hidden;
   overflow-y: scroll;
+  overscroll-behavior: none;
 }
 
 body {
