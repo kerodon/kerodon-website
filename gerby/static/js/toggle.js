@@ -11,7 +11,7 @@ $(document).ready(function() {
   // turn the checkbox into a toggle button
   $("input.toggle").bootstrapToggle();
 
-  $("input.toggle").change(function() {
+  $("input.toggle").change(function(e) {
     // change the state which decides whether we execute the event
     execute = !execute;
     // check whether we should execute the event or not: synchronise fires a second event
@@ -34,6 +34,10 @@ $(document).ready(function() {
       localStorage.setItem("toggle", "tag");
     else
       localStorage.setItem("toggle", "numbers");
+
+    // hide hamburger when clicking toggle
+    if ($(e.currentTarget.parentElement.parentElement).is("#burger-content"))
+      $("input#burger-checkbox").click();
   });
 
   // toggle if localStorage says so
