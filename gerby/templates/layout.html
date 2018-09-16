@@ -131,6 +131,13 @@
   {% endif %}
 </nav>
 
+<script type="text/javascript">
+// prevent scrolling when hamburger is visible
+$("div#burger-content").on("touchstart mousewheel", function(e) {
+  e.preventDefault();
+});
+</script>
+
 <div class="container" id="content">
   {% block content %}{% endblock %}
 </div>
