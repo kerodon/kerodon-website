@@ -33,36 +33,20 @@ $(document).on('click', 'a[href^="#"]', function (event) {
       </div>
 
       <div id="selector" class="col-12 col-lg-8">
+
         <h2>Forage</h2>
 
-        <h3><a href="#"><span class="type">Part I</span>: Fundamentals of Spectral Algebraic Geometry</a></h3>
-        <input type="checkbox" id="part-i" checked>
-        <label for="part-i"></label>
-        <ul>
-          <li><a href="#"><span class="type">Chapter 1</span>: Schemes and Deligne&ndash;Mumford Stacks</a>
-          <li><a href="#"><span class="type">Chapter 2</span>: Quasi-Coherent Sheaves</a>
-          <li><a href="#"><span class="type">Chapter 3</span>: Spectral Algebraic Spaces</a>
-        </ul>
+        {% for part in tags %}
+          <h3><a href="/tag/{{ part.tag }}"><span class="type">Part {{ part.ref }}</span>: {{ part.name }}</a></h3>
+          <input type="checkbox" id="part-{{ part.ref }}" checked>
+          <label for="part-{{ part.ref }}"></label>
 
-        <h3><a href="#"><span class="type">Part II</span>: Proper Morphisms</a></h3>
-        <input type="checkbox" id="part-ii" checked>
-        <label for="part-ii"></label>
-        <ul>
-          <li><a href="#"><span class="type">Chapter 4</span>: Morphisms of Finite Presentation</a>
-          <li><a href="#"><span class="type">Chapter 5</span>: Proper Morphisms in Spectral Algebraic Geometry</a>
-          <li><a href="#"><span class="type">Chapter 6</span>: Grothendieck Duality</a>
-          <li><a href="#"><span class="type">Chapter 7</span>: Nilpotent, Local and Complete Modules</a>
-          <li><a href="#"><span class="type">Chapter 8</span>: Formal Spectral Algebraic Geometry</a>
-        </ul>
-
-        <h3><a href="#"><span class="type">Part III</span>: Tannaka Reconstruction and Quasi-Coherent Stacks</a></h3>
-        <input type="checkbox" id="part-iii" checked>
-        <label for="part-iii"></label>
-        <ul>
-          <li><a href="#"><span class="type">Chapter 9</span>: Tannaka Duality</a>
-          <li><a href="#"><span class="type">Chapter 10</span>: Quasi-Coherent Stacks</a>
-          <li><a href="#"><span class="type">Chapter 11</span>: Smooth and Proper Linear $\infty$-Categories</a>
-        </ul>
+          <ul>
+          {% for chapter in part.children %}
+            <li><a href="/tag/{{ chapter.tag }}"><span class="type">Chapter {{ chapter.ref }}</span>: {{ chapter.name }}</a>
+          {% endfor %}
+          </ul>
+        {% endfor %}
       </div>
     </div>
   </div>

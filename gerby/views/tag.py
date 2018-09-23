@@ -1,5 +1,7 @@
 import datetime
 import string
+import random
+import itertools
 
 from flask import render_template, request, redirect
 
@@ -26,6 +28,10 @@ def isTag(string):
 def combine(tags):
   level = min([len(tag.ref.split(".")) for tag in tags], default=0)
 
+  # split up into tags and parts
+  parts = sorted([tag for tag in tags if tag.type == "part"])
+  tags = [tag for tag in tags if tag.type != "part"]
+
   output = []
   children = []
   for tag in tags:
@@ -51,10 +57,25 @@ def combine(tags):
 
   # recurse for all elements in output which have children
   for tag in output:
-      if hasattr(tag, "children"):
-        tag.children = combine(tag.children)
+    if hasattr(tag, "children"):
+      tag.children = combine(tag.children)
 
-  return output
+  # if no parts are present we are done
+  if len(parts) == 0:
+    return output
+  # otherwise we recombine parts and other tags
+  else:
+    # add part information to chapters
+    for chapter in output:
+      chapter.part = Part.get(Part.chapter == chapter).part
+
+    # combine parts with chapters
+    for part in parts:
+      part.children = [tag for tag in output if tag.part == part]
+
+
+    return parts
+
 
 def getNeighbours(tag):
   # items cannot be dealt with appropriately, so we just don't
@@ -104,6 +125,46 @@ def getNeighbours(tag):
     up = None
 
   return (left, right, up)
+
+
+def get_statistics():
+  statistics = []
+
+  if BookStatistic.table_exists():
+    try:
+      statistics.append(str(BookStatistic.get(BookStatistic.statistic == "pages").value) + " pages")
+    except BookStatistic.DoesNotExist:
+      app.logger.warning("No entry 'pages' in table 'BookStatistics'.")
+
+    try:
+      statistics.append(str(BookStatistic.get(BookStatistic.statistic == "lines").value) + " lines of code")
+    except BookStatistic.DoesNotExist:
+      app.logger.warning("No entry 'lines' in table 'BookStatistics'.")
+
+  tags = Tag.select().where(Tag.active == True).count()
+  statistics.append(str(tags) + " tags")
+  statistics.append(str(Tag.select().where(Tag.type == "section").count()) + " sections")
+  statistics.append(str(Tag.select().where(Tag.type == "chapter").count()) + " chapters")
+  statistics.append(str(Slogan.select().count()) + " slogans")
+
+  return statistics
+
+
+
+@app.route("/")
+def show_index():
+  kerodi = ["Kerodon-Climbing.svg", "Kerodon-Guitar.svg", "Kerodon-Reading.svg", "Kerodon-Scientist.svg", "Kerodon-Sports.svg", "Kerodon-Surfing.svg", "Kerodon-VR.svg"]
+  number = 1 # change accordingly
+
+  tags = Tag.select().where(Tag.type << ["part", "chapter"])
+  tags = combine(tags)
+
+  return render_template(
+      "index.html",
+      tags=tags,
+      kerodi=random.choice(list(itertools.combinations(kerodi, number))),
+      statistics=get_statistics(),
+      )
 
 
 @app.route("/tag/<string:tag>")

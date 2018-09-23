@@ -3,7 +3,6 @@ import os.path
 import time
 import urllib.request
 import itertools
-import random
 import socket
 import feedparser
 import re
@@ -53,28 +52,6 @@ feeds = {
 socket.setdefaulttimeout(5)
 
 
-def get_statistics():
-  statistics = []
-
-  if BookStatistic.table_exists():
-    try:
-      statistics.append(str(BookStatistic.get(BookStatistic.statistic == "pages").value) + " pages")
-    except BookStatistic.DoesNotExist:
-      app.logger.warning("No entry 'pages' in table 'BookStatistics'.")
-
-    try:
-      statistics.append(str(BookStatistic.get(BookStatistic.statistic == "lines").value) + " lines of code")
-    except BookStatistic.DoesNotExist:
-      app.logger.warning("No entry 'lines' in table 'BookStatistics'.")
-
-  tags = Tag.select().where(Tag.active == True).count()
-  statistics.append(str(tags) + " tags")
-  statistics.append(str(Tag.select().where(Tag.type == "section").count()) + " sections")
-  statistics.append(str(Tag.select().where(Tag.type == "chapter").count()) + " chapters")
-  statistics.append(str(Slogan.select().count()) + " slogans")
-
-  return statistics
-
 feedsDirectory = app.instance_path + "/feeds"
 
 def update_feeds():
@@ -91,41 +68,6 @@ def update_feeds():
       except:
         # when this happens we should probably add more information etc. but for now it's just caught
         app.logger.warning("feed '%s' did not load properly" % feed["title"])
-
-
-@app.route("/")
-def show_index():
-  update_feeds()
-
-  updates = []
-  for label, feed in feeds.items():
-    update = {"title": "<a href='" + feed["link"] + "'>" + feed["title"] + "</a>", "entries": []}
-
-    d = feedparser.parse(feedsDirectory + "/" + label + ".feed")
-    for i in range(min(5, len(d.entries))):
-      entry = "<span class='date'>" + time.strftime("%d %b %Y", d.entries[i].updated_parsed) + "</span>: "
-      entry = entry + "<a href='" + d.entries[i].link + "'>" + d.entries[i].title + "</a>"
-      update["entries"].append(entry)
-
-    updates.append(update)
-
-  comments = []
-  if Comment.table_exists():
-    comments = Comment.select().where(Comment.active).order_by(Comment.id.desc()).paginate(1, 5)
-
-  for comment in comments:
-    comment.tag = Tag.get(Tag.tag == comment.tag)
-
-  kerodi = ["Kerodon-Climbing.svg", "Kerodon-Guitar.svg", "Kerodon-Reading.svg", "Kerodon-Scientist.svg", "Kerodon-Sports.svg", "Kerodon-Surfing.svg", "Kerodon-VR.svg"]
-  number = 3 # change accordingly
-
-  return render_template(
-      "index.html",
-      kerodi=random.choice(list(itertools.combinations(kerodi, number))),
-      updates=updates,
-      statistics=get_statistics(),
-      comments=comments,
-      )
 
 
 @app.route("/about")
