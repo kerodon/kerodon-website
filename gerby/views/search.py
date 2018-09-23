@@ -5,6 +5,7 @@ from gerby.views import tag
 from gerby.database import *
 
 import peewee
+from gerby.views.methods import *
 
 spelling = {
     "quasiaffine": "\"quasi-affine\"",
@@ -113,6 +114,11 @@ def show_search():
   for result in complete:
     if result.type.startswith("part"):
       result.type = result.type[4:]
+
+
+  # deal with HTML issues in results
+  for result in complete:
+    result.html = fixDataMarker(result.html)
 
   tree = tag.combine(list(sorted(complete)))
 

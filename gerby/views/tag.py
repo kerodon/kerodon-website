@@ -241,6 +241,8 @@ def show_tag(tag):
 
   footnotes = Footnote.select().where(Footnote.label << labels)
 
+  html = fixDataMarker(html)
+
   # deal with data-marker="$$"
   symbols = {"$(" + symbol + ")$": "(" + symbol + ")" for symbol in string.ascii_letters + string.digits}
   symbols["$(\\ast )$"] = "(&lowast;)"

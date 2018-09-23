@@ -1,4 +1,6 @@
 import markdown
+import string
+
 from mdx_bleach.extension import BleachExtension
 from mdx_bleach.whitelist import ALLOWED_TAGS
 from mdx_bleach.whitelist import ALLOWED_ATTRIBUTES
@@ -69,3 +71,13 @@ def getBreadcrumb(tag):
   return tags
 
 
+def fixDataMarker(html):
+  # deal with data-marker="$$"
+  symbols = {"$(" + symbol + ")$": "(" + symbol + ")" for symbol in string.ascii_letters + string.digits}
+  symbols["$(\\ast )$"] = "(&lowast;)"
+  symbols["$(\\ast ')$"] = "(&lowast;')"
+  symbols["$(\\ast '')$"] = "(&lowast;'')"
+  for symbol in symbols:
+    html = html.replace("data-marker=\"" + symbol + "\"", "data-marker=\"" + symbols[symbol] + "\"")
+
+  return html
