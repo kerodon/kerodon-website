@@ -231,6 +231,12 @@ ul#quicknav a {
   font-weight: bold;
 }
 
+@media (max-height: 700px) {
+  ul#quicknav {
+    display: none;
+  }
+}
+
 section#sidebar,
 div#burger-content {
   a.btn {
