@@ -119,6 +119,7 @@ def show_search():
   # deal with HTML issues in results
   for result in complete:
     result.html = fixDataMarker(result.html)
+    result.html = fixFutureRef(result.html)
 
   tree = tag.combine(list(sorted(complete)))
 

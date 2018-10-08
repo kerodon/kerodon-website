@@ -242,17 +242,7 @@ def show_tag(tag):
   footnotes = Footnote.select().where(Footnote.label << labels)
 
   html = fixDataMarker(html)
-
-  # deal with data-marker="$$"
-  symbols = {"$(" + symbol + ")$": "(" + symbol + ")" for symbol in string.ascii_letters + string.digits}
-  symbols["$(\\ast )$"] = "(&lowast;)"
-  symbols["$(\\ast ')$"] = "(&lowast;')"
-  symbols["$(\\ast '')$"] = "(&lowast;'')"
-  for symbol in symbols:
-    html = html.replace("data-marker=\"" + symbol + "\"", "data-marker=\"" + symbols[symbol] + "\"")
-
-  # deal with \futureref
-  html = html.replace("[?]", '<a style="cursor: pointer;" tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="" data-toggle="popover" title="Future reference" data-html="true" data-content="This is a reference to something which is not yet available in Kerodon."><img src="/static/images/question.svg"></a>')
+  html = fixFutureRef(html)
 
   tree = None
   quicknav = None
