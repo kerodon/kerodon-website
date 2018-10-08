@@ -6,7 +6,7 @@ import itertools
 import socket
 import feedparser
 import re
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, send_file
 #import flask_profiler
 import flask_scss
 
@@ -68,6 +68,11 @@ def update_feeds():
       except:
         # when this happens we should probably add more information etc. but for now it's just caught
         app.logger.warning("feed '%s' did not load properly" % feed["title"])
+
+
+@app.route("/kerodon.pdf")
+def download_file():
+  return send_file("kerodon.pdf")
 
 
 @app.route("/about")
