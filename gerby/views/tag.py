@@ -153,7 +153,7 @@ def get_statistics():
 
 @app.route("/")
 def show_index():
-  kerodi = ["Kerodon-Climbing.svg", "Kerodon-Guitar.svg", "Kerodon-Reading.svg", "Kerodon-Scientist.svg", "Kerodon-Sports.svg", "Kerodon-Surfing.svg", "Kerodon-VR.svg"]
+  kerodi = ["Kerodon-Climbing.svg"] # for now only the climber, "Kerodon-Guitar.svg", "Kerodon-Reading.svg", "Kerodon-Scientist.svg", "Kerodon-Sports.svg", "Kerodon-Surfing.svg", "Kerodon-VR.svg"]
   number = 1 # change accordingly
 
   tags = Tag.select().where(Tag.type << ["part", "chapter"])
