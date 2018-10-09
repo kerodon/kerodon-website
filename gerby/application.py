@@ -101,26 +101,6 @@ def show_statistics():
   return render_template("single/statistics.html", total=total, counts=counts, extras=extras, records=records)
 
 
-@app.route("/browse")
-def show_chapters():
-  # part is top-level
-  if Tag.select().where(Tag.type == "part").exists():
-    chapters = Part.select()
-    parts = Tag.select().join(Part, on=Part.part).order_by(Tag.ref).distinct()
-
-    for part in parts:
-      part.chapters = sorted([chapter.chapter for chapter in chapters if chapter.part.tag == part.tag])
-
-    return render_template("toc.parts.html", parts=parts)
-
-  # chapter is top-level
-  else:
-    chapters = Tag.select().where(Tag.type == "chapter")
-    chapters = sorted(chapters)
-
-    return render_template("toc.chapters.html", chapters=chapters)
-
-
 @app.route("/robots.txt")
 def show_robots():
   return send_from_directory(app.static_folder, request.path[1:])
