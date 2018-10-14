@@ -212,6 +212,13 @@ ul#citations {
   font-size: .9rem;
 }
 
+div.html {
+  dl dt {
+    float: left;
+    margin: 0 1rem;
+  }
+}
+
 a.btn:hover {
   color: white;
 }
