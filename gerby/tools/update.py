@@ -70,6 +70,9 @@ def importTags(files):
       except:
         pass
 
+    # dealing with `xymatrix@1`, see https://github.com/gerby-project/plastex/issues/55
+    entity.html = entity.html.replace("xymatrix@ 1", "xymatrix@1")
+
     entity.save()
 
 
