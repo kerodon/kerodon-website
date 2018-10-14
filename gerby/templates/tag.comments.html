@@ -25,10 +25,10 @@
 
 {% if commentsEnabled %}
 <section id="comments">
-  <h2>Comments on {{ tag.type }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span></h2>
+  <h2>Comments on {{ tag.type | capitalize }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span></h2>
 
   {% if comments | length == 0 %}
-    <p>There are currently no comments on {{ tag.type }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span>.
+    <p>There are currently no comments on {{ tag.type | capitalize }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span>.
   {% endif %}
 
   {% for comment in comments %}
@@ -64,6 +64,8 @@
   <div id="sidebar-related">
     <a class="btn btn-success" href="/kerodon.pdf#nameddest={{ tag.tag }}">view as pdf</a>
 
-    {{ macros.tagInformation(tag, dependencies) }}
+    <ul class="tag-info">
+      {{ macros.tagInformation(tag, dependencies) }}
+    </ul>
   </div>
 {% endblock %}
