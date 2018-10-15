@@ -1,3 +1,5 @@
 # go away
 User-agent: *
-Disallow: /
+Disallow: /changes
+Disallow: /recent-comments
+Disallow: /recent-comments/*
