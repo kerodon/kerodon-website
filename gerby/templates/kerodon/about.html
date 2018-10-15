@@ -3,10 +3,13 @@
 {% block title %}About{% endblock %}
 
 {% block body %}
-<h1>About</h1>
+<h1>About <em>Kerodon</em></h1>
 <h2>Mathematics</h2>
+<p>Kerodon is an online textbook on categorical homotopy theory and related mathematics. It currently consists of a single chapter, but should grow (slowly) over time. It is modeled on <a href="https://stacks.math.columbia.edu">the Stacks project</a>, and is maintained by <a href="http://www.math.harvard.edu/~lurie/">Jacob Lurie</a>.
 
-<h2>Animal kingdom</h2>
+<p>Its infrastructure uses <a href="https://gerby-project.github.io">Gerby</a>, which is maintained by <a href="https://pbelmans.ncag.info">Pieter Belmans</a>. The design was created by <a href="https://opusdesign.us/">Opus Design</a>.
+
+<h2>In the animal kingdom</h2>
 <p>According to <a href="https://en.wikipedia.org/wiki/Kerodon">Wikipedia</a>:
 <blockquote>
   The genus <strong><em>Kerodon</em></strong> contains two species of South American rock cavies related to capybaras and guinea pigs. They are found in semi-arid regions of Northeast Brazil known as the Caatinga. This area has a rocky terrain with large granite boulders that contain rifts and hollows where Kerodon primarily lives.
@@ -14,8 +17,5 @@
 {% endblock %}
 
 {% block sidebar %}
-  <ul>
-    <li><a href="/statistics">statistics</a>
-    <li>more?
-  </ul>
+  {{ macros.pagelinks() }}
 {% endblock %}

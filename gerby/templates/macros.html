@@ -30,3 +30,10 @@
     {% if loop.last %}<span id="citation">(<a href="/tag/{{ parent.tag }}/cite">cite</a>)</span>{% endif %}
   {% endfor %}
 {% endmacro %}
+
+{% macro pagelinks() %}
+  <ul class="tag-info">
+    <li class="tag-statistics"><a href="/statistics">statistics for Kerodon</a>
+    <li class="tag-dependencies"><a href="/tags">tags explained</a>
+  </ul>
+{% endmacro %}

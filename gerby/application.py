@@ -4,7 +4,6 @@ import time
 import urllib.request
 import itertools
 import socket
-import feedparser
 import re
 from flask import Flask, render_template, request, send_from_directory, send_file
 #import flask_profiler
@@ -35,40 +34,6 @@ flask_scss.Scss(app, static_dir="gerby/static/css", asset_dir="gerby/assets")
 #    "ignore": ["^/static/.*"]
 #}
 
-feeds = {
-  "github": {
-    "url": "https://github.com/stacks/stacks-project/commits/master.atom",
-    "title": "Recent commits",
-    "link": "https://github.com/stacks/stacks-project/commits",
-  },
-  "blog": {
-    "url": "https://www.math.columbia.edu/~dejong/wordpress/?feed=rss2",
-    "title": "Recent blog posts",
-    "link": "https://www.math.columbia.edu/~dejong/wordpress",
-  },
-}
-
-# set timeout for feed request
-socket.setdefaulttimeout(5)
-
-
-feedsDirectory = app.instance_path + "/feeds"
-
-def update_feeds():
-  # make sure there is a directory
-  if not os.path.exists(feedsDirectory):
-    os.makedirs(feedsDirectory)
-
-  # update if needed (i.e. older than 1 hour)
-  for label, feed in feeds.items():
-    path = feedsDirectory + "/" + label + ".feed"
-    if not os.path.isfile(path) or time.time() - os.path.getmtime(path) > 3600:
-      try:
-        urllib.request.urlretrieve(feed["url"], path)
-      except:
-        # when this happens we should probably add more information etc. but for now it's just caught
-        app.logger.warning("feed '%s' did not load properly" % feed["title"])
-
 
 @app.route("/kerodon.pdf")
 def download_file():
@@ -78,6 +43,16 @@ def download_file():
 @app.route("/about")
 def show_about():
   return render_template("kerodon/about.html")
+
+
+@app.route("/tags")
+def show_tags():
+  return render_template("kerodon/tags.html")
+
+
+@app.route("/markdown")
+def show_markdown():
+  return render_template("kerodon/markdown.html")
 
 
 @app.route("/statistics")
@@ -98,22 +73,12 @@ def show_statistics():
   records["referenced"] = Dependency.select(Dependency.to, fn.COUNT(Dependency.to).alias("value")).group_by(Dependency.to).order_by(fn.COUNT(Dependency.to).desc())[0]
   records["proof"] = Proof.select(Proof.tag, fn.length(Proof.html).alias("value")).order_by(fn.length(Proof.html).desc())[0]
 
-  return render_template("single/statistics.html", total=total, counts=counts, extras=extras, records=records)
+  return render_template("kerodon/statistics.html", total=total, counts=counts, extras=extras, records=records)
 
 
 @app.route("/robots.txt")
 def show_robots():
   return send_from_directory(app.static_folder, request.path[1:])
-
-
-@app.route("/tags")
-def show_tags():
-  return render_template("single/tags.html")
-
-
-@app.route("/markdown")
-def show_markdown():
-  return render_template("single/markdown.html")
 
 
 app.jinja_env.add_extension('jinja2.ext.do')

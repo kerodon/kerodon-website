@@ -11,7 +11,7 @@
 
 {% block body %}
 <h2>Statistics</h2>
-<p>Here we collect some metrics regarding the Stacks project. If you have a suggestion for an interesting metric, <a href="mailto:stacks.project@gmail.com">please get in touch</a>.
+<p>Here we collect some metrics regarding Kerodon.
 
 <h3>Breakdown of tags per type</h3>
 <p>There are {{ total }} tags in total.
@@ -75,3 +75,6 @@
 </table>
 {% endblock %}
 
+{% block sidebar %}
+  {{ macros.pagelinks() }}
+{% endblock %}
