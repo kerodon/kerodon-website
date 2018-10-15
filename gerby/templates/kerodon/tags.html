@@ -2,11 +2,9 @@
 
 {% block title %}Tags explained{% endblock %}
 
-{% block breadcrumb %}
-  <li><a href="/tags">Tags explained</a>
-{% endblock %}
-
 {% block body %}
+  <h1>Tags explained</h1>
+
   <h2>The tag system</h2>
   <p>Each tag refers to a unique item (section, lemma, theorem, etc.) in order for this project to be referenceable. These tags don't change even if the item moves within the text.
 
@@ -20,9 +18,8 @@
   <h2 id="reference">How to reference tags</h2>
   <p>In your BibTeX file put
   <pre><code>@misc{kerodon,
-    shorthand    = {K},
-    author       = {Jacob Lurie},
     title        = {Kerodon},
+    author       = {Jacob Lurie},
     howpublished = {\url{https://kerodon.net}},
     year         = {2018},
   }</code></pre>
@@ -32,6 +29,7 @@
 {% endblock %}
 
 {% block sidebar %}
+  {{ macros.pagelinks() }}
 {% endblock %}
 
 

@@ -8,9 +8,6 @@
   <link rel="alternate" type="application/rss+xml" href="/recent-comments.rss">
 {% endblock %}
 
-{% block breadcrumb %}
-{% endblock %}
-
 {% macro pagination() %}
 
 <ul class="neighbours">
@@ -66,8 +63,17 @@
 
 {% block sidebar %}
   <div class="interaction">
+    <div id="sidebar-interaction">
+      <span id="sidebar-toggle"></span>
+    </div>
+
+    <hr>
+
     {{ pagination() }}
-    <p style="text-align: center"><a rel="alternate" type="application/rss.xml" href="/recent-comments.rss">feed</a></p>
+
+    <hr>
+
+    <p><a rel="alternate" type="application/rss.xml" href="/recent-comments.rss">feed</a></p>
   </div>
 {% endblock %}
 
