@@ -139,8 +139,11 @@ $(function () {
 
   <div id="sidebar-related">
     <a class="btn btn-success" href="/kerodon.pdf#nameddest={{ tag.tag }}">view as pdf</a>
-    <br>
-    <a class="btn btn-success" href="/tag/{{ tag.tag }}/comments">comments ({{ comments | length }})</a>
+
+    {% if commentsEnabled %}
+      <br>
+      <a class="btn btn-success" href="/tag/{{ tag.tag }}/comments">comments ({{ comments | length }})</a>
+    {% endif %}
 
     <ul class="tag-info">
       {{ macros.tagInformation(tag, dependencies) }}

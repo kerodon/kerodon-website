@@ -14,7 +14,7 @@ import gerby.configuration
 import re
 
 headings = ["part", "chapter", "section", "subsection", "subsubsection"]
-hideComments = ["part", "chapter"]
+hideComments = ["part"]
 extras = {"slogan": Slogan, "history": History, "reference": Reference}
 
 # Tags pattern as used in the tag_up scripts
@@ -311,23 +311,25 @@ def show_comments(tag):
 
   breadcrumb = getBreadcrumb(tag)
 
-  commentsEnabled = Comment.table_exists() # for now use comments on every possible tag type
+  commentsEnabled = tag.type not in hideComments and Comment.table_exists()
   comments = []
   parentComments = []
 
-  if commentsEnabled:
-    comments = Comment.select().where(Comment.tag == tag.tag, Comment.active)
-    for comment in comments:
-      comment.comment = sfm(comment.comment)
+  if not commentsEnabled:
+    return render_template("tag.nocomments.html", tag=tag)
 
-    # looking for comments higher up in the breadcrumb
-    parentComments = []
-    for parent in breadcrumb:
-      if parent.tag == tag.tag:
-        continue
-      count = Comment.select().where(Comment.tag == parent.tag, Comment.active).count() # this could be done in a single JOIN
-      if count > 0:
-        parentComments.append([parent, count])
+  comments = Comment.select().where(Comment.tag == tag.tag, Comment.active)
+  for comment in comments:
+    comment.comment = sfm(comment.comment)
+
+  # looking for comments higher up in the breadcrumb
+  parentComments = []
+  for parent in breadcrumb:
+    if parent.tag == tag.tag:
+      continue
+    count = Comment.select().where(Comment.tag == parent.tag, Comment.active).count() # this could be done in a single JOIN
+    if count > 0:
+      parentComments.append([parent, count])
 
   return render_template("tag.comments.html",
                          tag=tag,
