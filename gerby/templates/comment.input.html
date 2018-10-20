@@ -94,9 +94,9 @@ $("input#check").on("keypress", function(e) {
       // explain captcha
       $("#captcha-message").toggle();
     }
-
-    console.log("now submitting");
-    $("form#comment-form").submit();
+    else {
+      $("form#comment-form").submit();
+    }
   }
 });
     </script>
