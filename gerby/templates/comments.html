@@ -43,7 +43,7 @@
         {% if comment.site %}<cite><a href="{{ comment.site }}" rel="author">{{ comment.author }}</a></cite>
         {% else %}<cite>{{ comment.author }}</cite>{% endif %}
         left
-        <a href="/tag/{{ comment.tag.tag }}/comments/#comment-{{ comment.id }}">comment #{{ comment.id }}</a>
+        <a href="/tag/{{ comment.tag.tag }}/comments#comment-{{ comment.id }}">comment #{{ comment.id }}</a>
         on
 	{{ comment.tag.type | capitalize }}
 	<a href="/tag/{{ comment.tag.tag }}" data-tag="{{ comment.tag.tag }}">{{ comment.tag.ref }}</a>
