@@ -35,8 +35,10 @@ spelling = {
     }
 
 @app.route("/tag")
+@app.route("/tag/")
 def redirect_to_search():
   return redirect("/search")
+
 
 @app.route("/search", methods = ["GET"])
 def show_search():
