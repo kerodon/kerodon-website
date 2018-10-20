@@ -1,0 +1,14 @@
+{% extends "page.html" %}
+
+{% block title %}{{ tag }} does not allow comments{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block body %}
+<h2 class="error">Tag <span class="tag">{{ tag.tag }}</span> does not allow comments</h2>
+
+<p>Comments are not enabled for this tag.
+{% endblock %}
+
+
