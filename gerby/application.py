@@ -40,6 +40,11 @@ def download_file():
   return send_file("kerodon.pdf")
 
 
+@app.route("/favicon.ico")
+def download_favicon():
+  return send_file("static/kerodon.ico")
+
+
 @app.route("/about")
 def show_about():
   return render_template("kerodon/about.html")
