@@ -26,6 +26,9 @@
 {% if commentsEnabled %}
 <section id="comments">
   <h2>Comments on {{ tag.type | capitalize }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span></h2>
+  <p>Go back to the page of <a href="/tag/{{ tag.tag }}">{{ tag.type | capitalize }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span></a>.
+
+  <hr>
 
   {% if comments | length == 0 %}
     <p>There are currently no comments on {{ tag.type | capitalize }} <span data-tag="{{ tag.tag }}">{{ tag.ref }}</span>.
