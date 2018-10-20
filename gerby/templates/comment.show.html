@@ -1,6 +1,6 @@
 <article  id="comment-{{ comment.id }}">
   <header>
-    <p><a href="/tag/{{ tag.tag }}#comment-{{ comment.id }}">Comment #{{ comment.id }}</a>
+    <p><a href="/tag/{{ tag.tag }}/comments#comment-{{ comment.id }}">Comment #{{ comment.id }}</a>
     by
     {% if comment.site %}<cite><a href="{{ comment.site }}" rel="author">{{ comment.author }}</a></cite>
     {% else %}<cite>{{ comment.author }}</cite>{% endif %}
