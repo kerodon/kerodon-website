@@ -4,15 +4,15 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Mono:400);
 
-@import url("bibliography.css");
-@import url("browse.css");
-@import url("comments.css");
-@import url("search.css");
-@import url("tag.css");
-@import url("toc.css");
-@import url("tree.css");
-
 @import "variables";
+
+@import "bibliography";
+@import "comments";
+@import "search";
+@import "tag";
+@import "tree";
+
+@import "print";
 
 html {
   font-size: #{$size}px;
