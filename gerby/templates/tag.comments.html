@@ -42,7 +42,7 @@
     <p>There are also:
     <ul>
       {% for parent in parentComments %}
-        <li>{{ parent[1] }} comment(s) on {{ parent[0].type | capitalize }} <a href="/tag/{{ parent[0].tag }}#comments" data-tag="{{ parent[0].tag }}">{{ parent[0].ref }}</a>{% if parent[0].name %}: {{ parent[0].name | safe }}{% endif %}
+        <li>{{ parent[1] }} comment(s) on {{ parent[0].type | capitalize }} <a href="/tag/{{ parent[0].tag }}/comments" data-tag="{{ parent[0].tag }}">{{ parent[0].ref }}</a>{% if parent[0].name %}: {{ parent[0].name | safe }}{% endif %}
       {% endfor %}
     </ul>
   {% endif %}
