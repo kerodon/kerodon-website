@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
-  <title>Stacks project -- Comments</title>
-  <link>https://stacks.math.columbia.edu/recent-comments.xml</link>
-  <description>Stacks project, see https://stacks.math.columbia.edu</description>
+  <title>Kerodon &ndash; Comments</title>
+  <link>https://kerodon.net/recent-comments.xml</link>
+  <description>Kerodon, see https://kerodon.net</description>
   <language>en</language>
-  <managingEditor>stacks.project@gmail.com (The Stacks project)</managingEditor>
+  <managingEditor>pieterbelmans@gmail.com (Pieter Belmans)</managingEditor>
   <webMaster>pieterbelmans@gmail.com (Pieter Belmans)</webMaster>
   <image>
-    <url>https://stacks.math.columbia.edu/static/stacks.png</url>
-    <title>Stacks project -- Comments</title>
-    <link>https://stacks.math.columbia.edu/recent-comments.rss</link>
+    <url>https://kerodon.net/static/favicon.png</url>
+    <title>Kerodon &ndash; Comments</title>
+    <link>https://kerodon.net/recent-comments.rss</link>
   </image>
 
   {% for comment in comments %}
     <item>
       <title>#{{ comment.id }} on tag {{ comment.tag }} by {{ comment.author }}</title>
-      <link>https://stacks.math.columbia.edu/tag/{{ comment.tag }}#comment-{{ comment.id }}</link>
+      <link>https://kerodon.net/tag/{{ comment.tag }}/comments#comment-{{ comment.id }}</link>
       <description>A new comment by {{ comment.author }} on tag {{ comment.tag }}.</description>
       <content:encoded><![CDATA[ {{ comment.comment | safe }}]]></content:encoded>
       <dc:creator>{{ comment.author }}</dc:creator>
