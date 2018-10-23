@@ -10,7 +10,7 @@
   <image>
     <url>https://kerodon.net/static/favicon.png</url>
     <title>Kerodon—Comments</title>
-    <link>https://kerodon.net/recent-comments.rss</link>
+    <link>https://kerodon.net/recent-comments.xml</link>
   </image>
 
   {% for comment in comments %}

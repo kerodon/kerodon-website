@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, redirect
+from flask import redirect, render_template, request, redirect, Response
 
 from gerby.application import app
 from gerby.database import *
@@ -43,7 +43,7 @@ def show_comments_feed():
     comment.comment = sfm(comment.comment)
     commentsout.append(comment)
 
-  return render_template("comments.xml", comments=commentsout)
+  return Response(render_template("comments.xml", comments=commentsout), mimetype="application/rss+xml")
 
 
 @app.route("/recent-comments", defaults={"page": 1})
