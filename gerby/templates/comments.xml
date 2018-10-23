@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
-  <title>Kerodon &ndash; Comments</title>
+  <title>Kerodon—Comments</title>
   <link>https://kerodon.net/recent-comments.xml</link>
   <description>Kerodon, see https://kerodon.net</description>
   <language>en</language>
@@ -9,7 +9,7 @@
   <webMaster>pieterbelmans@gmail.com (Pieter Belmans)</webMaster>
   <image>
     <url>https://kerodon.net/static/favicon.png</url>
-    <title>Kerodon &ndash; Comments</title>
+    <title>Kerodon—Comments</title>
     <link>https://kerodon.net/recent-comments.rss</link>
   </image>
 
