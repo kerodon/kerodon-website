@@ -3,3 +3,4 @@ User-agent: *
 Disallow: /changes
 Disallow: /recent-comments
 Disallow: /recent-comments/*
+Disallow: /tag/*/cite
