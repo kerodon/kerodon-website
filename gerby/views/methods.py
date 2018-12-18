@@ -47,6 +47,9 @@ def getBreadcrumb(tag):
   if tag.type == "item":
     return [tag]
 
+  if tag.type == "eqnarray":
+    return [tag]
+
   if tag.type == "part":
     return [tag]
 
@@ -59,7 +62,7 @@ def getBreadcrumb(tag):
   pieces = tag.ref.split(".")
   refs = [".".join(pieces[0:i]) for i in range(len(pieces) + 1)]
 
-  tags = Tag.select().where(Tag.ref << refs, ~(Tag.type << ["item", "part"]))
+  tags = Tag.select().where(Tag.ref << refs, ~(Tag.type << ["item", "part", "eqnarray"]))
   tags = sorted(tags)
 
   # if there are parts, we look up the corresponding part and add it
