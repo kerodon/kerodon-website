@@ -107,7 +107,7 @@ def show_search():
                         Slogan.html.alias("slogan"),
                         History.html.alias("history"),
                         Reference.html.alias("reference")) \
-                .where(Tag.ref << references, ~(Tag.type << ["item", "part"])) \
+                .where(Tag.ref << references, ~(Tag.type << ["item", "part", "eqnarray"])) \
                 .join(Slogan, JOIN.LEFT_OUTER).switch(Tag) \
                 .join(History, JOIN.LEFT_OUTER).switch(Tag) \
                 .join(Reference, JOIN.LEFT_OUTER)
