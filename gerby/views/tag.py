@@ -157,6 +157,10 @@ def show_index():
   number = 1 # change accordingly
 
   tags = Tag.select().where(Tag.type << ["part", "chapter"])
+
+  # get rid of retired tags on frontpage
+  tags = [tag for tag in tags if tag.tag not in ["00FP", "00FN"]]
+
   tags = combine(tags)
 
   return render_template(
