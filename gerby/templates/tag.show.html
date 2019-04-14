@@ -122,6 +122,9 @@ $(function () {
   {% if tree %}
   <div id="sidebar-structure">
     {% if quicknav %}
+    <input type="checkbox" id="quicknav-toggle" checked>
+    <label for="quicknav-toggle"></label>
+
     <ul id="quicknav">
       {% for item in quicknav %}
         <li><a class="sidebar-link" href="/tag/{{ item.tag }}">{{ item.type | capitalize }} <span data-tag="{{ item.tag }}">{{ item.ref }}</span></a>: {{ item.name }}
