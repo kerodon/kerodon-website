@@ -13,6 +13,9 @@ setup(
         "validators ",
         "flask ",
         "peewee ",
+        "bs4",
+        "html5lib",
+        "python-dateutil",
         "flask_profiler ",
         "flask_scss",
         "feedparser "])
