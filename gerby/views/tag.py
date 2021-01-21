@@ -248,6 +248,9 @@ def show_tag(tag):
   html = fixDataMarker(html)
   html = fixFutureRef(html)
 
+  # some Gerby bug fixes
+  html = html.replace("xymatrix@ 1", "xymatrix@1") # not sure why this is newly introduced on January 21 2021 (maybe it has to do with an upgrade of my Python version?)
+
   tree = None
   quicknav = None
   # if it's a heading
