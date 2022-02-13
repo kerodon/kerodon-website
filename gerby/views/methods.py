@@ -44,6 +44,8 @@ def sfm(comment):
 
 
 def getBreadcrumb(tag):
+  if tag.type == "equation":
+    return [tag]
   if tag.type == "item":
     return [tag]
 
