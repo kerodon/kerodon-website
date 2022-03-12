@@ -48,7 +48,8 @@ div.html {
 
 div.html div.equation {
   margin-top: -.3rem;
-  overflow-x: -moz-scrollbars-none;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
 div.equation::-webkit-scrollbar {
