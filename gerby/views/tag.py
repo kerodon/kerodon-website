@@ -156,7 +156,7 @@ def show_index():
   kerodi = ["Kerodon-Climbing.svg"] # for now only the climber, "Kerodon-Guitar.svg", "Kerodon-Reading.svg", "Kerodon-Scientist.svg", "Kerodon-Sports.svg", "Kerodon-Surfing.svg", "Kerodon-VR.svg"]
   number = 1 # change accordingly
 
-  tags = Tag.select().where(Tag.type << ["part", "chapter"]).order_by(Tag.ref)
+  tags = Tag.select().where(Tag.type << ["part", "chapter"]).order_by(Tag.ref.cast("int"))
 
   # get rid of retired tags on frontpage
   tags = [tag for tag in tags if tag.tag not in ["00FP", "00FN"]]
