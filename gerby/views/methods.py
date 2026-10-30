@@ -40,6 +40,18 @@ def getPartTags(tag, headings_only=False):
   return chapters + [item for item in descendants if item.ref.startswith(prefixes)]
 
 
+def getParentComments(breadcrumb, tag):
+  parent_tags = [parent.tag for parent in breadcrumb if parent.tag != tag.tag]
+  if not parent_tags:
+    return []
+  rows = (Comment.select(Comment.tag, fn.COUNT(Comment.id).alias("count"))
+                 .where(Comment.tag << parent_tags, Comment.active)
+                 .group_by(Comment.tag).dicts())
+  counts = {row["tag"]: row["count"] for row in rows}
+  return [[parent, counts[parent.tag]] for parent in breadcrumb
+          if counts.get(parent.tag, 0)]
+
+
 def is_math(tag, name, value):
   return name == "type" and value in ["math/tex", "math/tex; mode=display"]
 

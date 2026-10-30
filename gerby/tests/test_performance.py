@@ -150,6 +150,16 @@ class PerformanceTests(unittest.TestCase):
         body = self.client.get("/tag/L001").get_data(as_text=True)
         self.assertLess(body.index("First proof"), body.index("Second proof"))
 
+    def test_breadcrumb_parent_comments_and_active_filter(self):
+        for tag, active in [("P001", True), ("C001", True), ("S001", True),
+                            ("S001", False)]:
+            Comment.create(tag=tag, author="Reader", comment="Parent comment", active=active)
+        body = self.client.get("/tag/L001/comments").get_data(as_text=True)
+        self.assertIn("1 comment(s) on Chapter", body)
+        self.assertIn("1 comment(s) on Section", body)
+        self.assertIn("1 comment(s) on Part", body)
+        self.assertNotIn("2 comment(s)", body)
+
     def test_reference_key_matches_legacy_numeric_and_appendix_order(self):
         refs = ["10.2", "2", "1.0.1", "1", "2.10", "2.2", "A", "A.2", "B", "2.A"]
         tags = [Tag(tag=str(i), ref=ref) for i, ref in enumerate(refs)]

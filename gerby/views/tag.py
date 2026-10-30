@@ -269,14 +269,7 @@ def show_tag(tag):
     for comment in comments:
       comment.comment = sfm(comment.comment)
 
-    # looking for comments higher up in the breadcrumb
-    parentComments = []
-    for parent in breadcrumb:
-      if parent.tag == tag.tag:
-        continue
-      count = Comment.select().where(Comment.tag == parent.tag, Comment.active).count() # this could be done in a single JOIN
-      if count > 0:
-        parentComments.append([parent, count])
+    parentComments = getParentComments(breadcrumb, tag)
 
   # Kerodon: we are not using separate files for the pdf's
   filename = "kerodon.pdf"
@@ -319,14 +312,7 @@ def show_comments(tag):
   for comment in comments:
     comment.comment = sfm(comment.comment)
 
-  # looking for comments higher up in the breadcrumb
-  parentComments = []
-  for parent in breadcrumb:
-    if parent.tag == tag.tag:
-      continue
-    count = Comment.select().where(Comment.tag == parent.tag, Comment.active).count() # this could be done in a single JOIN
-    if count > 0:
-      parentComments.append([parent, count])
+  parentComments = getParentComments(breadcrumb, tag)
 
   return render_template("tag.comments.html",
                          tag=tag,
