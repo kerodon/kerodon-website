@@ -17,14 +17,15 @@ def decorateEntries(entries):
   for entry in entries:
     entry.fields = {}
 
-  for field in (BibliographyField
-                .select()
-                .where(BibliographyField.key << list(by_key))):
-    entry = by_key.get(field.key_id)
+  for key, name, value in (BibliographyField
+                          .select(BibliographyField.key, BibliographyField.field,
+                                  BibliographyField.value)
+                          .where(BibliographyField.key << list(by_key)).tuples()):
+    entry = by_key.get(key)
     if entry is None:
       continue
-    setattr(entry, field.field, field.value)
-    entry.fields[field.field] = field.value
+    setattr(entry, name, value)
+    entry.fields[name] = value
 
   return entries
 
