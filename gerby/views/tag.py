@@ -358,23 +358,28 @@ def show_tag_statistics(tag):
   creation = None
   update = None
   try:
-    creation = tag.changes.where(Change.action == "creation").get()
+    creation = (Change.select(Change, Commit).join(Commit)
+                      .where(Change.tag == tag.tag, Change.action == "creation").get())
     creation = datetime.datetime.strptime(creation.commit.time.decode(), "%Y-%m-%d %H:%M:%S %z")
 
-    update = Commit.select().where(Commit.hash << [change.commit.hash for change in tag.changes]).order_by(Commit.time.desc()).get()
+    update = (Commit.select().where(Commit.hash << Change.select(Change.commit).where(Change.tag == tag.tag))
+                    .order_by(Commit.time.desc()).get())
     update = datetime.datetime.strptime(update.time.decode(), "%Y-%m-%d %H:%M:%S %z")
   except (Change.DoesNotExist, Commit.DoesNotExist):
     pass
 
   # dealing with the tags using this results
-  tag.incoming = sorted(tag.incoming)
+  tag.incoming = sorted(Dependency.select(Dependency, *Tag.metadata_fields())
+                                  .join(Tag, on=Dependency.tag)
+                                  .where(Dependency.to == tag.tag),
+                        key=lambda dependency: reference_key(dependency.tag.ref))
 
   # making sure we can give section numbers here
   sections = []
   for dependency in tag.incoming:
     sections.append(".".join(dependency.tag.ref.split(".")[0:-1]))
 
-  sections = Tag.select().where(Tag.ref << sections, ~(Tag.type << ["item"]))
+  sections = Tag.select(*Tag.metadata_fields()).where(Tag.ref << sections, ~(Tag.type << ["item"]))
   sections = {section.ref: section for section in sections}
 
   for dependency in tag.incoming:
@@ -386,11 +391,12 @@ def show_tag_statistics(tag):
   statistics["proof"] = tag.outgoing.count()
 
   if TagStatistic.table_exists():
+    values = {row.statistic: row.value for row in tag.statistics}
     for statistic in ["preliminaries", "chapters", "sections", "consequences"]:
-      try:
-        statistics[statistic] = tag.statistics.filter(TagStatistic.statistic == statistic).get().value
-      except TagStatistic.DoesNotExist:
-        log.warning("Unable to get statistic '{0}' for tag '{1}'.".format(statistic, tag))
+      if statistic in values:
+        statistics[statistic] = values[statistic]
+      else:
+        app.logger.warning("Unable to get statistic '%s' for tag '%s'.", statistic, tag.tag)
         statistics[statistic] = -1
 
   return render_template("tag.statistics.html",

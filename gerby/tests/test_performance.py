@@ -143,6 +143,16 @@ class PerformanceTests(unittest.TestCase):
         response = self.client.get("/tag/L001")
         self.assertEqual(response.status_code, 200)
 
+    def test_tag_statistics_bulk_dependencies(self):
+        with self.count_queries() as counter:
+            response = self.client.get("/tag/L001/statistics")
+        self.assertEqual(response.status_code, 200)
+        body = response.get_data(as_text=True)
+        self.assertIn('href="/tag/T200"', body)
+        self.assertLess(body.index('href="/tag/T002"'), body.index('href="/tag/T010"'))
+        self.assertIn('<td>7</td>', body)
+        self.assertLessEqual(counter[0], 12)
+
     def test_section_badges_and_ordered_proofs(self):
         body = self.client.get("/tag/U001").get_data(as_text=True)
         for text in ["A slogan", "A history", "An author's reference"]:
@@ -159,6 +169,19 @@ class PerformanceTests(unittest.TestCase):
         self.assertIn("1 comment(s) on Section", body)
         self.assertIn("1 comment(s) on Part", body)
         self.assertNotIn("2 comment(s)", body)
+
+    def test_creation_and_latest_change(self):
+        # The imported history stores timezone-bearing dates as SQLite blobs.
+        for number, date in [(1, b"2020-01-02 00:00:00 +0000"),
+                             (2, b"2021-02-03 00:00:00 +0000")]:
+            commit = str(number) * 40
+            Commit.create(hash=commit, author="Author", log="Change", time=date)
+            Change.create(tag="L001", commit=commit,
+                          action="creation" if number == 1 else "statement",
+                          filename="book.tex", label="target", begin=1, end=2)
+        body = self.client.get("/tag/L001/statistics").get_data(as_text=True)
+        self.assertIn("Jan 2, 2020", body)
+        self.assertIn("Feb 3, 2021", body)
 
     def test_reference_key_matches_legacy_numeric_and_appendix_order(self):
         refs = ["10.2", "2", "1.0.1", "1", "2.10", "2.2", "A", "A.2", "B", "2.A"]
