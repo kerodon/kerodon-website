@@ -63,18 +63,10 @@ def show_api_structure(tag):
   else:
     # if the tag is a part, we select all chapters, and then do the startswith for these
     if tag.type == "part":
-      chapters = Part.select(Part.chapter).where(Part.part == tag.tag)
-      chapters = Tag.select().where(Tag.tag << [chapter.chapter.tag for chapter in chapters])
-
-      prefixes = tuple(chapter.ref + "." for chapter in chapters)
-      # instead of sections we now select *all* tags, which can be slow'ish
-      sections = Tag.select()
-      sections = filter(lambda section: section.ref.startswith(prefixes), sections)
-
-      tags = list(chapters) + list(sections)
+      tags = getPartTags(tag)
 
     else:
-      tags = Tag.select(Tag).where(Tag.ref.startswith(tag.ref + "."))
+      tags = Tag.select(*Tag.metadata_fields()).where(Tag.ref.startswith(tag.ref + "."))
 
     tree = gerby.views.tag.combine(sorted(tags, key=lambda tag: reference_key(tag.ref)))
 

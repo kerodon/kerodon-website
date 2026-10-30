@@ -69,8 +69,13 @@ def combine(tags):
   # otherwise we recombine parts and other tags
   else:
     # add part information to chapters
+    links = (Part.select(Part, *Tag.metadata_fields()).join(Tag, on=Part.part)
+                 .where(Part.chapter << [chapter.tag for chapter in output]))
+    by_chapter = {}
+    for link in links:
+      by_chapter.setdefault(link.chapter_id, link.part)
     for chapter in output:
-      chapter.part = Part.get(Part.chapter == chapter).part
+      chapter.part = by_chapter[chapter.tag]
 
     # combine parts with chapters
     for part in parts:
@@ -91,43 +96,27 @@ def getNeighbours(tag):
   except ValueError:
     return (None, None) # TODO deal with appendices
 
-  # left
-  pieces[-1] = pieces[-1] - 1
-  left = ".".join(map(str, pieces))
-  try:
-    if tag.type in headings:
-      left = Tag.get(Tag.ref == left, Tag.type == tag.type) # to deal with parts appropriately we select for part / chapter with the appropriate number
-    else:
-      left = Tag.get(Tag.ref == left, Tag.type != "item")
-  except Tag.DoesNotExist:
-    left = None
-
-  # right
-  pieces[-1] = pieces[-1] + 2
-  right = ".".join(map(str, pieces))
-  try:
-    if tag.type in headings:
-      right = Tag.get(Tag.ref == right, Tag.type == tag.type) # to deal with parts appropriately we select for part / chapter with the appropriate number
-    else:
-      right = Tag.get(Tag.ref == right, Tag.type != "item")
-  except Tag.DoesNotExist:
-    right = None
+  number = pieces[-1]
+  left_ref = ".".join(map(str, pieces[:-1] + [number - 1]))
+  right_ref = ".".join(map(str, pieces[:-1] + [number + 1]))
+  up = ".".join(map(str, pieces[:-1]))
+  refs = [left_ref, right_ref]
+  if tag.type in headings:
+    condition = Tag.type == tag.type
+  else:
+    condition = Tag.type != "item"
+    refs.append(up)
+  neighbours = Tag.select(*Tag.metadata_fields()).where(Tag.ref << refs, condition)
+  by_ref = {}
+  for neighbour in neighbours:
+    by_ref.setdefault(neighbour.ref, neighbour)
+  left, right = by_ref.get(left_ref), by_ref.get(right_ref)
 
   # deal with thmenv in parts
   if left and left.type.startswith("part"): left.type = left.type[4:]
   if right and right.type.startswith("part"): right.type = right.type[4:]
 
-  # up
-  up = ".".join(map(str, pieces[:-1]))
-  try:
-    if tag.type in headings: # for now we don't deal with this, Kerodon might need this though
-      up = None
-    else:
-      up = Tag.get(Tag.ref == up, Tag.type != "item")
-  except Tag.DoesNotExist:
-    up = None
-
-  return (left, right, up)
+  return (left, right, by_ref.get(up) if up in refs else None)
 
 
 def get_statistics():
@@ -215,13 +204,13 @@ def show_tag(tag):
 
       references = Reference.select().where(Reference.tag << identifiers)
       for reference in references:
-        html = html.replace("id=\"" + reference.tag.tag + "\">", 'id="' + reference.tag.tag + '"><a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-info" data-toggle="popover" title="Reference" data-html="true" data-content=\'' + reference.html + '\'>reference</a>')
+        html = html.replace("id=\"" + reference.tag_id + "\">", 'id="' + reference.tag_id + '"><a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-info" data-toggle="popover" title="Reference" data-html="true" data-content=\'' + reference.html + '\'>reference</a>')
       histories = History.select().where(History.tag << identifiers)
       for history in histories:
-        html = html.replace("id=\"" + history.tag.tag + "\">", 'id="' + history.tag.tag + '"><a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-secondary" data-toggle="popover" title="Historical remark" data-html="true" data-content=\'' + history.html + '\'>historical remark</a>')
+        html = html.replace("id=\"" + history.tag_id + "\">", 'id="' + history.tag_id + '"><a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-secondary" data-toggle="popover" title="Historical remark" data-html="true" data-content=\'' + history.html + '\'>historical remark</a>')
       slogans = Slogan.select().where(Slogan.tag << identifiers)
       for slogan in slogans:
-        html = html.replace("id=\"" + slogan.tag.tag + "\">", 'id="' + slogan.tag.tag + '"><a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-primary" data-toggle="popover" title="Slogan" data-html="true" data-content=\'' + slogan.html + '\'>slogan</a>')
+        html = html.replace("id=\"" + slogan.tag_id + "\">", 'id="' + slogan.tag_id + '"><a tabindex="0" role="button" data-trigger="focus" data-placement="bottom" class="btn badge badge-primary" data-toggle="popover" title="Slogan" data-html="true" data-content=\'' + slogan.html + '\'>slogan</a>')
 
 
   # it's an item
@@ -260,12 +249,9 @@ def show_tag(tag):
   if tag.type in headings and headings.index(tag.type) < headings.index(gerby.configuration.UNIT):
     # if the tag is a part, we select all chapters, and then do the startswith for these
     if tag.type == "part":
-      chapters = Part.select(Part.chapter).where(Part.part == tag.tag)
-      chapters = Tag.select().where(Tag.tag << [chapter.chapter.tag for chapter in chapters])
-
-      tags = [tag for chapter in chapters for tag in Tag.select().where(Tag.ref.startswith(chapter.ref), Tag.type << headings, Tag.type != "part")]
+      tags = getPartTags(tag, headings_only=True)
     else:
-      tags = Tag.select().where(Tag.ref.startswith(tag.ref + "."), Tag.type << headings)
+      tags = Tag.select(*Tag.metadata_fields()).where(Tag.ref.startswith(tag.ref + "."), Tag.type << headings)
 
     tree = combine(sorted(tags, key=lambda tag: reference_key(tag.ref)))
 

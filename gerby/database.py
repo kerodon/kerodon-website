@@ -25,6 +25,11 @@ class Tag(BaseModel):
   html = TextField(null=True)
   name = TextField(null=True)
 
+  @classmethod
+  def metadata_fields(cls):
+    # Navigation and trees do not need the potentially large HTML body.
+    return (cls.tag, cls.label, cls.active, cls.ref, cls.type, cls.name)
+
   # allows us to sort tags according to their reference
   def __gt__(self, other):
     try:

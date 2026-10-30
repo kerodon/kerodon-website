@@ -97,6 +97,52 @@ class PerformanceTests(unittest.TestCase):
                                                 counted(database.execute_sql)))
             yield counter
 
+    def test_index_order_and_bounded_queries(self):
+        with self.count_queries() as initial:
+            response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+        body = response.get_data(as_text=True)
+        self.assertLess(body.index('href="/tag/C002"'), body.index('href="/tag/C010"'))
+        for number in range(11, 51):
+            tag = "C%03d" % number
+            self.add_tag(tag, str(number), "chapter", "Another chapter")
+            Part.create(part="P001", chapter=tag)
+        with self.count_queries() as expanded:
+            self.client.get("/")
+        self.assertEqual(initial[0], expanded[0])
+        self.assertLessEqual(expanded[0], 10)
+
+    def test_structure_contains_only_part_descendants(self):
+        with self.count_queries() as counter:
+            response = self.client.get("/data/tag/P001/structure")
+        data = json.loads(response.get_data())
+        self.assertEqual([child["tag"] for child in data["children"]],
+                         ["C001", "C002", "C010"])
+        results = data["children"][0]["children"][0]["children"][0]["children"]
+        self.assertEqual(results[0]["tag"], "L001")
+        self.assertEqual(results[-1]["tag"], "T200")
+        self.assertNotIn("S099", response.get_data(as_text=True))
+        self.assertLessEqual(counter[0], 3)
+
+    def test_part_structure_handles_duplicate_links_and_appendix_case(self):
+        self.add_tag("C00A", "A", "chapter", "Appendix")
+        self.add_tag("S00A", "A.1", "section", "Appendix section")
+        self.add_tag("S00B", "a.1", "section", "Another appendix")
+        Part.create(part="P001", chapter="C00A")
+        Part.create(part="P001", chapter="C00A")
+        data = json.loads(self.client.get("/data/tag/P001/structure").get_data())
+        appendices = [child for child in data["children"] if child["tag"] == "C00A"]
+        self.assertEqual(len(appendices), 1)
+        self.assertEqual([child["tag"] for child in appendices[0]["children"]], ["S00A"])
+
+    def test_navigation_without_parts(self):
+        Part.drop_table()
+        Tag.delete().where(Tag.type == "part").execute()
+        body = self.client.get("/").get_data(as_text=True)
+        self.assertLess(body.index('href="/tag/C002"'), body.index('href="/tag/C010"'))
+        response = self.client.get("/tag/L001")
+        self.assertEqual(response.status_code, 200)
+
     def test_section_badges_and_ordered_proofs(self):
         body = self.client.get("/tag/U001").get_data(as_text=True)
         for text in ["A slogan", "A history", "An author's reference"]:
@@ -151,6 +197,27 @@ class PerformanceTests(unittest.TestCase):
                 response = self.client.get(path)
                 self.assertEqual(response.status_code, 200)
                 self.assertEqual(response.get_data(), indexed[path])
+
+    def test_kerodon_equation_breadcrumbs_and_part_neighbour_types(self):
+        from gerby.views.methods import getBreadcrumb
+        from gerby.views.tag import getNeighbours
+        for kind in ["equation", "eqnarray", "item"]:
+            tag = Tag(tag="E001", type=kind, ref="1.1.1.2")
+            self.assertEqual(getBreadcrumb(tag), [tag])
+        self.add_tag("P002", "1.2", "partlemma", "Part lemma")
+        self.add_tag("P003", "1.3", "parttheorem", "Part theorem")
+        left, right, up = getNeighbours(Tag(tag="P004", type="partlemma", ref="1.1"))
+        self.assertEqual(right.type, "lemma")
+
+    def test_part_toc_preserves_kerodon_heading_selection(self):
+        from gerby.views.methods import getPartTags
+        self.add_tag("U002", "10.1.1", "subsection", "Subsection")
+        rows = getPartTags(Tag.get_by_id("P001"), headings_only=True)
+        # Legacy bare-prefix selection includes chapter 10 under prefix 1 too.
+        self.assertEqual(sum(row.tag == "C010" for row in rows), 2)
+        copies = [row for row in rows if row.tag == "C010"]
+        self.assertIsNot(copies[0], copies[1])
+        self.assertTrue(all(row.type in ["chapter", "section", "subsection"] for row in rows))
 
 
 class BenchmarkTests(unittest.TestCase):

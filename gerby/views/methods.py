@@ -1,5 +1,7 @@
 import markdown
 import string
+from functools import reduce
+from operator import or_
 
 from mdx_bleach.extension import BleachExtension
 from mdx_bleach.whitelist import ALLOWED_TAGS
@@ -14,6 +16,28 @@ def reference_key(ref):
   pieces = tuple((0, int(piece)) if piece.isdigit() else (1, piece)
                  for piece in ref.split("."))
   return (pieces, len(ref))
+
+
+def getPartTags(tag, headings_only=False):
+  chapters = list(Tag.select(*Tag.metadata_fields())
+                     .where(Tag.tag << Part.select(Part.chapter).where(Part.part == tag.tag)))
+  if not chapters:
+    return []
+
+  if headings_only:
+    # Preserve Kerodon's existing bare-prefix TOC selection, including overlaps
+    # such as chapters 1 and 10. Each occurrence needs its own tree node.
+    tags = list(Tag.select(*Tag.metadata_fields()).where(
+        reduce(or_, [Tag.ref.startswith(chapter.ref) for chapter in chapters]),
+        Tag.type << headings, Tag.type != "part"))
+    return [Tag(**item.__data__) for chapter in chapters for item in tags
+            if item.ref.lower().startswith(chapter.ref.lower())]
+
+  prefixes = tuple(chapter.ref + "." for chapter in chapters)
+  descendants = Tag.select(*Tag.metadata_fields()).where(
+      reduce(or_, [Tag.ref.startswith(prefix) for prefix in prefixes]))
+  # Retain the case-sensitive Python filter used by the structure API.
+  return chapters + [item for item in descendants if item.ref.startswith(prefixes)]
 
 
 def is_math(tag, name, value):
@@ -63,20 +87,23 @@ def getBreadcrumb(tag):
 
   # to deal with tags which are immediate descendants of parts
   if tag.type not in headings and len(tag.ref.split(".")) == 2:
-    part = Tag.get(Tag.ref == tag.ref.split(".")[0], Tag.type == "part")
+    part = (Tag.select(*Tag.metadata_fields())
+               .where(Tag.ref == tag.ref.split(".")[0], Tag.type == "part").get())
     tag.type = tag.type[4:] # remove the prefix part
     return [part, tag]
 
   pieces = tag.ref.split(".")
   refs = [".".join(pieces[0:i]) for i in range(len(pieces) + 1)]
 
-  tags = Tag.select().where(Tag.ref << refs, ~(Tag.type << ["item", "part", "eqnarray", "equation"]))
+  tags = Tag.select(*Tag.metadata_fields()).where(Tag.ref << refs, ~(Tag.type << ["item", "part", "eqnarray", "equation"]))
   tags = sorted(tags, key=lambda tag: reference_key(tag.ref))
 
   # if there are parts, we look up the corresponding part and add it
   if Tag.select().where(Tag.type == "part").exists():
     chapter = tags[0]
-    part = Part.get(Part.chapter == chapter.tag).part
+    part = (Tag.select(*Tag.metadata_fields())
+               .join(Part, on=Part.part)
+               .where(Part.chapter == chapter.tag).get())
     tags.insert(0, part)
 
   return tags
