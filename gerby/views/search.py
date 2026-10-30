@@ -93,7 +93,7 @@ def show_search():
                              count=-1)
 
   # sorting and pagination
-  results = sorted(results)
+  results = sorted(results, key=lambda result: reference_key(result.ref))
   results = results[(page - 1) * perpage : page * perpage]
 
   # determine list of parents
@@ -123,7 +123,7 @@ def show_search():
     result.html = fixDataMarker(result.html)
     result.html = fixFutureRef(result.html)
 
-  tree = tag.combine(list(sorted(complete)))
+  tree = tag.combine(sorted(complete, key=lambda result: reference_key(result.ref)))
 
   # check whether we should suggest an alternative query, and build it if this is the case
   misspelt = [keyword for keyword in spelling.keys() if keyword in request.args["query"]]

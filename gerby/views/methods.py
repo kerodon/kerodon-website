@@ -10,6 +10,12 @@ from gerby.database import *
 
 headings = ["part", "chapter", "section", "subsection", "subsubsection"]
 
+def reference_key(ref):
+  pieces = tuple((0, int(piece)) if piece.isdigit() else (1, piece)
+                 for piece in ref.split("."))
+  return (pieces, len(ref))
+
+
 def is_math(tag, name, value):
   return name == "type" and value in ["math/tex", "math/tex; mode=display"]
 
@@ -65,7 +71,7 @@ def getBreadcrumb(tag):
   refs = [".".join(pieces[0:i]) for i in range(len(pieces) + 1)]
 
   tags = Tag.select().where(Tag.ref << refs, ~(Tag.type << ["item", "part", "eqnarray", "equation"]))
-  tags = sorted(tags)
+  tags = sorted(tags, key=lambda tag: reference_key(tag.ref))
 
   # if there are parts, we look up the corresponding part and add it
   if Tag.select().where(Tag.type == "part").exists():

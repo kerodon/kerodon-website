@@ -76,7 +76,7 @@ def show_api_structure(tag):
     else:
       tags = Tag.select(Tag).where(Tag.ref.startswith(tag.ref + "."))
 
-    tree = gerby.views.tag.combine(sorted(tags))
+    tree = gerby.views.tag.combine(sorted(tags, key=lambda tag: reference_key(tag.ref)))
 
     tag.children = tree
     return json.dumps(jsonify(tag), indent=2)
@@ -100,7 +100,7 @@ def show_api_statement(tag):
     # if we are below the cutoff: generate all data below it too
     if gerby.views.tag.headings.index(tag.type) >= gerby.views.tag.headings.index(UNIT):
       tags = Tag.select().where(Tag.ref.startswith(tag.ref + "."), Tag.type << gerby.views.tag.headings)
-      html = html + "".join([item.html for item in sorted(tags)])
+      html = html + "".join([item.html for item in sorted(tags, key=lambda tag: reference_key(tag.ref))])
 
   return html
 
@@ -123,7 +123,7 @@ def show_api_tag(tag):
     # if we are below the cutoff: generate all data below it too
     if gerby.views.tag.headings.index(tag.type) >= gerby.views.tag.headings.index(UNIT):
       tags = Tag.select().where(Tag.ref.startswith(tag.ref + "."), Tag.type << gerby.views.tag.headings)
-      html = html + "".join([item.html for item in sorted(tags)])
+      html = html + "".join([item.html for item in sorted(tags, key=lambda tag: reference_key(tag.ref))])
 
   # it's a tag (maybe with proofs)
   else:

@@ -17,6 +17,7 @@ from gerby.database import (Tag, Part, Proof, Slogan, History, Reference,
                             SearchTag, SearchStatement, Comment, BibliographyEntry,
                             BibliographyField, Citation, db, comments)
 from gerby.tools.indexes import ensure_indexes
+from gerby.views.methods import reference_key
 from gerby.views.tag import combine
 
 
@@ -95,6 +96,29 @@ class PerformanceTests(unittest.TestCase):
                 stack.enter_context(patch.object(database, "execute_sql",
                                                 counted(database.execute_sql)))
             yield counter
+
+    def test_section_badges_and_ordered_proofs(self):
+        body = self.client.get("/tag/U001").get_data(as_text=True)
+        for text in ["A slogan", "A history", "An author's reference"]:
+            self.assertIn(text, body)
+        body = self.client.get("/tag/L001").get_data(as_text=True)
+        self.assertLess(body.index("First proof"), body.index("Second proof"))
+
+    def test_reference_key_matches_legacy_numeric_and_appendix_order(self):
+        refs = ["10.2", "2", "1.0.1", "1", "2.10", "2.2", "A", "A.2", "B", "2.A"]
+        tags = [Tag(tag=str(i), ref=ref) for i, ref in enumerate(refs)]
+        self.assertEqual([tag.ref for tag in sorted(tags)],
+                         [tag.ref for tag in sorted(tags, key=lambda tag: reference_key(tag.ref))])
+
+    def test_tree_handles_zero_components_and_duplicate_parents(self):
+        tags = [Tag(tag=tag, ref=ref) for tag, ref in
+                [("C001", "1"), ("C002", "1"), ("L001", "1.0.1"),
+                 ("S001", "1.2"), ("T001", "1.2.1"), ("X001", "9.9")]]
+        tree = combine(tags)
+        self.assertEqual([tag.tag for tag in tree], ["C001", "C002"])
+        for parent in tree:
+            self.assertEqual([child.tag for child in parent.children], ["L001", "S001"])
+            self.assertEqual(parent.children[1].children[0].tag, "T001")
 
     def test_index_upgrade_is_idempotent_and_used_for_navigation(self):
         # Emulate an older imported database, then apply the upgrade twice.

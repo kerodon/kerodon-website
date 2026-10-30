@@ -12,6 +12,7 @@ from gerby.views.methods import *
 import gerby.configuration
 
 import re
+from collections import defaultdict
 
 headings = ["part", "chapter", "section", "subsection", "subsubsection"]
 hideComments = ["part"]
@@ -26,34 +27,36 @@ def isTag(string):
 
 # turn a flat list into a tree based on tag.ref length
 def combine(tags):
-  level = min([len(tag.ref.split(".")) for tag in tags], default=0)
-
   # split up into tags and parts
-  parts = sorted([tag for tag in tags if tag.type == "part"])
+  parts = sorted([tag for tag in tags if tag.type == "part"],
+                 key=lambda tag: reference_key(tag.ref))
+  level = min((len(tag.ref.split(".")) for tag in tags), default=0)
   tags = [tag for tag in tags if tag.type != "part"]
+  pieces = [(tag, tag.ref.split(".")) for tag in tags]
 
   output = []
   children = []
-  for tag in tags:
+  parents = defaultdict(list)
+  for tag, ref in pieces:
     # if we are at the bottom level (locally) we add it to the output
-    if len(tag.ref.split(".")) == level:
+    if len(ref) == level:
       output.append(tag)
+      parents[tag.ref].append(tag)
     # if we have a 0 at on the position of the current level we also add it to the output
-    elif tag.ref.split(".")[level - 1] == "0":
+    elif ref[level - 1] == "0":
       output.append(tag)
+      parents[tag.ref].append(tag)
     else:
-      children.append(tag)
+      children.append((tag, ref))
 
   # attach children to the correct parent
-  for tag in children:
+  for tag, pieces in children:
     # construct the reference for the parent
-    ref = ".".join([piece for piece in tag.ref.split(".")[0:level]])
-    for parent in output:
-      if parent.ref == ref:
-        # create children if necessary
-        if not hasattr(parent, "children"):
-          parent.children = []
-        parent.children.append(tag)
+    ref = ".".join(pieces[:level])
+    for parent in parents[ref]:
+      if not hasattr(parent, "children"):
+        parent.children = []
+      parent.children.append(tag)
 
   # recurse for all elements in output which have children
   for tag in output:
@@ -204,7 +207,7 @@ def show_tag(tag):
     # if we are below the cutoff: generate all data below it too
     if headings.index(tag.type) >= headings.index(gerby.configuration.UNIT):
       tags = Tag.select().where(Tag.ref.startswith(tag.ref + "."), Tag.type << headings)
-      html = html + "".join([item.html for item in sorted(tags)])
+      html = html + "".join([item.html for item in sorted(tags, key=lambda tag: reference_key(tag.ref))])
 
       # add badges for extras: look for HTML code that signifies a tag
       pattern = re.compile("id=\"([0-9A-Z]{4})\">")
@@ -264,11 +267,12 @@ def show_tag(tag):
     else:
       tags = Tag.select().where(Tag.ref.startswith(tag.ref + "."), Tag.type << headings)
 
-    tree = combine(sorted(tags))
+    tree = combine(sorted(tags, key=lambda tag: reference_key(tag.ref)))
 
     if headings.index(tag.type) < headings.index(gerby.configuration.UNIT):
       level = min([len(tag.ref.split(".")) for tag in tags], default=-1)
-      quicknav = sorted([tag for tag in tags if len(tag.ref.split(".")) == level])
+      quicknav = sorted([tag for tag in tags if len(tag.ref.split(".")) == level],
+                        key=lambda tag: reference_key(tag.ref))
 
   # dealing with comments
   commentsEnabled = tag.type not in hideComments and Comment.table_exists()
