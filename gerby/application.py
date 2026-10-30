@@ -65,7 +65,7 @@ def show_statistics():
   total = Tag.select().count()
 
   counts = dict()
-  for count in Tag.select(Tag.type, fn.COUNT(Tag.tag).alias("count")).group_by(Tag.type):
+  for count in Tag.select(Tag.type, fn.COUNT(SQL("*")).alias("count")).group_by(Tag.type):
     counts[count.type] = count.count
 
   extras = dict()

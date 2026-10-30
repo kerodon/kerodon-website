@@ -13,6 +13,7 @@ from PyPDF2 import PdfFileReader
 
 from gerby.database import *
 import gerby.configuration
+from gerby.tools.indexes import ensure_indexes
 
 
 # helper function
@@ -400,6 +401,9 @@ if __name__ == "__main__":
   if not os.path.isfile(gerby.configuration.COMMENTS):
     Comment.create_table()
     log.info("Created COMMENTS database")
+
+  # Upgrade navigation indexes for existing books as well as new imports.
+  ensure_indexes()
 
   # the information on disk
   tags = getTags()

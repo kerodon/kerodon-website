@@ -20,7 +20,7 @@ class Tag(BaseModel):
   tag = CharField(unique=True, primary_key=True)
   label = CharField(unique=True, null=True)
   active = BooleanField(null=True)
-  ref = CharField(null=True)
+  ref = CharField(null=True, index=True)
   type = CharField(null=True)
   html = TextField(null=True)
   name = TextField(null=True)
@@ -45,6 +45,11 @@ class Tag(BaseModel):
 
     except ValueError:
       return 0 # just do something, will need to implement a better version
+
+
+# LIKE uses NOCASE, while exact reference lookups use the ordinary ref index.
+Tag.add_index(Tag.ref.collate("NOCASE"), name="tag_ref_prefix")
+Tag.add_index(Tag.type, Tag.ref, name="tag_type_ref")
 
 
 class Proof(BaseModel):
