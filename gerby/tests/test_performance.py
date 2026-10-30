@@ -262,6 +262,32 @@ class PerformanceTests(unittest.TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertEqual(response.get_data(), indexed[path])
 
+    def test_bibliography_query_count_does_not_grow_with_entries_or_citations(self):
+        def add_entry(key):
+            BibliographyEntry.create(key=key, entrytype="article", code="@article{}")
+            for field, value in [("author", key), ("title", "A title"), ("year", "2020")]:
+                BibliographyField.create(key=key, field=field, value=value)
+        add_entry("Alpha")
+        Citation.create(key="Alpha", tag="L001")
+        with self.count_queries() as initial:
+            response = self.client.get("/bibliography/Alpha")
+        self.assertEqual(response.status_code, 200)
+        for number in range(20):
+            add_entry("Book%02d" % number)
+            Citation.create(key="Alpha", tag="T%03d" % (number + 1))
+        with self.count_queries() as expanded:
+            response = self.client.get("/bibliography/Alpha")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('href="/tag/T020"', response.get_data(as_text=True))
+        self.assertEqual(initial[0], expanded[0])
+        self.assertLessEqual(expanded[0], 4)
+        with self.count_queries() as overview:
+            self.assertEqual(self.client.get("/bibliography").status_code, 200)
+        self.assertEqual(overview[0], 2)
+        with self.count_queries() as missing:
+            self.assertEqual(self.client.get("/bibliography/missing").status_code, 404)
+        self.assertEqual(missing[0], 1)
+
     def test_kerodon_equation_breadcrumbs_and_part_neighbour_types(self):
         from gerby.views.methods import getBreadcrumb
         from gerby.views.tag import getNeighbours
