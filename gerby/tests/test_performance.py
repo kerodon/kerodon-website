@@ -160,6 +160,37 @@ class PerformanceTests(unittest.TestCase):
         body = self.client.get("/tag/L001").get_data(as_text=True)
         self.assertLess(body.index("First proof"), body.index("Second proof"))
 
+    def test_search_pagination_and_statement_radius(self):
+        with self.count_queries() as counter:
+            response = self.client.get("/search?query=scheme&page=2&perpage=10")
+        body = response.get_data(as_text=True)
+        self.assertIn("201 results", body)
+        tags = re.findall(r'data-tag="(T[0-9]{3}|L001)"', body)
+        self.assertEqual(tags, ["T%03d" % number for number in range(10, 20)])
+        self.assertLessEqual(counter[0], 2)
+        body = self.client.get("/search?query=scheme&radius=statements").get_data(as_text=True)
+        self.assertIn("100 results", body)
+        tags = re.findall(r'data-tag="(T[0-9]{3}|L001)"', body)
+        self.assertEqual(tags, ["T%03d" % number for number in range(2, 21, 2)])
+
+    def test_many_matches_do_not_exhaust_sql_variables(self):
+        connection = db.connection()
+        # Room for page/ancestor and CASE parameters, but not the 201 matches.
+        old_limit = connection.setlimit(sqlite3.SQLITE_LIMIT_VARIABLE_NUMBER, 40)
+        try:
+            response = self.client.get("/search?query=scheme")
+            self.assertEqual(response.status_code, 200)
+            self.assertIn("201 results", response.get_data(as_text=True))
+        finally:
+            connection.setlimit(sqlite3.SQLITE_LIMIT_VARIABLE_NUMBER, old_limit)
+
+    def test_empty_malformed_and_tag_search(self):
+        self.assertIn("No results", self.client.get("/search?query=unmatched").get_data(as_text=True))
+        self.assertEqual(self.client.get('/search?query=%22').status_code, 200)
+        response = self.client.get("/search?query=L001")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers["Location"], "tag/L001")
+
     def test_breadcrumb_parent_comments_and_active_filter(self):
         for tag, active in [("P001", True), ("C001", True), ("S001", True),
                             ("S001", False)]:

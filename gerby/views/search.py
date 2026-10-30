@@ -4,7 +4,6 @@ from gerby.application import app
 from gerby.views import tag
 from gerby.database import *
 
-import peewee
 from gerby.views.methods import *
 
 spelling = {
@@ -72,34 +71,23 @@ def show_search():
       return redirect("tag/" + request.args["query"].upper())
 
 
-  # c) actually search
+  # c) Search and sort references before loading HTML for the selected page.
   try:
-    if radius == "all":
-      tags = [result.tag for result in SearchTag(SearchTag.tag).search(request.args["query"])]
-    else:
-      tags = [result.tag for result in SearchStatement(SearchStatement.tag).search(request.args["query"])]
+    search = SearchTag if radius == "all" else SearchStatement
+    matches = search.select(search.tag).where(search.match(request.args["query"]))
+    results = list(Tag.select(Tag.tag, Tag.ref)
+                      .where(Tag.tag << matches, Tag.type != "item").tuples())
   except OperationalError:
     return render_template("search.malformed.html", query=request.args["query"])
 
-
-  # now get all the information about the results
-  try:
-    results = Tag.select().where(Tag.tag << tags, ~(Tag.type << ["item"]))
-    count = results.count()
-  except peewee.OperationalError as e:
-    if "too many SQL variables" in str(e):
-      return render_template("search.html",
-                             query=request.args["query"],
-                             count=-1)
-
-  # sorting and pagination
-  results = sorted(results, key=lambda result: reference_key(result.ref))
+  count = len(results)
+  results = sorted(results, key=lambda result: reference_key(result[1]))
   results = results[(page - 1) * perpage : page * perpage]
 
   # determine list of parents
   references = set()
-  for result in results:
-    pieces = result.ref.split(".")
+  for identifier, ref in results:
+    pieces = ref.split(".")
     references.update([".".join(pieces[0:i]) for i in range(len(pieces) + 1)])
 
   # get all tags for the search results (including parent tags)
