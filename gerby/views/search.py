@@ -91,7 +91,8 @@ def show_search():
     references.update([".".join(pieces[0:i]) for i in range(len(pieces) + 1)])
 
   # get all tags for the search results (including parent tags)
-  complete = Tag.select(Tag,
+  complete = Tag.select(*Tag.metadata_fields(),
+                        Case(None, [(Tag.type << tag.headings, None)], Tag.html).alias("html"),
                         Slogan.html.alias("slogan"),
                         History.html.alias("history"),
                         Reference.html.alias("reference")) \
@@ -108,8 +109,9 @@ def show_search():
 
   # deal with HTML issues in results
   for result in complete:
-    result.html = fixDataMarker(result.html)
-    result.html = fixFutureRef(result.html)
+    if result.type not in tag.headings:
+      result.html = fixDataMarker(result.html)
+      result.html = fixFutureRef(result.html)
 
   tree = tag.combine(sorted(complete, key=lambda result: reference_key(result.ref)))
 
